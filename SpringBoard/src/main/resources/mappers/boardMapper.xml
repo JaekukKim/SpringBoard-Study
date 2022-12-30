@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatisBoard">
+<!-- mapper태그의 namespace이름은 자유롭게 작명가능한 변수명이라고 생각하면된다. 거창하게 뭘 할 필요가 없다는뜻이다. -->
+	<!-- 게시물 목록 쿼리 -->
+	<select id="list" resultType="boardList">
+	<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다.
+		 아래 쿼리는 list라는 이름을 갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다.-->
+		 <!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
+		select
+			bno, title, content, writer, regDate, viewCnt
+		from tbl_board
+		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
+	</select>
+	
+	<!-- 여기 아래 resultType=HashMap 부분은 도움받은부분 -->
+	<select id="list2" resultType="HashMap">
+	<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다.
+		 아래 쿼리는 list라는 이름을 갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다.-->
+		 <!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
+		select
+			bno, title, content, writer, regDate, viewCnt
+		from tbl_board
+		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
+	</select>
+	
+	<delete id="deleteList" parameterType="HashMap">
+	<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다.
+		 아래 쿼리는 list라는 이름을 갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다.-->
+		 <!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
+		delete from tbl_board
+		where bno = #{bno}
+		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
+	</delete>
+</mapper>

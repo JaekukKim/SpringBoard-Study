@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- SQL과 동일하게 alias를 매길수가 있다. alias="이름" type="패키지 경로"를 하면 VO나 DTO같은 객체를 간단하게 사용할 수 있다. -->
+	<typeAliases>
+		<typeAlias alias="boardList" type="com.board.domain.BoardVO"/>
+	</typeAliases>
+</configuration>
