@@ -22,6 +22,7 @@ public class BoardDAOimpl implements BoardDAO{
 	// namespace는 mapper.xml과 동일해야한다. 태그안에 namespace선언한거임.
 	private static String namespace = "mybatisBoard";
 	
+	// DB에서 게시글을 불러오는 메소드
 	@Override
 	public List<BoardVO> list() throws Exception {
 		
@@ -30,18 +31,26 @@ public class BoardDAOimpl implements BoardDAO{
 		// 근데 namespace에 
 	}
 	
-	// 나중에 혼자 해볼것 반드시
+	// DB에다가 게시글을 넣는 메소드
 	@Override
-	public List<HashMap> list2() throws Exception {
-		
-		return sql.selectList("mybatisBoard.list2");
+	public void write(BoardVO boardVO) throws Exception {
+		// view에서 입력받은 데이터들은 boardVO로 들어가고 service를 지나 boardDao에 도착했다. 그거를 이제 db로 보내야한다.
+		// view - controller - service - dao - model 의 과정을 항상그리자.
+		sql.insert(namespace + ".write", boardVO);
 	}
 	
-	@Override
-	public void deleteList(HashMap map) throws Exception {
-		System.out.println("짠7567567");
-		sql.delete("mybatisBoard.list2", map);
-		System.out.println("짠345345");
-	}
 	// 나중에 혼자 해볼것 반드시
+//	@Override
+//	public List<HashMap> list2() throws Exception {
+//		
+//		return sql.selectList("mybatisBoard.list2");
+//	}
+//	
+//	@Override
+//	public void deleteList(HashMap map) throws Exception {
+//		System.out.println("짠7567567");
+//		sql.delete("mybatisBoard.list2", map);
+//		System.out.println("짠345345");
+//	}
+
 }

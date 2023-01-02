@@ -6,11 +6,15 @@
 <title>최초실행페이지(스프링)</title>
 </head>
 <body>
-	서버 실행 성공시 뜨는 문구입니다. 기뻐하십시오.
-
-	<P>The time on the server is ${serverTime}.</P>
+	<h1>현재시간</h1>
+	<P>=> The time on the server is ${serverTime}. <=</P>
 	
-	<a href="/board/list">게시물 목록 이동</a>
+	서버 실행 성공시 뜨는 문구입니다. 원하시는 작업을 선택해주세용.
+	<br>
+	<br>
+	
+	<a href="/board/main">게시판 메인페이지 이동</a>
+	
 </body>
 </html>
 
