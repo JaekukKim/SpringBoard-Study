@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.BoardVO;
 import com.board.service.BoardService;
@@ -61,6 +62,20 @@ public class BoardController {
 	}
 	// ----------------------------------게시글 관련 메소드 끝----------------------------------
 	
+	// 게시글 조회하기
+	@RequestMapping(value="/board/view", method = RequestMethod.GET)
+	public void viewContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
+		// 게시글을 조회하기 위해 bno를 따와서 조회하는 방법을 사용하였다.
+		// 게시글을 조회할라면 bno는 기본적으로 값으로 받아야하고 (@RequestParam("bno") : /board?bno=?
+		// boardVO 객체의 데이터를 받아와야한다음 다시 view에 출력해주어야 한다.
+		try {
+			boardVO = boardService.view(bno);
+			model.addAttribute("view", boardVO);
+		} catch (Exception e) {
+			System.out.println("게시글 조회 실패");
+			e.printStackTrace();
+		}
+	}
 	
 	// 게시글 삭제 기능 구현 // 도움받은부분 나중에 혼자 해볼것 반드시
 //	@RequestMapping(value = "/board/deleteList")

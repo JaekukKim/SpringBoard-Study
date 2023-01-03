@@ -11,7 +11,8 @@ public interface BoardService {
 	// 게시글의 데이터 (내용,제목,작성자)를 담아서 보낼 메소드. 마찬가지로 비즈니스 로직.
 	public void write(BoardVO boardVO) throws Exception;
 	
-	
+	// 게시글 조회하기 메소드.
+	public BoardVO view(int bno) throws Exception;
 	
 	// 도움받은부분 나중에 혼자 해볼것 반드시
 //	public List<HashMap> list2() throws Exception;

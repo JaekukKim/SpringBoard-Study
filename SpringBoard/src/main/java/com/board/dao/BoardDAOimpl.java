@@ -1,9 +1,6 @@
 package com.board.dao;
 
-import java.util.HashMap;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,7 @@ import com.board.domain.BoardVO;
 public class BoardDAOimpl implements BoardDAO{
 	
 	@Autowired
-	private SqlSession sql;
+	private SqlSession sqlSesssion;
 	// mybatis에서 객체를 생성하는 부분은 너무 심층적으로 생각하지말고 사용법만 최대한 알자 아직 자세히 알기엔 시기상조다.
 	
 	// namespace는 mapper.xml과 동일해야한다. 태그안에 namespace선언한거임.
@@ -26,17 +23,23 @@ public class BoardDAOimpl implements BoardDAO{
 	@Override
 	public List<BoardVO> list() throws Exception {
 		
-		return sql.selectList(namespace + ".list");
+		return sqlSesssion.selectList(namespace + ".list");
 		// 맨 처음에 namespace + ".list" 했던 부분은 <select id="list" resultType="boardList"> 부분에서 id를 불러온것이다.
-		// 근데 namespace에 
 	}
 	
-	// DB에다가 게시글을 넣는 메소드
+	// DB에다가 게시글을 넣는 메소드 (게시글작성)
 	@Override
 	public void write(BoardVO boardVO) throws Exception {
 		// view에서 입력받은 데이터들은 boardVO로 들어가고 service를 지나 boardDao에 도착했다. 그거를 이제 db로 보내야한다.
 		// view - controller - service - dao - model 의 과정을 항상그리자.
-		sql.insert(namespace + ".write", boardVO);
+		sqlSesssion.insert(namespace + ".write", boardVO);
+	}
+	
+	// DB에 저장된 데이터중 게시글 번호(bno)를 불러와 게시글을 조회한다.
+	@Override
+	public BoardVO view(int bno) throws Exception {
+		// sqlSession 객체에 담긴 쿼리문에 bno를 담아서 리턴시킨다.
+		return sqlSesssion.selectOne(namespace + ".view", bno);
 	}
 	
 	// 나중에 혼자 해볼것 반드시

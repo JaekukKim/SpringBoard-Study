@@ -5,6 +5,7 @@
 <configuration>
 	<!-- SQL과 동일하게 alias를 매길수가 있다. alias="이름" type="패키지 경로"를 하면 VO나 DTO같은 객체를 간단하게 사용할 수 있다. -->
 	<typeAliases>
-		<typeAlias alias="boardList" type="com.board.domain.BoardVO"/>
+		<typeAlias alias="boardQueryResult" type="com.board.domain.BoardVO"/>
 	</typeAliases>
+	<!-- 근데 그냥 boardList만 박아놓으면 가독성 이슈가 생겨버린다. 그냥 차라리 경로를 싹다 명시하는거도 좋은 방법중 하나일것이다. -->
 </configuration>

@@ -32,6 +32,12 @@ public class BoardServiceImpl implements BoardService{
 		boardDao.write(boardVO);
 	}
 	
+	@Override
+	public BoardVO view(int bno) throws Exception {
+		
+		return boardDao.view(bno);
+	}
+	
 	// 도움받은부분 나중에 혼자 해볼것 반드시
 //	@Override
 //	public List<HashMap> list2() throws Exception {

@@ -4,16 +4,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 작성</title>
+<title>${view.bno }번게시글 조회</title>
+<!-- 간단 css -->
 <style type="text/css">
-#boardWrite {
+#boardTB{
 	padding-top: 50px;
+	margin-top: 20px;
 }
-
-span {
-	text-align: left;
+label{
+	font-size: 22px;
+	
 }
 </style>
+
 </head>
 <body>
 	<!-- 게시글에 대한 정보는 데이터기도 하며 get은 글자수의 제한이 있으니 get보단 post로 전달해주어야 한다 -->
@@ -28,27 +31,22 @@ span {
 	 	생략할 수 있어 작업이 매우 편해진다.
 	 	그렇지 않다면 String id=getAttribute("name속성 명")이런식으로 데이터를 받아서 jdbc마냥 추가시켜주어야 한다.
 	  -->
-	<div id="boardWrite" align="center">
-		<h1>게시글 작성하기</h1>
-		<hr />
+	<h1 align="center">${view.bno }번게시글</h1>
+	<div id="boardTB" align="center">
 		<form method="post">
 			<label>게시글 제목</label>
-			<input type="text" name="title" maxlength="20">
+			<div class="boardElement">${view.title }</div>
 			<br> <br>
-			<label> 작성자</label>
-			<input type="text" name="writer" maxlength="12">
+			<label>작성자</label>
+			<div class="boardElement">${view.writer }</div>
 			<br> <br>
-			<label> 내용 </label>
+			<label>내용</label>
 			<br>
-			<textarea cols="50" rows="10" name="content" maxlength="2000"></textarea>
+			<div class="boardElement">${view.content }</div>
 			<br> <br>
-			<input type="submit" value="제출">
-			<input type="reset" value="다시작성">
+			<!-- <input type="submit" value="제출">
+		<input type="reset" value="다시작성"> -->
 		</form>
-		<br>
-		<a href="/board/list">
-			<button>목록으로 돌아가기</button>
-		</a>
 	</div>
 </body>
 </html>
