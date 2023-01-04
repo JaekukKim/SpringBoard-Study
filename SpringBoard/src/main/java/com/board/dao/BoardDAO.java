@@ -16,6 +16,9 @@ public interface BoardDAO {
 	// 리턴되는 타입은 게시글 자체를 리턴해주어야 하기때문에 데이터가 담긴 BoardVO 객체를 리턴시킨다.
 	public BoardVO view(int bno) throws Exception;
 	
+	// 게시글 수정하기
+	public void modify(BoardVO boardVO) throws Exception;
+	
 	// 나중에 혼자 해볼것 반드시
 //	public List<HashMap> list2() throws Exception;
 //	public void deleteList(HashMap map) throws Exception;

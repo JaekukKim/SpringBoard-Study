@@ -44,8 +44,13 @@ label{
 			<br>
 			<div class="boardElement">${view.content }</div>
 			<br> <br>
-			<!-- <input type="submit" value="제출">
-		<input type="reset" value="다시작성"> -->
+			<a href="/board/modify?bno=${view.bno }"><button type="button">게시글 수정하기</button></a>
+			<!-- 
+				**매우중요!!!
+				-- jsp페이지에서 <button> 태그를 만들어 버튼을 누를 때 동작을 처리하여 서버와 연결하였는데
+				button 태그에 type을 지정해주지 않아 버튼만 누르면 무조건 controller로 넘어가고 있는 것이었다..!
+				(button의 type을 지정해주지 않으면 기본 type은 ***submit이 되기 때문에*** 주의해야한다. )
+			 -->
 		</form>
 	</div>
 </body>

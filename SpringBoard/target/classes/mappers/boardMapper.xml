@@ -32,9 +32,15 @@
 			db에 넣을 쿼리문을 작성할때는 SQLworkbench에서 시험삼아 데이터를 넣어 작성한다음 유효한 쿼리문을 넣어주는게 좋다.
 			"나보다 SQL 잘하는사람 없어" 정도의 경지가 된다면 그냥 해도 되겠지만;;
 		 -->
-		
 		<!-- 우리가 jsp의 form태그에서 입력했던 데이터들을 가져와 테이블에다가 넣어준다. 게시글 작성은 데이터를 추가하는 과정. -->
 	</insert>
+	
+	<update id="modify" parameterType="com.board.domain.BoardVO">
+		update tbl_board set
+		title = #{title},
+		content = #{content}
+		where bno = #{bno};
+	</update>
 	
 	<!-- 
 		게시글 읽는 쿼리 

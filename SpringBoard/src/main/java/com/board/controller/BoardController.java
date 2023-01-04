@@ -77,6 +77,36 @@ public class BoardController {
 		}
 	}
 	
+	// 게시글 수정하기 : 기존 게시글 조회 ---------------------------------------------------------------------
+	@RequestMapping(value ="/board/modify", method = RequestMethod.GET)
+	public void getContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
+		// 수정하는건 게시글 작성 + 조회이며 거기에 쿼리문만 기존걸 대체하는 update로 바꿔주면 된다.
+		// 그러면?? 수정하기 버튼을 눌렀을때 조회하는거같이 보여주는 컨트롤러랑 쿼리문을 방출하는 컨트롤러 가지가 필요하다.
+		// 게시글 수정하기를 누르면 기존 데이터를 전부 가져와서 보여주어야 한다. 조회하기랑 똑같다..?
+		try {
+			boardVO = boardService.view(bno);
+			model.addAttribute("view", boardVO);
+		} catch (Exception e) {
+			System.out.println("게시글 수정 실패");
+			e.printStackTrace();
+		}
+	}
+	
+	// 게시글 수정하기 : 기존 게시글 수정
+	@RequestMapping(value="/board/modify", method = RequestMethod.POST)
+	public String setContent(BoardVO boardVO) {
+		try {
+			boardService.modify(boardVO);
+		} catch (Exception e) {
+			System.out.println("게시글 수정 실패");
+			e.printStackTrace();
+		}
+		
+		return "redirect:/board/view?bno=" + boardVO.getBno();
+		// 수정에 성공하면 수정된 게시글로 넘긴다.
+	}
+	//------------------------게시글 수정 컨트롤러 2개 끝----------------------------------
+	
 	// 게시글 삭제 기능 구현 // 도움받은부분 나중에 혼자 해볼것 반드시
 //	@RequestMapping(value = "/board/deleteList")
 //	@ResponseBody
