@@ -16,7 +16,7 @@ import com.board.domain.BoardVO;
 public class BoardDAOimpl implements BoardDAO{
 	
 	// DB쪽 연결은 logger로 기록을 많이 찍어본다고 한다. 나도 한번 연습해보자.
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardDAOimpl.class);
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -50,6 +50,9 @@ public class BoardDAOimpl implements BoardDAO{
 	public BoardVO view(int bno) throws Exception {
 		// sqlSession 객체에 담긴 쿼리문에 bno를 담아서 리턴시킨다.
 		logger.info("게시글 조회(bno값) 실행.");
+		
+		// 게시글이 조회될 시 조회수도 1 증가시켜주어야 한다.
+		sqlSession.update(namespace + ".increaseViewCount", bno);
 		
 		return sqlSession.selectOne(namespace + ".view", bno);
 	}

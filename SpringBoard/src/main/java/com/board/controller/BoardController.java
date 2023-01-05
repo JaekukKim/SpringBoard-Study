@@ -2,6 +2,8 @@ package com.board.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import com.board.service.BoardService;
 @Controller
 public class BoardController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	// 만약 넘어온 데이터가 null값이면 안돼니깐 골라서받자
 	// null인 경우는 거의 없다. 일시적인 원인모를 예외였음.
 	@Autowired
@@ -23,6 +26,7 @@ public class BoardController {
 	// 게시판 메인 화면 페이지
 	@RequestMapping(value = "/board/main", method=RequestMethod.GET)
 	public String connectBoard() {
+		logger.info("게시판 접속");
 		return "/board/boardMain";
 	}
 	
@@ -31,10 +35,7 @@ public class BoardController {
 	public void getList(Model model) throws Exception {
 		List<BoardVO> list = null;
 		list = boardService.list();
-		
-//		List<HashMap> list2 = null;
-//		list2 = boardService.list2();
-//		System.out.println(list2+"ㅇㅇㄹㅇㄹ");
+		logger.info("게시글 리스트 불러오기 실행");
 		
 		model.addAttribute("list", list);
 	}
@@ -43,6 +44,7 @@ public class BoardController {
 	// 게시글 작성 페이지
 	@RequestMapping(value="/board/write", method = RequestMethod.GET)
 	public String writePage() {
+		logger.info("게시글 작성페이지 실행");
 		return "/board/write";
 	}
 	
@@ -51,9 +53,10 @@ public class BoardController {
 	public String writeContent(BoardVO boardVO) {
 		// BoardDAO에서 넘어온 데이터를 이제 Controller를 통해서 출력해주어야 한다.
 		try {
-			boardService.write(boardVO);			
+			boardService.write(boardVO);
+			logger.info("게시글 작성 완료");
 		} catch (Exception e) {
-			System.out.println("게시글 작성 실패");
+			logger.info("게시글 작성 실패");
 			e.printStackTrace();
 		}
 		
@@ -62,7 +65,7 @@ public class BoardController {
 	}
 	// ----------------------------------게시글 관련 메소드 끝----------------------------------
 	
-	// 게시글 조회하기
+	// 게시글 조회하기 및 조회수 증가.
 	@RequestMapping(value="/board/view", method = RequestMethod.GET)
 	public void viewContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
 		// 게시글을 조회하기 위해 bno를 따와서 조회하는 방법을 사용하였다.
@@ -76,6 +79,7 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	// 게시글 수정하기 : 기존 게시글 조회 ---------------------------------------------------------------------
 	@RequestMapping(value ="/board/modify", method = RequestMethod.GET)
@@ -110,8 +114,12 @@ public class BoardController {
 	// 게시글 삭제기능 pk인 bno를 받아 삭제할 예정.
 	@RequestMapping(value="/board/remove", method = RequestMethod.GET)
 	public String removeContent(@RequestParam("bno") int bno) throws Exception{
+		logger.info("게시글 삭제 실행");
+		
 		boardService.removeContent(bno);
 		
 		return "redirect:/board/list";
+		// redirect는 서버를 2번 호출한다.
+		// View → Interceptor → Controller(내부에 redirect 실행) → View → Interceptor → Controller(redirect 링크 호출)
 	}
 }

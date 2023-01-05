@@ -14,6 +14,9 @@ public interface BoardService {
 	// 게시글 조회하기 메소드.
 	public BoardVO view(int bno) throws Exception;
 	
+	// 게시글 조회수 증가 메소드
+	public void increaseViewCount(int bno) throws Exception;
+	
 	// 게시글 수정하기 메소드 (service)
 	public void modify(BoardVO boardVO) throws Exception;
 	

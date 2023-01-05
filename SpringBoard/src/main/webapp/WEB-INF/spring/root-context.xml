@@ -12,6 +12,13 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 로깅을 위한 JDBC프로퍼티 파일 불러오기. -->
+	<bean id="propertyPlaceholderConfigurer"
+			class = "org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="locations">
+				<value>/WEB-INF/config/jdbc.properties</value>
+			</property>
+	</bean>
 
 	<!-- 스프링 DataSource 객체 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
