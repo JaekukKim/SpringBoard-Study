@@ -54,15 +54,11 @@ public class BoardServiceImpl implements BoardService{
 	// 리턴타입을 어떻게 해야할지 햇갈린다. 일단 지금은 select = 리턴타입이 정해져있음,
 	// insert나 update같이 리턴타입이 추상적인 경우 = void 인거 같은데. 생각하는 힘을 기르자.
 	
-	// 도움받은부분 나중에 혼자 해볼것 반드시
-//	@Override
-//	public List<HashMap> list2() throws Exception {
-//		
-//		return boardDao.list2();
-//	}
-	
-//	@Override
-//	public void deleteList(HashMap map) throws Exception {
-//		boardDao.deleteList(map);
-//	}
+	// 게시글 삭제하기 (pk인 bno를 받아서 삭제한다. 삭제는 리턴값이 컴퓨터 입장에서 모호하다. 그러므로 void로 리턴해준다.
+	@Override
+	public void removeContent(int bno) throws Exception {
+		logger.info("게시글 삭제 실행");
+		
+		boardDao.removeContent(bno);
+	}
 }

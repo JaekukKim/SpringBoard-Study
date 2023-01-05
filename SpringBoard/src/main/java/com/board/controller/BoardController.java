@@ -107,17 +107,11 @@ public class BoardController {
 	}
 	//------------------------게시글 수정 컨트롤러 2개 끝----------------------------------
 	
-	// 게시글 삭제 기능 구현 // 도움받은부분 나중에 혼자 해볼것 반드시
-//	@RequestMapping(value = "/board/deleteList")
-//	@ResponseBody
-//	public String deleteList(HttpServletRequest request) throws Exception {
-//		String bno = request.getParameter("bno");
-//		HashMap map = new HashMap();
-//		map.put("bno", bno);
-//		System.out.println("456짠");
-//		boardService.deleteList(map);
-//		System.out.println("4356짠");
-//		return "test";
-//	}
-	
+	// 게시글 삭제기능 pk인 bno를 받아 삭제할 예정.
+	@RequestMapping(value="/board/remove", method = RequestMethod.GET)
+	public String removeContent(@RequestParam("bno") int bno) throws Exception{
+		boardService.removeContent(bno);
+		
+		return "redirect:/board/list";
+	}
 }

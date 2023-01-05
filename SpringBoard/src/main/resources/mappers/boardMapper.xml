@@ -16,6 +16,7 @@
 			bno, title, content, writer, regDate, viewCnt
 			<!-- 와일드카드 패턴(*아스타)도 좋지만 가독성을 위해 가급적 전부 다 쓰는 방식이 추천된다. -->
 		from tbl_board
+		order by bno desc
 		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
 	</select>
 	
@@ -54,13 +55,13 @@
 		where bno = #{bno}
 	</select>
 	
+	<!-- 
+		게시글 삭제하기 쿼리. 고유키인 bno를 받아서 글을 삭제한다. 삭제한뒤에는 redirect로 게시글 리스트로 간다.(controller)
+	 -->
+	 <delete id="removeContent" parameterType="Int">
+	 	delete from tbl_board
+	 	where bno = #{bno}
+	 	<!-- 나 왜 where id라고 했냐... bno인데... 다른 게시판이랑 햇갈렸다... 하 ㅠㅠ -->
+	 </delete>
 	
-	<delete id="deleteList" parameterType="HashMap">
-	<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다.
-		 아래 쿼리는 list라는 이름을 갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다.-->
-		 <!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
-		delete from tbl_board
-		where bno = #{bno}
-		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
-	</delete>
 </mapper>

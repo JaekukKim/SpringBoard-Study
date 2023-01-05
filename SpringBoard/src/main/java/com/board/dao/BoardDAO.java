@@ -19,7 +19,6 @@ public interface BoardDAO {
 	// 게시글 수정하기
 	public void modify(BoardVO boardVO) throws Exception;
 	
-	// 나중에 혼자 해볼것 반드시
-//	public List<HashMap> list2() throws Exception;
-//	public void deleteList(HashMap map) throws Exception;
+	// 게시글 삭제하기 (DAO)
+	public void removeContent(int bno) throws Exception;
 }

@@ -16,12 +16,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
-		<!--<dependency>
-			<groupId>com.ibm.icu</groupId>
-			<artifactId>icu4j</artifactId>
-			<version>62.2</version>
-		</dependency>-->
-		
 		<!-- mySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -133,7 +127,6 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.19.0</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- log4j-jcl -->
 		<dependency>
@@ -141,6 +134,13 @@
 			<artifactId>log4j-jcl</artifactId>
 			<version>2.19.0</version>
 		</dependency>
+		<!--log4jdbc-->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
+		</dependency>
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

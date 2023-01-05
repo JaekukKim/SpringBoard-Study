@@ -17,7 +17,7 @@ public interface BoardService {
 	// 게시글 수정하기 메소드 (service)
 	public void modify(BoardVO boardVO) throws Exception;
 	
-	// 도움받은부분 나중에 혼자 해볼것 반드시
-//	public List<HashMap> list2() throws Exception;
-//	public void deleteList(HashMap map) throws Exception;
+	// 게시글 삭제 메소드 (service)
+	public void removeContent(int bno) throws Exception;
+	
 }

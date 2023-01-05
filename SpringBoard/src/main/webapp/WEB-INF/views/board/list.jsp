@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.board.domain.BoardVO"%>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ tr {
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
-					<th>삭제버튼</th>
+					<th>삭제하기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -55,12 +56,16 @@ tr {
 					</td>
 					<td><%=boardList.get(i).getContent()%></td>
 					<td><%=boardList.get(i).getWriter()%></td>
-					<td><%=boardList.get(i).getRegDate()%></td>
+					<td>
+						<fmt:formatDate value="<%=boardList.get(i).getRegDate()%>" pattern="yyyy-MM-dd" />
+					</td>
 					<td><%=boardList.get(i).getViewCnt()%></td>
 					<td>
 						<!-- 여기 td부분 delete는 도움받은부분. 나중에 혼자 해볼것 반드시 -->
-						<button id="btn_<%=boardList.get(i).getBno()%>" onclick="deleteRecord(<%=boardList.get(i).getBno()%>)">
-							<%=boardList.get(i).getBno()%></button>
+						<a href="/board/remove?bno=<%=boardList.get(i).getBno()%>">
+						<!-- 스크립틀릿은 꼭 "" 사이에 넣어주자!! 실수한부분임!! -->
+							<button><%=boardList.get(i).getBno()%>번 게시글 삭제하기</button>
+						</a>
 					</td>
 					<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
 				</tr>
@@ -90,25 +95,26 @@ tr {
 	</div>
 </body>
 <script>
-/* ajax로 delete 구현은 도움받은부분. 나중에 혼자 해볼것 반드시 */
-function deleteRecord(bno){
-	$.ajax({
-		url : "/board/deleteList",
-		type : "POST",
-		data : {
-			bno : bno
-		},
-		/* datatype : "JSON", */
-		success : function(data) {
-			alert("contoller로 삭제 성공");
-			location.href = "/board/list";
-		},
-		error : function() {
-			alert("삭제 실패");
-		}
-	});
-	
-	//ajax로 bno와 함께 delete에 관한 컨트롤러 호출해서 mybatis로 동적으로 데이터 지우기.
-}
+	//도움받은 부분은 이미 답이 정해져 있어서 어떻게 처리할까 고민하다가 bno를 받아 컨트롤러에서 redirect 해주는식으로 하였다.
+	/* ajax로 delete 구현은 도움받은부분. 나중에 혼자 해볼것 반드시 */
+	/* function deleteRecord(bno){
+	 $.ajax({
+	 url : "/board/deleteList",
+	 type : "POST",
+	 data : {
+	 bno : bno
+	 },
+	 datatype : "JSON",
+	 success : function(data) {
+	 alert("contoller로 삭제 성공");
+	 location.href = "/board/list";
+	 },
+	 error : function() {
+	 alert("삭제 실패");
+	 }
+	 });
+	 //ajax로 bno와 함께 delete에 관한 컨트롤러 호출해서 mybatis로 동적으로 데이터 지우기.
+	 }*/
+	//도움받은 부분은 이미 답이 정해져 있어서 어떻게 처리할까 고민하다가 bno를 받아 컨트롤러에서 redirect 해주는식으로 하였다.
 </script>
 </html>

@@ -63,19 +63,13 @@ public class BoardDAOimpl implements BoardDAO{
 		
 	}
 	
-	
-	// 나중에 혼자 해볼것 반드시
-//	@Override
-//	public List<HashMap> list2() throws Exception {
-//		
-//		return sql.selectList("mybatisBoard.list2");
-//	}
-//	
-//	@Override
-//	public void deleteList(HashMap map) throws Exception {
-//		System.out.println("짠7567567");
-//		sql.delete("mybatisBoard.list2", map);
-//		System.out.println("짠345345");
-//	}
+	// 게시글 삭제하기. (DELETE)
+	@Override
+	public void removeContent(int bno) throws Exception {
+		logger.info("게시글 삭제하기 실행");
+		
+		sqlSession.delete(namespace + ".removeContent", bno);
+		
+	}
 
 }
