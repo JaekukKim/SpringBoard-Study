@@ -4,16 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${view.bno }번게시글 조회</title>
+<title>${view.bno }번게시글조회</title>
 <!-- 간단 css -->
 <style type="text/css">
-#boardTB{
+#boardTB {
 	padding-top: 50px;
 	margin-top: 20px;
 }
-label{
+
+label {
 	font-size: 22px;
-	
 }
 </style>
 
@@ -31,6 +31,9 @@ label{
 	 	생략할 수 있어 작업이 매우 편해진다.
 	 	그렇지 않다면 String id=getAttribute("name속성 명")이런식으로 데이터를 받아서 jdbc마냥 추가시켜주어야 한다.
 	  -->
+	<!-- 게시판 네비게이션 -->
+	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
+
 	<h1 align="center">${view.bno }번게시글</h1>
 	<div id="boardTB" align="center">
 		<form method="post">
@@ -44,7 +47,9 @@ label{
 			<br>
 			<div class="boardElement">${view.content }</div>
 			<br> <br>
-			<a href="/board/modify?bno=${view.bno }"><button type="button">게시글 수정하기</button></a>
+			<a href="/board/modify?bno=${view.bno }">
+				<button type="button">게시글 수정하기</button>
+			</a>
 			<!-- 
 				**매우중요!!!
 				-- jsp페이지에서 <button> 태그를 만들어 버튼을 누를 때 동작을 처리하여 서버와 연결하였는데

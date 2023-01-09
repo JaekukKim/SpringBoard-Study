@@ -63,7 +63,7 @@ public class BoardController {
 		return "redirect:/board/list";
 		// redirect는 다시 돌려보낸다는 의미이다. 서블릿의 sendRedirect와 같음, 스프링에선 return에 저런식으로 입력가능.
 	}
-	// ----------------------------------게시글 관련 메소드 끝----------------------------------
+	// ----------------------------------게시글 리스트 관련 메소드 끝----------------------------------
 	
 	// 게시글 조회하기 및 조회수 증가.
 	@RequestMapping(value="/board/view", method = RequestMethod.GET)
@@ -73,15 +73,18 @@ public class BoardController {
 		// boardVO 객체의 데이터를 받아와야한다음 다시 view에 출력해주어야 한다.
 		try {
 			boardVO = boardService.view(bno);
+			// 위의 view 메소드에는 조회수가 증가하는 로직도 포함되어있다. 즉, 하나의 DAO로직이 2가지 일을 하는 셈이다.
 			model.addAttribute("view", boardVO);
+			logger.info("게시글 조회하기 성공, 조회수 ++");
+			
 		} catch (Exception e) {
-			System.out.println("게시글 조회 실패");
-			e.printStackTrace();
+			logger.error("게시글 조회 실패");
 		}
 	}
 	
 	
-	// 게시글 수정하기 : 기존 게시글 조회 ---------------------------------------------------------------------
+	// 게시글 수정하기 : 기존 게시글 조회(의 개념으로 수정페이지 들어가기) ---------------------------------------------------------------------
+	// String 게시글 = "내용123";
 	@RequestMapping(value ="/board/modify", method = RequestMethod.GET)
 	public void getContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
 		// 수정하는건 게시글 작성 + 조회이며 거기에 쿼리문만 기존걸 대체하는 update로 바꿔주면 된다.
@@ -97,6 +100,7 @@ public class BoardController {
 	}
 	
 	// 게시글 수정하기 : 기존 게시글 수정
+	// 게시글 = "내용 456";
 	@RequestMapping(value="/board/modify", method = RequestMethod.POST)
 	public String setContent(BoardVO boardVO) {
 		try {

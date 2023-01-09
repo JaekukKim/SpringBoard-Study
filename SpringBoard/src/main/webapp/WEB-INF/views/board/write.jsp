@@ -28,6 +28,9 @@ span {
 	 	생략할 수 있어 작업이 매우 편해진다.
 	 	그렇지 않다면 String id=getAttribute("name속성 명")이런식으로 데이터를 받아서 jdbc마냥 추가시켜주어야 한다.
 	  -->
+	<!-- 게시판 네비게이션 -->
+	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
+
 	<div id="boardWrite" align="center">
 		<h1>게시글 작성하기</h1>
 		<hr />
@@ -42,7 +45,7 @@ span {
 			<br>
 			<textarea cols="50" rows="10" name="content" maxlength="2000"></textarea>
 			<br> <br>
-			<input type="submit" value="제출">
+			<input type="submit" value="게시글작성">
 			<input type="reset" value="다시작성">
 		</form>
 		<br>

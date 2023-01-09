@@ -21,6 +21,10 @@ tr {
 </style>
 </head>
 <body>
+<!-- 게시판 네비게이션 -->
+<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
+
+
 	<div align="center">
 		<h1>게시글 목록</h1>
 		<table border="1">
