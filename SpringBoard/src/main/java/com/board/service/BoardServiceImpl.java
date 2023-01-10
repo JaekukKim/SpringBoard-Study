@@ -27,6 +27,19 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.list();
 	}
 	
+	// 게시글 불러오기 및 페이징 (select and select-count)
+	@Override
+	public List<BoardVO> pageList(int displayTotalContent, int pageContent) throws Exception {
+		
+		return boardDao.pageList(displayTotalContent, pageContent);
+	}
+	// 게시글의 총 갯수를 구해오자 (페이징에 쓰일 예정)
+	@Override
+	public int totalContent() throws Exception {
+		
+		return boardDao.totalContent();
+	}
+	
 	// 게시글 작성하기 (insert)
 	@Override
 	public void write(BoardVO boardVO) throws Exception {
@@ -38,19 +51,23 @@ public class BoardServiceImpl implements BoardService{
 	// 게시글 조회하기(pk인 bno로 게시글 정보 불러오기, select)
 	@Override
 	public BoardVO view(int bno) throws Exception {
-		logger.info("게시글 조회 -> DB접근");
+		logger.info("게시글 조회 로직 실행");
+		
+		// 게시글 조회시 조회수도 1 증가시켜야함.
+		boardDao.increaseViewCount(bno);
+		logger.info("게시글 조회 -> 조회수 증가 로직 실행");
 		
 		return boardDao.view(bno);
 	}
 	
-	// 게시글 조회수 증가시키기(pk가 일치하면 viewCnt+1)
-	@Override
-	public void increaseViewCount(int bno) throws Exception {
-		logger.info("게시글 조회수 증가");
-		
-		boardDao.view(bno);
-		
-	}
+//	// 게시글 조회수 증가시키기(pk가 일치하면 viewCnt+1)
+//	@Override
+//	public void increaseViewCount(int bno) throws Exception {
+//		logger.info("게시글 조회수 증가");
+//		
+//		boardDao.view(bno);
+//		
+//	}
 	
 	// 게시글 수정하기 (기존 게시글을 수정하기 누른 후 (조회나마찬가지) 수정하여 db로 보냄(update)
 	@Override

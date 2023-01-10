@@ -3,47 +3,61 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatisBoard">
-<!-- mapper태그의 namespace이름은 자유롭게 작명가능한 변수명이라고 생각하면된다. 거창하게 뭘 할 필요가 없다는뜻이다. -->
+	<!-- mapper태그의 namespace이름은 자유롭게 작명가능한 변수명이라고 생각하면된다. 거창하게 뭘 할 필요가 없다는뜻이다. -->
 
-<!-- com.board.domain.BoardVO == boardQueryResult(alias) -->
+	<!-- com.board.domain.BoardVO == boardQueryResult(alias) -->
 
-	<!-- 게시물 목록 쿼리 -->
+	<!-- 게시물 목록 가져오기 쿼리 -->
 	<select id="list" resultType="boardQueryResult">
-	<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다.
-		 아래 쿼리는 list라는 이름을 갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다.-->
-		 <!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
+		<!-- id는 맵퍼 내에서 쿼리를 구분짓는 고유한 이름. 리절트 타입은 쿼리 결과의 형태이다. 아래 쿼리는 list라는 이름을 
+			갖는 쿼리란 뜻이며 아래의 쿼리를 실행하는데 데이터를 BoardVO에서 끌어와서 실행한다. -->
+		<!-- mybatis-config.xml에 alias와 경로를 등록했다면 변수명 끌어쓰듯이 편하게 사용이 가능하다. -->
 		select
-			bno, title, content, writer, regDate, viewCnt
-			<!-- 와일드카드 패턴(*아스타)도 좋지만 가독성을 위해 가급적 전부 다 쓰는 방식이 추천된다. -->
+		bno, title, content, writer, regDate, viewCnt
+		<!-- 와일드카드 패턴(*아스타)도 좋지만 가독성을 위해 가급적 전부 다 쓰는 방식이 추천된다. -->
 		from tbl_board
 		order by bno desc
 		<!-- 게시글 번호 제목 내용 글쓴이 작성일 조회수를 가져옴 -->
 	</select>
-	
-	<!-- 조회수 증가 쿼리,  -->
+
+	<!-- 게시글 총 갯수를 가져오는 쿼리 -->
+	<select id="totalContent" resultType="Int">
+		select count(bno)
+		from
+		tbl_board
+	</select>
+
+	<!-- 게시물 목록 불러오기 및 페이징 처리를 위한 limit -->
+	<select id="pageList" resultType="com.board.domain.BoardVO"
+		parameterType="hashMap">
+		select bno, title, content, writer, regDate, viewCnt
+		from tbl_board
+		order by bno desc
+		limit #{displayTotalContent} , #{pageContent}
+		<!-- hashmap에 넣은 키 값 2개 (위의 동적쿼리 2개) 로 각각 받아 쓸것이다. -->
+	</select>
+
+	<!-- 조회수 증가 쿼리, -->
 	<update id="increaseViewCount" parameterType="Int">
 		update tbl_board
-			set
-				viewCnt = viewCnt+1
-			where bno = #{bno}
+		set
+		viewCnt = viewCnt+1
+		where bno = #{bno}
 	</update>
-	
+
 	<!-- 게시글 작성 쿼리 : id는 자동증가. 날짜도 now()로 등록, 우리가 DB에 추가할건 제목, 글쓴이, 내용밖에 없다. -->
 	<insert id="write" parameterType="com.board.domain.BoardVO">
-	<!-- resultType는 쿼리를 실행하고 결과가 "나올때만" 사용하고 데이터를 "입력받는"과정은 결과가 없기에 입력받는 "타입"이므로
-		 parameterType를 사용한다. 즉, 출력할 결과가 있다 = resultType, 데이터를 입력한다 = parameterType	 
-	 -->
+		<!-- resultType는 쿼리를 실행하고 결과가 "나올때만" 사용하고 데이터를 "입력받는"과정은 결과가 없기에 입력받는 "타입"이므로 
+			parameterType를 사용한다. 즉, 출력할 결과가 있다 = resultType, 데이터를 입력한다 = parameterType -->
 		insert into
-			tbl_board (title, writer, content)
+		tbl_board (title, writer, content)
 		values (#{title}, #{writer}, #{content})
-		
-		<!--
-			db에 넣을 쿼리문을 작성할때는 SQLworkbench에서 시험삼아 데이터를 넣어 작성한다음 유효한 쿼리문을 넣어주는게 좋다.
-			"나보다 SQL 잘하는사람 없어" 정도의 경지가 된다면 그냥 해도 되겠지만;;
-		 -->
+
+		<!-- db에 넣을 쿼리문을 작성할때는 SQLworkbench에서 시험삼아 데이터를 넣어 작성한다음 유효한 쿼리문을 넣어주는게 
+			좋다. "나보다 SQL 잘하는사람 없어" 정도의 경지가 된다면 그냥 해도 되겠지만;; -->
 		<!-- 우리가 jsp의 form태그에서 입력했던 데이터들을 가져와 테이블에다가 넣어준다. 게시글 작성은 데이터를 추가하는 과정. -->
 	</insert>
-	
+
 	<!-- 게시글 수정 쿼리, 기존에 있던 데이터에 새로운 데이터를 동적 쿼리로 받아서 덮어씌운당. -->
 	<update id="modify" parameterType="com.board.domain.BoardVO">
 		update tbl_board set
@@ -51,26 +65,23 @@
 		content = #{content}
 		where bno = #{bno};
 	</update>
-	
-	<!-- 
-		게시글 읽는 쿼리 
-		select title, content, writer, regDate, viewCnt from tbl_board
-		where bno=1;
-		게시글의 번호는 pk이므로 번호만 불러다가 데이터를 싹가져오면 되지 않을까? parameterType은 int고 #{}은 bno부분이다.
-	-->
-	<select id="view" parameterType="int" resultType="com.board.domain.BoardVO">
+
+	<!-- 게시글 읽는 쿼리 select title, content, writer, regDate, viewCnt from tbl_board 
+		where bno=1; 게시글의 번호는 pk이므로 번호만 불러다가 데이터를 싹가져오면 되지 않을까? parameterType은 int고 
+		#{}은 bno부분이다. -->
+	<select id="view" parameterType="int"
+		resultType="com.board.domain.BoardVO">
 		select bno, title, content, writer, regDate, viewCnt
-		from tbl_board
+		from
+		tbl_board
 		where bno = #{bno}
 	</select>
-	
-	<!-- 
-		게시글 삭제하기 쿼리. 고유키인 bno를 받아서 글을 삭제한다. 삭제한뒤에는 redirect로 게시글 리스트로 간다.(controller)
-	 -->
-	 <delete id="removeContent" parameterType="Int">
-	 	delete from tbl_board
-	 	where bno = #{bno}
-	 	<!-- 나 왜 where id라고 했냐... bno인데... 다른 게시판이랑 햇갈렸다... 하 ㅠㅠ -->
-	 </delete>
-	
+
+	<!-- 게시글 삭제하기 쿼리. 고유키인 bno를 받아서 글을 삭제한다. 삭제한뒤에는 redirect로 게시글 리스트로 간다.(controller) -->
+	<delete id="removeContent" parameterType="Int">
+		delete from tbl_board
+		where bno = #{bno}
+		<!-- 나 왜 where id라고 했냐... bno인데... 다른 게시판이랑 햇갈렸다... 하 ㅠㅠ -->
+	</delete>
+
 </mapper>

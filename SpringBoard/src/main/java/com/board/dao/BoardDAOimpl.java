@@ -1,5 +1,6 @@
 package com.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.board.HomeController;
 import com.board.domain.BoardVO;
 
 // BoardDAO interface를 구현하는 클래스.
@@ -33,6 +33,26 @@ public class BoardDAOimpl implements BoardDAO{
 		return sqlSession.selectList(namespace + ".list");
 		// 맨 처음에 namespace + ".list" 했던 부분은 <select id="list" resultType="boardList"> 부분에서 id를 불러온것이다.
 	}
+	// 게시글 불러오기 및 페이징하는 메소드
+	@Override
+	public List<BoardVO> pageList(int displayTotalContent, int pageContent) throws Exception {
+		// service에서 보내준 값을 여기의 매개변수로 받아야한다.
+		
+		HashMap <String,Integer> pageData = new HashMap<>();
+		pageData.put("displayTotalContent", displayTotalContent);
+		pageData.put("pageContent", pageContent);
+		
+		return sqlSession.selectList(namespace + ".pageList", pageData);
+		// 엥 매개변수가 2개인데 어떻게 전달하지 하다가 맵을 생각하였다, setAttribute에서 파생된 생각임.
+	}
+	
+	// 게시글 총 갯수 (페이징에 사용될 계획)
+	@Override
+	public int totalContent() throws Exception {
+		logger.info("게시글 총 갯수 불러오기");
+		
+		return sqlSession.selectOne(namespace + ".totalContent");
+	}
 	
 	// DB에다가 게시글을 넣는 메소드 (게시글작성)
 	@Override
@@ -51,10 +71,13 @@ public class BoardDAOimpl implements BoardDAO{
 		// sqlSession 객체에 담긴 쿼리문에 bno를 담아서 리턴시킨다.
 		logger.info("게시글 조회(bno값) 실행.");
 		
-		// 게시글이 조회될 시 조회수도 1 증가시켜주어야 한다.
-		sqlSession.update(namespace + ".increaseViewCount", bno);
-		
 		return sqlSession.selectOne(namespace + ".view", bno);
+	}
+	// 게시글 조회시 조회수 1 증가시켜야함, 원래 내용보이기 -> 1증가 였는데 클릭시->1증가로 로직 바꿈
+	@Override
+	public void increaseViewCount(int bno) throws Exception {
+		
+		sqlSession.update(namespace + ".increaseViewCount", bno);
 	}
 	
 	// DB에 저장된 데이터를 가져와 조회(수정버튼누름) 한 후 내용을 수정하여 기존 DB에 덮어씌움 (UPDATE)
@@ -74,5 +97,7 @@ public class BoardDAOimpl implements BoardDAO{
 		sqlSession.delete(namespace + ".removeContent", bno);
 		
 	}
+	
+	
 
 }

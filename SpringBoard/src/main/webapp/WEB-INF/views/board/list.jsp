@@ -32,7 +32,6 @@ tr {
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>내용</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
@@ -58,7 +57,6 @@ tr {
 					<td>
 						<a href="/board/view?bno=<%=boardList.get(i).getBno()%>"><%=boardList.get(i).getTitle()%></a>
 					</td>
-					<td><%=boardList.get(i).getContent()%></td>
 					<td><%=boardList.get(i).getWriter()%></td>
 					<td>
 						<fmt:formatDate value="<%=boardList.get(i).getRegDate()%>" pattern="yyyy-MM-dd" />

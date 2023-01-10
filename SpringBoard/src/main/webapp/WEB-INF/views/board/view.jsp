@@ -8,12 +8,16 @@
 <!-- 간단 css -->
 <style type="text/css">
 #boardTB {
-	padding-top: 50px;
-	margin-top: 20px;
+	width : 1500px;
+	padding-top: 30px;
+	margin-left: 50px;
 }
 
 label {
 	font-size: 22px;
+}
+.boardElement {
+	margin-left: 80px;
 }
 </style>
 
@@ -34,18 +38,22 @@ label {
 	<!-- 게시판 네비게이션 -->
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 
-	<h1 align="center">${view.bno }번게시글</h1>
-	<div id="boardTB" align="center">
+	<div id="boardTB">
+	<h1>${view.bno }번게시글</h1>
 		<form method="post">
 			<label>게시글 제목</label>
-			<div class="boardElement">${view.title }</div>
-			<br> <br>
+			<br>
+			<span class="boardElement">${view.title }</span>
+			<br>
+			<br>
 			<label>작성자</label>
-			<div class="boardElement">${view.writer }</div>
-			<br> <br>
+			<br>
+			<span class="boardElement">${view.writer }</span>
+			<br>
+			<br>
 			<label>내용</label>
 			<br>
-			<div class="boardElement">${view.content }</div>
+			<span class="boardElement">${view.content }</span>
 			<br> <br>
 			<a href="/board/modify?bno=${view.bno }">
 				<button type="button">게시글 수정하기</button>
