@@ -8,7 +8,7 @@
 <!-- 간단 css -->
 <style type="text/css">
 #boardTB {
-	width : 1500px;
+	width: 1500px;
 	padding-top: 30px;
 	margin-left: 50px;
 }
@@ -16,8 +16,13 @@
 label {
 	font-size: 22px;
 }
+
 .boardElement {
 	margin-left: 80px;
+}
+
+a {
+	text-decoration: none;
 }
 </style>
 
@@ -39,25 +44,22 @@ label {
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 
 	<div id="boardTB">
-	<h1>${view.bno }번게시글</h1>
+		<h1>${view.bno }번게시글</h1>
 		<form method="post">
+			<label>조회수</label>
+			
 			<label>게시글 제목</label>
 			<br>
 			<span class="boardElement">${view.title }</span>
-			<br>
-			<br>
+			<br> <br>
 			<label>작성자</label>
 			<br>
 			<span class="boardElement">${view.writer }</span>
-			<br>
-			<br>
+			<br> <br>
 			<label>내용</label>
 			<br>
 			<span class="boardElement">${view.content }</span>
 			<br> <br>
-			<a href="/board/modify?bno=${view.bno }">
-				<button type="button">게시글 수정하기</button>
-			</a>
 			<!-- 
 				**매우중요!!!
 				-- jsp페이지에서 <button> 태그를 만들어 버튼을 누를 때 동작을 처리하여 서버와 연결하였는데
@@ -65,6 +67,25 @@ label {
 				(button의 type을 지정해주지 않으면 기본 type은 ***submit이 되기 때문에*** 주의해야한다. )
 			 -->
 		</form>
+		<a href="/board/modify?bno=${view.bno }">
+			<button type="button">게시글 수정하기</button>
+		</a>
+		<a onclick="javascript:removeContent('${view.bno}');">
+			<button>게시글삭제</button>
+		</a>
 	</div>
 </body>
+<script type="text/javascript">
+	function removeContent(bno) {
+		let YN = confirm('정말 [' + bno + ']번 게시글을 삭제하시겠습니까?\n삭제된 정보는 복구되지 않습니다.');
+
+		if (YN == true) {
+			alert('게시글이 삭제되었습니다.');
+			location.href = "/board/remove?bno=" + bno;
+		} else {
+			alert('게시글 삭제를 취소하셨습니다.');
+			location.href = "http://localhost:8080/board/view?bno=" + bno;
+		}
+	}
+</script>
 </html>

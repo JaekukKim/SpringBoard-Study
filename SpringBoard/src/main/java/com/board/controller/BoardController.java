@@ -20,6 +20,7 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	// 만약 넘어온 데이터가 null값이면 안돼니깐 골라서받자
 	// null인 경우는 거의 없다. 일시적인 원인모를 예외였음.
+	
 	@Autowired
 	private BoardService boardService;
 
@@ -44,21 +45,59 @@ public class BoardController {
 	// 일단 게시글 리스트 불러오는거랑 연관이 있는건 바로 알 수 있다.
 	@RequestMapping(value = "/board/pageList", method = RequestMethod.GET)
 	public void pageList(@RequestParam("pageNum") int pageNum, Model model) throws Exception {
+		
 		// 게시글 총 갯수
 		int totalContent = boardService.totalContent();
 		
 		// 페이지별 출력될 게시글의 갯수
 		int contentNum = 10;
 		
-		// 총 페이지의 갯수
+		// 전체 페이지의 갯수
 		int totalPageNum = (int)Math.ceil((double)totalContent/contentNum);
 		
 		// 출력할 게시물 갯수
 		int selectContent = (pageNum-1) * contentNum;
 		
+		// 전체 페이지의 수는 위에서 구했으니 한 화면당 출력될 페이지의 갯수를 정해서 접근하면 된다.
+		int maxPageNum = 10;
+		
+		// 마지막 페이지는 pageNum을 이용하여 10의 단위로 만들어주면 된다.
+		// pageNum을 10으로 나누어 "몫"을 구한다음 나온 실수를 올림처리 해버린뒤 10을 곱하면 된다
+		int endPage = (int)Math.ceil((double)pageNum/maxPageNum) * 10;
+		
+		// endPage는 치명적인 결함이 하나 있다. pageNum에 따라 값이 결정되지만 10의 배수로밖에 결정이 안된다는 것이다.
+		// 만약 게시글이 애매하게 174개라면? 18페이지가 출력되야 하는데 20페이지가 나와버린다.
+		// 이럴경우 endPage는 그냥 전체페이지 갯수로 덮어 씌워버림 댄다
+		if (endPage>totalPageNum) {
+			endPage=totalPageNum;
+		}
+		
+		// 시작페이지는 endPage에서 9를 빼주면?? 시작페이지다.
+		int startPage = (endPage-maxPageNum) + 1;
+		
+		// 이전버튼 : 시작페이지가 10 이상일때.
+		boolean prevPage;
+		if (startPage > maxPageNum) {
+			prevPage = true;
+		} else {
+			prevPage = false;
+		}
+		
+		// 다음버튼 : 해당 화면의 끝 페이지가 "전체 페이지 수"보다 작으면 활성화
+		boolean nextPage;
+		if (endPage < totalPageNum) {
+			nextPage = true;
+		} else {
+			nextPage = false;
+		}
+		
 		List<BoardVO> list = null;
 		list = boardService.pageList(selectContent, contentNum);
 		model.addAttribute("list",list);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("prevPage", prevPage);
+		model.addAttribute("nextPage", nextPage);
 		model.addAttribute("totalPageNum",totalPageNum);
 	}
 	// ---------------------------------------게시글 리스트 가져오기 및페이징끝---------------------------------------------------
@@ -145,7 +184,7 @@ public class BoardController {
 
 		boardService.removeContent(bno);
 
-		return "redirect:/board/list";
+		return "redirect:/board/pageList?pageNum=1";
 		// redirect는 서버를 2번 호출한다.
 		// View → Interceptor → Controller(내부에 redirect 실행) → View → Interceptor →
 		// Controller(redirect 링크 호출)

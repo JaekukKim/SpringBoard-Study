@@ -24,6 +24,9 @@ span {
 #boardTable{
 	margin-bottom: 20px;
 }
+.pageList{
+	
+}
 
 </style>
 </head>
@@ -43,11 +46,11 @@ span {
 					<th style="width: 150px;">작성자</th>
 					<th style="width: 150px;">작성일</th>
 					<th style="width: 80px;">조회수</th>
-					<th>삭제하기</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- 게시글 리스트 불러올때 변수명 편하게 보세용.
+			<!--
+				게시글 리스트 불러올때 변수명 편하게 보세용.
 				private int bno; //primary key.
 				private String title;
 				private String content;
@@ -66,9 +69,7 @@ span {
 					<td>${list.writer }</td>
 					<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/></td>
 					<td>${list.viewCnt }</td>
-					<td>
-						<a onclick="javascript:removeContent('${list.bno}');"><button>${list.bno}번 게시글 삭제</button></a>
-					</td>
+					
 					<%-- <a class="btn btn-sm btn-danger"
 						href="javascript:removeMember('${member.id }');">삭제</a> --%>
 					<!-- 자바스크립트 함수 안에 매개변수로 id를 넘겨준다. 이때 el식 안에 싱글쿼테이션으로 묶어주어야한다. -->
@@ -103,30 +104,34 @@ span {
 				</tr>
 				<%
 				}
-				%>--%>
+				%> --%>
 			</tbody>
 		</table>
-		<!-- pageList = boardService.pageList(totalContentPage, eachPageNum);
-		model.addAttribute("pageList", pageList);
-		model.addAttribute("totalPageNum", totalPageNum); -->
-		<c:forEach begin="1" end="${totalPageNum }" var="pageNum">
-			<span><a href="/board/pageList?pageNum=${pageNum }">${pageNum }</a></span>
+		<!--
+			pageList = boardService.pageList(totalContentPage, eachPageNum);
+			model.addAttribute("pageList", pageList);
+			model.addAttribute("totalPageNum", totalPageNum);
+		-->
+		<%--
+		무지성으로 일단 페이징이 잘 되었는지 확인만하는 "이전,다음"없는 전체 출력.
+		<c:forEach begin="1" end="${totalPageNum }" var="pageNum" >
+			<span><a class="pageList" href="/board/pageList?pageNum=${pageNum }">${pageNum }</a></span>
 		</c:forEach>
-		<hr />
+		--%>
+		<%
+		/*
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			model.addAttribute("prevPage", prevPage);
+			model.addAttribute("nextPage", nextPage);
+			model.addAttribute("totalPageNum",totalPageNum); <= 필요한 로직들 잠깐 빌려쓸게용
+		*/
+			
+		%>
+		<hr/>
 		<br>
 		<a href="/board/write">게시글 작성</a>
 	</div>
 </body>
-<script type="text/javascript">
-function removeContent(bno) {
-	let YN = confirm('정말' + bno + '번 게시글을 삭제하시겠습니까?\n삭제된 정보는 복구되지 않습니다.');
-	
-	if (YN == true) {
-		alert('게시글이 삭제되었습니다.');
-	} else {
-		alert('게시글 삭제를 취소하셨습니다.');
-		location.href = "/board/pageList?pageList=" + 
-	}
-}
-</script>
+
 </html>
