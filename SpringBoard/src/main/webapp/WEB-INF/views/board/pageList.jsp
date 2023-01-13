@@ -126,7 +126,32 @@ span {
 			model.addAttribute("nextPage", nextPage);
 			model.addAttribute("totalPageNum",totalPageNum); <= 필요한 로직들 잠깐 빌려쓸게용
 		*/
+			int startPage = (int)request.getAttribute("startPage");
+			int endPage = (int)request.getAttribute("endPage");
+			boolean prevPage = (boolean)request.getAttribute("prevPage");
+			boolean nextPage = (boolean)request.getAttribute("nextPage");
+			int totalPageNum = (int)request.getAttribute("totalPageNum");
 			
+			/* 이전페이지 버튼만들기 */
+			if(prevPage == true){ %>
+				<span><a href="/board/pageList?pageNum=<%=startPage-1 %>">◀이전</a></span>
+		<%		
+			}
+			
+			/* 페이지 쫙 출력하기 */
+			for(int i = startPage; i <= endPage; i++){
+				/* 주노좌한테 여기 왜 i를 page라고 선언하면 빨간줄에 듀플리케이트 뜨는지 질문하기 */
+		%>
+				<span><a href="/board/pageList?pageNum=<%=i%>"><%=i%></a></span>
+		<%
+			}
+			
+			/* 다음버튼 만들기 */
+			if(nextPage==true){
+		%>
+				<span><a href="/board/pageList?pageNum=<%=endPage+1%>">다음▶</a></span>
+		<%
+			}
 		%>
 		<hr/>
 		<br>
