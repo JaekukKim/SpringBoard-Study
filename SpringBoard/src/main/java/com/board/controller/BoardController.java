@@ -58,22 +58,37 @@ public class BoardController {
 		// 출력할 게시물 갯수
 		int selectContent = (pageNum-1) * contentNum;
 		
+		
+		
 		// 전체 페이지의 수는 위에서 구했으니 한 화면당 출력될 페이지의 갯수를 정해서 접근하면 된다.
 		int maxPageNum = 10;
 		
 		// 마지막 페이지는 pageNum을 이용하여 10의 단위로 만들어주면 된다.
 		// pageNum을 10으로 나누어 "몫"을 구한다음 나온 실수를 올림처리 해버린뒤 10을 곱하면 된다
-		int endPage = (int)Math.ceil((double)pageNum/maxPageNum) * 10;
+		int endPage = (int)(Math.ceil((double)pageNum/maxPageNum) * maxPageNum);
 		
-		// endPage는 치명적인 결함이 하나 있다. pageNum에 따라 값이 결정되지만 10의 배수로밖에 결정이 안된다는 것이다.
-		// 만약 게시글이 애매하게 174개라면? 18페이지가 출력되야 하는데 20페이지가 나와버린다.
-		// 이럴경우 endPage는 그냥 전체페이지 갯수로 덮어 씌워버림 댄다
-		if (endPage>totalPageNum) {
-			endPage=totalPageNum;
-		}
+		// (2023-01-16) 마지막 페이지 출력부의 치명적이진 않지만 결함이 발견되어 수정을 해주어야 한다.
+		// 게시글이 1024개이면 총 페이지는 103페이지이며 91~100 / 101~103으로 화면에 나와야하는데
+		// 91~100 / 94 ~ 103으로 10개를 너무 철저하게 잘 지켜서 나온다. 이 부분은 클라이언트의 가독성을 위해 수정이 필요하다.
+		// [1] endPage가 totalPageNum보다 크다면 덮어씌워주었는데 잘 생각해보니 동작하지 않는 노는코드였다.
+		// [2] totalPageNum은 그냥 전체 페이지 갯수만으로 바라봐야한다. 새로운 변수를 하나 더 만들어야 한다.
+		// 전체 게시글 총 갯수를 전체 페이지 갯수로 나누어서 접근을 해야한다. 우리가 전에 사용했던 전체 페이지의 코드는
+		// "게시글갯수"에 묶어있는 전체페이지였을 뿐이다!!
+		int correctLastPage = (int)(Math.ceil((double)totalContent/maxPageNum));
+		
+		/*
+			2023-01-16 위에 적었던 주석에 이어서 - 94~103의 페이지가 출력되는 이유는 선언부가 달라서였다.
+			startPage는 먼저 순수한 endPage(10단위로 끊어지는)를 받고 난 뒤 가야 1, 11, 21 ... 순으로 1의자리가 1로 끊어지게 된다.
+			하지만 나는 아래 if문 아래 startPage를 선언해주어 제~일 마지막(다음버튼없는)
+			페이지가 너무 정직하게 출력되는 대참사가 발생해버렸다. 
+		*/
 		
 		// 시작페이지는 endPage에서 9를 빼주면?? 시작페이지다.
-		int startPage = (endPage-maxPageNum) + 1;
+		int startPage = endPage - maxPageNum + 1;
+		  
+		if (endPage > correctLastPage) {
+			endPage = correctLastPage;
+		}
 		
 		// 이전버튼 : 시작페이지가 10 이상일때.
 		boolean prevPage;
@@ -94,11 +109,13 @@ public class BoardController {
 		List<BoardVO> list = null;
 		list = boardService.pageList(selectContent, contentNum);
 		model.addAttribute("list",list);
+		model.addAttribute("totalPageNum",totalPageNum);
+		// 한 화면에 출력되는 시작페이지 숫자, 끝페이지 숫자
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		// 이전,다음버튼
 		model.addAttribute("prevPage", prevPage);
 		model.addAttribute("nextPage", nextPage);
-		model.addAttribute("totalPageNum",totalPageNum);
 	}
 	// ---------------------------------------게시글 리스트 가져오기 및페이징끝---------------------------------------------------
 

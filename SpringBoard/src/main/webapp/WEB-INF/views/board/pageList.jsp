@@ -141,6 +141,12 @@ span {
 			/* 페이지 쫙 출력하기 */
 			for(int i = startPage; i <= endPage; i++){
 				/* 주노좌한테 여기 왜 i를 page라고 선언하면 빨간줄에 듀플리케이트 뜨는지 질문하기 */
+				/*
+					2023-01-13
+					page가 듀플이 뜨는 이유는 서블릿 스코프 때문이다. page < request < session < application
+					위에 적어논 범위를 나타내는 스코프들은 jsp에서 변수명으로 사용하지 못한다.
+					(js의 예약어를 생각하면 이해가 쉽다.)
+				*/
 		%>
 				<span><a href="/board/pageList?pageNum=<%=i%>"><%=i%></a></span>
 		<%
