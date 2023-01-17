@@ -53,4 +53,15 @@ call dummyContent; <br>
 
 1024건의 데이터를 생성한 이유는 페이징 처리에 있어 마지막 페이지가 정확히 출력되는지를 알아보기 위해서이다.
 
+<h1>테이블 구조</h1>
+
+![image](https://user-images.githubusercontent.com/114370547/212781318-93d00e53-4289-4a6f-a291-b052521dba3e.png)
+
+=> 게시글 테이블
+
+
+![image](https://user-images.githubusercontent.com/114370547/212781390-1e6fce97-4492-470d-bd6c-c8347e53d40f.png)
+
+=> 댓글 테이블 (게시글 테이블의 pk인 bno, 게시글 번호를 외래키 (fk)로 가짐)
+
 추후 추가예정입니당.
