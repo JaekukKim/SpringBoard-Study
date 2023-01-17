@@ -13,7 +13,7 @@
 	<br>
 	<br>
 	
-	<a href="/board/main">게시판 메인페이지 이동</a>
+	<a href="/board/pageList?pageNum=1">게시판 메인페이지 이동</a>
 	
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="com.board.domain.PageIngredient"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -18,22 +19,24 @@ thead {
 tr {
 	text-align: center;
 }
+
 span {
 	margin-right: 10px;
 }
-#boardTable{
+
+#boardTable {
 	margin-bottom: 20px;
 }
-.pageList{
+
+.pageList {
 	
 }
-
 </style>
 </head>
 <body>
 
-<!-- 게시판 네비게이션 -->
-<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
+	<!-- 게시판 네비게이션 -->
+	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 
 
 	<div id="boardGroup" align="center">
@@ -49,7 +52,7 @@ span {
 				</tr>
 			</thead>
 			<tbody>
-			<!--
+				<!--
 				게시글 리스트 불러올때 변수명 편하게 보세용.
 				private int bno; //primary key.
 				private String title;
@@ -61,24 +64,26 @@ span {
 				<!-- jstl -->
 				<!-- jstl의 forEach문으로 데이터를 하나하나 불러올수 있는거 잊지말자 ㅇㅇ -->
 				<c:forEach items="${list }" var="list">
-				<tr>
-					<td>${list.bno }</td>
-					<td>
-						<a href="/board/view?bno=${list.bno }">${list.title }</a>
-					</td>
-					<td>${list.writer }</td>
-					<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/></td>
-					<td>${list.viewCnt }</td>
-					
-					<%-- <a class="btn btn-sm btn-danger"
+					<tr>
+						<td>${list.bno }</td>
+						<td>
+							<a href="/board/view?bno=${list.bno }">${list.title }</a>
+						</td>
+						<td>${list.writer }</td>
+						<td>
+							<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
+						</td>
+						<td>${list.viewCnt }</td>
+
+						<%-- <a class="btn btn-sm btn-danger"
 						href="javascript:removeMember('${member.id }');">삭제</a> --%>
-					<!-- 자바스크립트 함수 안에 매개변수로 id를 넘겨준다. 이때 el식 안에 싱글쿼테이션으로 묶어주어야한다. -->
-					<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
-				</tr>
-			</c:forEach>
-			
+						<!-- 자바스크립트 함수 안에 매개변수로 id를 넘겨준다. 이때 el식 안에 싱글쿼테이션으로 묶어주어야한다. -->
+						<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
+					</tr>
+				</c:forEach>
+
 				<!-- 스크립틀릿 -->
-		<%--	<%
+				<%--	<%
 				List<BoardVO> boardList = (List<BoardVO>) request.getAttribute("list");
 				for (int i = 0; i < boardList.size(); i++) {
 				
@@ -120,26 +125,21 @@ span {
 		--%>
 		<%
 		/*
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("prevPage", prevPage);
-			model.addAttribute("nextPage", nextPage);
-			model.addAttribute("totalPageNum",totalPageNum); <= 필요한 로직들 잠깐 빌려쓸게용
+			model.addAttribute("list",list);
+			model.addAttribute("page",page);
 		*/
-			int startPage = (int)request.getAttribute("startPage");
-			int endPage = (int)request.getAttribute("endPage");
-			boolean prevPage = (boolean)request.getAttribute("prevPage");
-			boolean nextPage = (boolean)request.getAttribute("nextPage");
-			int totalPageNum = (int)request.getAttribute("totalPageNum");
+			PageIngredient pageIngredient = (PageIngredient)request.getAttribute("page");
 			
 			/* 이전페이지 버튼만들기 */
-			if(prevPage == true){ %>
-				<span><a href="/board/pageList?pageNum=<%=startPage-1 %>">◀이전</a></span>
+			if(pageIngredient.isPrevPage() == true){ %>
+		<span>
+			<a href="/board/pageList?pageNum=<%=pageIngredient.getStartPage()-1 %>">◀이전</a>
+		</span>
 		<%		
 			}
 			
 			/* 페이지 쫙 출력하기 */
-			for(int i = startPage; i <= endPage; i++){
+			for(int i = pageIngredient.getStartPage(); i <= pageIngredient.getEndPage(); i++){
 				/* 주노좌한테 여기 왜 i를 page라고 선언하면 빨간줄에 듀플리케이트 뜨는지 질문하기 */
 				/*
 					2023-01-13
@@ -148,18 +148,22 @@ span {
 					(js의 예약어를 생각하면 이해가 쉽다.)
 				*/
 		%>
-				<span><a href="/board/pageList?pageNum=<%=i%>"><%=i%></a></span>
+		<span>
+			<a href="/board/pageList?pageNum=<%=i%>"><%=i%></a>
+		</span>
 		<%
 			}
 			
 			/* 다음버튼 만들기 */
-			if(nextPage==true){
+			if(pageIngredient.isNextPage()==true){
 		%>
-				<span><a href="/board/pageList?pageNum=<%=endPage+1%>">다음▶</a></span>
+		<span>
+			<a href="/board/pageList?pageNum=<%=pageIngredient.getEndPage()+1%>">다음▶</a>
+		</span>
 		<%
 			}
 		%>
-		<hr/>
+		<hr />
 		<br>
 		<a href="/board/write">게시글 작성</a>
 	</div>

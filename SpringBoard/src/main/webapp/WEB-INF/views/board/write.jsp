@@ -13,6 +13,9 @@
 span {
 	text-align: left;
 }
+a {
+	text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -51,6 +54,9 @@ span {
 		<br>
 		<a href="/board/list">
 			<button>목록으로 돌아가기</button>
+		</a>
+		<a href="/board/pageList?pageNum=1">
+			<button>페이징 목록으로 돌아가기</button>
 		</a>
 	</div>
 </body>

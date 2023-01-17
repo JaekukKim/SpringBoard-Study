@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.BoardVO;
+import com.board.domain.PageIngredient;
 import com.board.service.BoardService;
 
 @Controller
@@ -44,78 +45,33 @@ public class BoardController {
 	// 게시글 페이징 기능 구현 : 매우 어렵다곤 하는데... 어려운거 맞는듯 생각조차 안남.
 	// 일단 게시글 리스트 불러오는거랑 연관이 있는건 바로 알 수 있다.
 	@RequestMapping(value = "/board/pageList", method = RequestMethod.GET)
-	public void pageList(@RequestParam("pageNum") int pageNum, Model model) throws Exception {
+	public void pageList(
+			@RequestParam("pageNum") int pageNum,
+			Model model,
+			PageIngredient page
+			) throws Exception {
 		
-		// 게시글 총 갯수
-		int totalContent = boardService.totalContent();
+		// 현재 페이지를 받아오기
+		page.setPageNum(pageNum);
 		
-		// 페이지별 출력될 게시글의 갯수
-		int contentNum = 10;
-		
-		// 전체 페이지의 갯수
-		int totalPageNum = (int)Math.ceil((double)totalContent/contentNum);
-		
-		// 출력할 게시물 갯수
-		int selectContent = (pageNum-1) * contentNum;
-		
-		
-		
-		// 전체 페이지의 수는 위에서 구했으니 한 화면당 출력될 페이지의 갯수를 정해서 접근하면 된다.
-		int maxPageNum = 10;
-		
-		// 마지막 페이지는 pageNum을 이용하여 10의 단위로 만들어주면 된다.
-		// pageNum을 10으로 나누어 "몫"을 구한다음 나온 실수를 올림처리 해버린뒤 10을 곱하면 된다
-		int endPage = (int)(Math.ceil((double)pageNum/maxPageNum) * maxPageNum);
-		
-		// (2023-01-16) 마지막 페이지 출력부의 치명적이진 않지만 결함이 발견되어 수정을 해주어야 한다.
-		// 게시글이 1024개이면 총 페이지는 103페이지이며 91~100 / 101~103으로 화면에 나와야하는데
-		// 91~100 / 94 ~ 103으로 10개를 너무 철저하게 잘 지켜서 나온다. 이 부분은 클라이언트의 가독성을 위해 수정이 필요하다.
-		// [1] endPage가 totalPageNum보다 크다면 덮어씌워주었는데 잘 생각해보니 동작하지 않는 노는코드였다.
-		// [2] totalPageNum은 그냥 전체 페이지 갯수만으로 바라봐야한다. 새로운 변수를 하나 더 만들어야 한다.
-		// 전체 게시글 총 갯수를 전체 페이지 갯수로 나누어서 접근을 해야한다. 우리가 전에 사용했던 전체 페이지의 코드는
-		// "게시글갯수"에 묶어있는 전체페이지였을 뿐이다!!
-		int correctLastPage = (int)(Math.ceil((double)totalContent/maxPageNum));
-		
-		/*
-			2023-01-16 위에 적었던 주석에 이어서 - 94~103의 페이지가 출력되는 이유는 선언부가 달라서였다.
-			startPage는 먼저 순수한 endPage(10단위로 끊어지는)를 받고 난 뒤 가야 1, 11, 21 ... 순으로 1의자리가 1로 끊어지게 된다.
-			하지만 나는 아래 if문 아래 startPage를 선언해주어 제~일 마지막(다음버튼없는)
-			페이지가 너무 정직하게 출력되는 대참사가 발생해버렸다. 
-		*/
-		
-		// 시작페이지는 endPage에서 9를 빼주면?? 시작페이지다.
-		int startPage = endPage - maxPageNum + 1;
-		  
-		if (endPage > correctLastPage) {
-			endPage = correctLastPage;
-		}
-		
-		// 이전버튼 : 시작페이지가 10 이상일때.
-		boolean prevPage;
-		if (startPage > maxPageNum) {
-			prevPage = true;
-		} else {
-			prevPage = false;
-		}
-		
-		// 다음버튼 : 해당 화면의 끝 페이지가 "전체 페이지 수"보다 작으면 활성화
-		boolean nextPage;
-		if (endPage < totalPageNum) {
-			nextPage = true;
-		} else {
-			nextPage = false;
-		}
+		// 게시글 총 갯수를 구하면 PageIngredient의 로직에서 전부 계산을 해준다.
+		page.setTotalContent(boardService.totalContent());
 		
 		List<BoardVO> list = null;
-		list = boardService.pageList(selectContent, contentNum);
+		list = boardService.pageList(page.getSelectContent(), page.getContentNum());
 		model.addAttribute("list",list);
-		model.addAttribute("totalPageNum",totalPageNum);
+		/*
+		model.addAttribute("totalPageNum",page.getTotalPageNum());
 		// 한 화면에 출력되는 시작페이지 숫자, 끝페이지 숫자
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+		model.addAttribute("startPage", page.getStartPage());
+		model.addAttribute("endPage", page.getEndPage());
 		// 이전,다음버튼
-		model.addAttribute("prevPage", prevPage);
-		model.addAttribute("nextPage", nextPage);
+		model.addAttribute("prevPage", page.isPrevPage());
+		model.addAttribute("nextPage", page.isNextPage());
+		
+		위 코드들은 전부 page란 공통점이 있다. 객체로 보내버려도 될듯?
+		*/
+		model.addAttribute("page",page);
 	}
 	// ---------------------------------------게시글 리스트 가져오기 및페이징끝---------------------------------------------------
 
@@ -139,7 +95,7 @@ public class BoardController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/board/list";
+		return "redirect:/board/pageList?pageNum=1";
 		// redirect는 다시 돌려보낸다는 의미이다. 서블릿의 sendRedirect와 같음, 스프링에선 return에 저런식으로 입력가능.
 	}
 	// ----------------------------------게시글 리스트 관련 메소드끝----------------------------------

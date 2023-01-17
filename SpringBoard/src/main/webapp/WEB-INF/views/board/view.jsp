@@ -21,6 +21,14 @@ label {
 	margin-left: 80px;
 }
 
+.boardElementTitle {
+	margin-left: 25px;
+}
+
+textarea {
+	resize: none;
+}
+
 a {
 	text-decoration: none;
 }
@@ -46,19 +54,18 @@ a {
 	<div id="boardTB">
 		<h1>${view.bno }번게시글</h1>
 		<form method="post">
-			<label>조회수</label>
-			
-			<label>게시글 제목</label>
-			<br>
-			<span class="boardElement">${view.title }</span>
+			<label>조회수 : </label>
+			<span class="boardElement">${view.viewCnt }</span>
 			<br> <br>
-			<label>작성자</label>
-			<br>
+			<label>게시글 제목 : </label>
+			<span class="boardElementTitle">${view.title }</span>
+			<br> <br>
+			<label>작성자 : </label>
 			<span class="boardElement">${view.writer }</span>
 			<br> <br>
 			<label>내용</label>
 			<br>
-			<span class="boardElement">${view.content }</span>
+			<textarea class="boardElement" cols="160" rows="10" name="content" maxlength="2000">${view.content}</textarea>
 			<br> <br>
 			<!-- 
 				**매우중요!!!
@@ -67,6 +74,10 @@ a {
 				(button의 type을 지정해주지 않으면 기본 type은 ***submit이 되기 때문에*** 주의해야한다. )
 			 -->
 		</form>
+		<hr>
+		
+
+		<hr>
 		<a href="/board/modify?bno=${view.bno }">
 			<button type="button">게시글 수정하기</button>
 		</a>
