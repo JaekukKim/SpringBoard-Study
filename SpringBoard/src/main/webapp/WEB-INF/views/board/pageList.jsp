@@ -27,9 +27,12 @@ span {
 #boardTable {
 	margin-bottom: 20px;
 }
+a{
+	text-decoration: none;
+}
 
-.pageList {
-	
+#notSelectedPage:visited {
+	color: gray;
 }
 </style>
 </head>
@@ -129,6 +132,7 @@ span {
 			model.addAttribute("page",page);
 		*/
 			PageIngredient pageIngredient = (PageIngredient)request.getAttribute("page");
+			int selectedPageNum = (int)request.getAttribute("selectedPageNum");
 			
 			/* 이전페이지 버튼만들기 */
 			if(pageIngredient.isPrevPage() == true){ %>
@@ -147,11 +151,17 @@ span {
 					위에 적어논 범위를 나타내는 스코프들은 jsp에서 변수명으로 사용하지 못한다.
 					(js의 예약어를 생각하면 이해가 쉽다.)
 				*/
+				if(selectedPageNum != i){
 		%>
-		<span>
-			<a href="/board/pageList?pageNum=<%=i%>"><%=i%></a>
-		</span>
+					<span>
+						<a id="notSelectedPage" href="/board/pageList?pageNum=<%=i%>"><%=i%></a>
+					</span>
 		<%
+				} else if(selectedPageNum == i){ %>
+					<span>
+						<b style="font-size: 22px"><%=i %></b>
+					</span>
+		<%		}
 			}
 			
 			/* 다음버튼 만들기 */

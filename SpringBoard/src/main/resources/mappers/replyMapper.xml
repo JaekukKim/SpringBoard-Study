@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatisReply">
+	<!--
+		rno int not null auto_increment, 			//  댓글 번호 (pk)
+		bno int not null, 							//  댓글은 게시글에 종속되어 있어야 하므로 외래키 설정.
+		content text not null, 						// 댓글 내용
+		writer varchar(30) not null, 				// 댓글 작성자
+		regDate timestamp not null default now(), 	// 댓글 작성날짜
+	-->
+	<select id="getReplyList" parameterType="int" resultType="com.board.domain.ReplyVO">
+		select rno, bno, content, writer, regDate
+		from tbl_reply
+		where bno = #{bno}
+	</select>
+	
+</mapper>

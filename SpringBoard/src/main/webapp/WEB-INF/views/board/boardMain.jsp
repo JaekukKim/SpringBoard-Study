@@ -15,6 +15,5 @@
 	<br> <br>
 	<a href="/board/write">게시글 작성</a>
 	<br> <br>
-	
 </body>
 </html>

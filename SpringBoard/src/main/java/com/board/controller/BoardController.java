@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.BoardVO;
 import com.board.domain.PageIngredient;
+import com.board.domain.ReplyVO;
 import com.board.service.BoardService;
+import com.board.service.ReplyService;
 
 @Controller
 public class BoardController {
@@ -24,9 +26,13 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	// 댓글 기능을 위한 DI
+	@Autowired
+	private ReplyService replyService;
 
 	// 게시판 메인 화면 페이지
-	@RequestMapping(value = "/board/main", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/boardMain", method = RequestMethod.GET)
 	public String connectBoard() {
 		logger.info("게시판 접속");
 		return "/board/boardMain";
@@ -60,18 +66,10 @@ public class BoardController {
 		List<BoardVO> list = null;
 		list = boardService.pageList(page.getSelectContent(), page.getContentNum());
 		model.addAttribute("list",list);
-		/*
-		model.addAttribute("totalPageNum",page.getTotalPageNum());
-		// 한 화면에 출력되는 시작페이지 숫자, 끝페이지 숫자
-		model.addAttribute("startPage", page.getStartPage());
-		model.addAttribute("endPage", page.getEndPage());
-		// 이전,다음버튼
-		model.addAttribute("prevPage", page.isPrevPage());
-		model.addAttribute("nextPage", page.isNextPage());
-		
-		위 코드들은 전부 page란 공통점이 있다. 객체로 보내버려도 될듯?
-		*/
 		model.addAttribute("page",page);
+		
+		// 현재 페이지가 몇페이지인지 쉽게 구분하기위한 구분자를 넘겨주자
+		model.addAttribute("selectedPageNum",pageNum);
 	}
 	// ---------------------------------------게시글 리스트 가져오기 및페이징끝---------------------------------------------------
 
@@ -82,7 +80,7 @@ public class BoardController {
 		logger.info("게시글 작성페이지 실행");
 		return "/board/write";
 	}
-
+	
 	// 게시글 작성 기능 구현
 	@RequestMapping(value = "/board/write", method = RequestMethod.POST)
 	public String writeContent(BoardVO boardVO) {
@@ -111,6 +109,13 @@ public class BoardController {
 			// 위의 view 메소드에는 조회수가 증가하는 로직도 포함되어있다. 즉, 하나의 DAO로직이 2가지 일을 하는 셈이다.
 			model.addAttribute("view", boardVO);
 			logger.info("게시글 조회하기 성공, 조회수 ++");
+			
+			// 게시글 조회와 동시에 댓글 리스트 불러오기.
+			List<ReplyVO> replyList = null;
+			
+			replyList = replyService.getReplyList(bno);
+			
+			model.addAttribute("replyList" , replyList);
 
 		} catch (Exception e) {
 			logger.error("게시글 조회 실패");
