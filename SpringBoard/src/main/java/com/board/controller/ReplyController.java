@@ -3,8 +3,11 @@ package com.board.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.domain.ReplyVO;
 import com.board.service.ReplyService;
@@ -18,13 +21,25 @@ public class ReplyController {
 
 	@Autowired
 	private ReplyService replyService;
-	
-	// 댓글 리스트 불러오기.
-	@RequestMapping(value = "/reply/replyList", method=RequestMethod.GET)
-	public void getReplyList(ReplyVO replyVO, Model model) throws Exception{
-		log.info("ReplyController 댓글 리스트 가져오기 시작.");
 
-		
-		
+	// 댓글 리스트 불러오기.
+	@RequestMapping(value = "/reply/replyList", method = RequestMethod.GET)
+	public void getReplyList(ReplyVO replyVO, Model model) throws Exception {
+		log.info("ReplyController-getReplyList 댓글 리스트 가져오기 시작.");
+
+	}
+
+	// 댓글 작성하기
+	@ResponseBody
+	@RequestMapping(value = "/reply/writeReply", method = RequestMethod.POST)
+	public void writeReply(ReplyVO replyVO) throws Exception {
+		log.info("ReplyController-writeReply 댓글 등록 : {}", replyVO);
+
+		System.out.println("댓글 내용 : " + replyVO.getContent());
+		System.out.println("게시글 번호 : " + replyVO.getBno());
+		System.out.println("댓글 번호 : " + replyVO.getRno());
+		System.out.println("댓글쓴이 : " + replyVO.getWriter());
+
+		replyService.writeReply(replyVO);
 	}
 }

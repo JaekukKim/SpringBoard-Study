@@ -8,10 +8,32 @@
 		writer varchar(30) not null, 				// 댓글 작성자
 		regDate timestamp not null default now(), 	// 댓글 작성날짜
 	-->
+	<!-- 댓글 리스트 불러오기 -->
 	<select id="getReplyList" parameterType="int" resultType="com.board.domain.ReplyVO">
 		select rno, bno, content, writer, regDate
 		from tbl_reply
 		where bno = #{bno}
+		order by rno asc;
 	</select>
 	
+	<!-- 댓글 작성하기 -->
+	<insert id="writeReply" parameterType="com.board.domain.ReplyVO">
+		insert into tbl_reply (bno, content, writer)
+		values (#{bno}, #{content}, #{writer})
+	</insert>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="modifyReply" parameterType="com.board.domain.ReplyVO">
+		update tbl_reply set
+			content = #{content}
+		where rno = #{rno}
+		and bno = #{bno}
+	</update>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="removeReply" parameterType="com.board.domain.ReplyVO">
+		delete from tbl_reply
+		where rno = #{rno}
+		and bno = #{bno}
+	</delete>
 </mapper>

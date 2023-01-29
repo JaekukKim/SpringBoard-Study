@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <title>게시판 네비게이션 탭</title>
 
+<!-- jquery 구글 CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <style type="text/css">
 header {
 	/* nav-bar 상단 고정 코드 시작 */

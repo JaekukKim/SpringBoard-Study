@@ -20,8 +20,30 @@ public class ReplyServiceImpl implements ReplyService {
 	// 댓글 리스트 불러오기
 	@Override
 	public List<ReplyVO> getReplyList(int bno) throws Exception {
-		log.info("ReplyServiceImpl 댓글 리스트 DB요청");
+		log.info("ReplyServiceImpl-getReplyList 댓글 리스트 DB요청");
 		
 		return replyDAO.getReplyList(bno);
+	}
+	
+	// 댓글 작성하기
+	@Override
+	public void writeReply(ReplyVO replyVO) throws Exception {
+		log.info("ReplyServiceImpl-writeReply 댓글 작성 : {}" , replyVO);
+		
+		replyDAO.writeReply(replyVO);
+	}
+	
+	// 댓글 수정하기
+	@Override
+	public void modifyReply(ReplyVO replyVO) throws Exception {
+		
+		replyDAO.modifyReply(replyVO);
+	}
+	
+	// 댓글 삭제하기
+	@Override
+	public void removeReply(ReplyVO replyVO) throws Exception {
+		
+		replyDAO.removeReply(replyVO);
 	}
 }

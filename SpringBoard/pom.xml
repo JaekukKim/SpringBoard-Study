@@ -28,10 +28,15 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.14.1</version>
 		</dependency>
-		<!-- jackson -->
+		<!-- Thanks for using https://jar-download.com -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 			<version>2.14.1</version>
 		</dependency>
 		<!-- mybatis -->
@@ -69,17 +74,6 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version>
 			<scope>provided</scope>
-		</dependency>
-		<!-- Thanks for using https://jar-download.com -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.14.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.14.1</version>
 		</dependency>
 		<!-- Spring -->
 		<dependency>

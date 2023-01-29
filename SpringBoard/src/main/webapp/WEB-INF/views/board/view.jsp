@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.board.domain.ReplyVO"%>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ label {
 textarea {
 	resize: none;
 	padding-bottom: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 a {
@@ -43,15 +43,36 @@ a {
 	height: 50px;
 	font-size: 22px;
 }
+
 td, th {
 	height: 50px;
 	border-bottom: 1px solid #dcdcdc;
+	/*
+		테이블 태그와 관련된 속성은 margin속성 적용이 불가능하다. 그래서 padding으로 밀어주어야 한다.
+		또한 밑줄 긋는걸 원할 경우 border로 따로 설정해 주어야 한다.
+	*/
 }
-#replyContent{
+
+#replyContent {
 	padding-left: 20px;
 }
+
 tr:nth-child(even) {
+	/*
+		nth-child는 자식속성에 한하여 css를 적용시키겠다는 의미이다. 괄호안에 숫자를 입력해서 몇번째인지를 지정해주거나
+		odd : 홀수번째만 / even : 짝수번째만 이런식으로 적용이 가능하다.
+	*/
 	background-color: #f9f9f9;
+}
+.replyButton{
+	height: 35px;
+	width: 80px;
+	background-color:#dcdcdc;
+	border-radius: 5px;
+	border: none;
+}
+.replyButton:hover{
+	background-color: #bebebe;
 }
 </style>
 
@@ -89,7 +110,7 @@ tr:nth-child(even) {
 			<br>
 			<label>내용</label>
 			<br>
-			<textarea class="boardElement" cols="160" rows="10" name="content" maxlength="2000">${view.content}</textarea>
+			<textarea class="boardElement" cols="160" rows="10" name="content" maxlength="2000" readonly="readonly">${view.content}</textarea>
 			<br>
 			<!-- 
 				**매우중요!!!
@@ -118,58 +139,95 @@ tr:nth-child(even) {
 			<table>
 				<thead>
 					<tr align="center">
-						<th style="width: 100px; display: none;">댓글 번호</th>
-						<th style="width: 150px; ">작성자</th>
+						<th style="display: none;">댓글 번호</th>
+						<th style="width: 250px;">작성자</th>
 						<th style="width: 600px;">내용</th>
-						<th style="width: 150px;">작성날짜</th>
+						<th style="width: 100px;">수정/삭제</th>
 					</tr>
 				</thead>
 				<tbody>
-				<!-- model.addAttribute("replyList" , replyList); -->
-				<%	
+					<!-- model.addAttribute("replyList" , replyList); -->
+					<%
 					/*
 					private String content;	// 댓글 내용
 					private String writer;	// 댓글 작성자
 					private Date regDate;	// 댓글 등록날짜
 					*/
-				
-					List<ReplyVO> replyList = (List<ReplyVO>)request.getAttribute("replyList");
-					for(int replyNum = 0; replyNum < replyList.size(); replyNum++){
-				%>
+
+					List<ReplyVO> replyList = (List<ReplyVO>) request.getAttribute("replyList");
+					for (int replyNum = 0; replyNum < replyList.size(); replyNum++) {
+					%>
 					<tr>
-						<td style="display: none;"><%=replyList.get(replyNum).getRno() %></td>
-						<td align="left" style="background-color: #e9e9e9"><%=replyList.get(replyNum).getWriter() %></td>
-						<td id="replyContent"><%=replyList.get(replyNum).getContent() %></td>
-						<td align="right" style="padding-right: 5px;">
-							<fmt:formatDate value="<%=replyList.get(replyNum).getRegDate() %>" pattern="yyyy-MM-dd"/>
+						<td style="display: none;"><%=replyList.get(replyNum).getRno()%></td>
+						<td>
+							<div style="margin-left: 20px;">
+								<%=replyList.get(replyNum).getWriter()%>
+								<br>
+								<div align="right" style="margin-right: 20px;">
+									<font size="2" color="gray"> <fmt:formatDate value="<%=replyList.get(replyNum).getRegDate()%>" pattern="yyyy-MM-dd" />
+									</font>
+								</div>
+							</div>
+						</td>
+						<td id="replyContent"><%=replyList.get(replyNum).getContent()%></td>
+						<td style="padding-right: 5px;" align="center">
+							<font size="2"><a href="#">[수정]</a></font> <br> <font size="2"><a href="#">[삭제]</a></font>
 						</td>
 					</tr>
-				<%
+					<%
 					}
-				%>
+					%>
 				</tbody>
 			</table>
 		</div>
 		<br>
 		<hr>
+		
 		<h2>댓글 작성</h2>
-		<div>
-			<p>
+		
+			<div align="center">
+				<table>
+					<thead>
+						<tr>
+							<th style="border-bottom: none;">
+								<div style="margin-right: 20px;" align="left">
+									<input id="writer" type="text" placeholder="닉네임을 입력하세요.">
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: none;">
+								<textarea id="content" rows="5" cols="100" placeholder="내용을 입력하세요"></textarea>
+								<div align="right">
+									<button class="replyButton" onclick="writeReply('${view.bno}');">
+									등록
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- <p>
 				<label>
 					아이디 :
 					<input type="text" placeholder="닉네임을 입력하세요">
 				</label>
 			</p>
 			<p>
-				<label style="float: left; margin-right: 20px;">내용</label>
+				<label>내용</label>
 				<textarea rows="5" cols="50" placeholder="내용을 입력하세요"></textarea>
-				<input type="submit" value="댓글작성">
 			</p>
-		</div>
+			<div align="right">
+				<input type="submit" value="댓글작성">
+			</div> -->
+			</div>
 		<!-- 댓글 구현 끝 -->
 	</div>
 </body>
 <script type="text/javascript">
+	/* 게시글 삭제 js 로직 */
 	function removeContent(bno) {
 		let YN = confirm('정말 [' + bno + ']번 게시글을 삭제하시겠습니까?\n삭제된 정보는 복구되지 않습니다.');
 
@@ -181,5 +239,36 @@ tr:nth-child(even) {
 			location.href = "http://localhost:8080/board/view?bno=" + bno;
 		}
 	}
+	/* 댓글 등록 js 로직 (ajax) */
+	function writeReply(bno) {
+		
+		let writer = document.getElementById("writer").value;
+		let content = document.getElementById("content").value;
+		
+		console.log(bno);
+		console.log(writer);
+		console.log(content);
+		
+		$.ajax({
+			url : "/reply/writeReply",
+			type : "POST",
+			data : {
+				bno : bno,
+				writer : writer,
+				content : content
+			},
+			
+			success : function(data) {
+				alert("댓글작성이 완료되었습니다.");
+				location.reload(true);
+			},
+			error : function(error) {
+				alert("알 수 없는 에러가 발생하였습니다.");
+				alert(error);
+				console.log(error);
+			}
+		});
+	}
+	
 </script>
 </html>
