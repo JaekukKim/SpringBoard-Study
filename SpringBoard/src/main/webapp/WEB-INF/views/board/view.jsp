@@ -6,76 +6,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>${view.bno }번게시글조회</title>
-<!-- 간단 css -->
+
+<!-- 간단 css (생각보다 길어져서 파일로..)-->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/boardCSS/viewCSS.css">
 <style type="text/css">
-#boardTB {
-	width: 1250px;
-	padding-top: 30px;
-	margin-left: 50px;
-}
 
-label {
-	font-size: 22px;
-}
-
-.boardElement {
-	margin-left: 80px;
-}
-
-.boardElementTitle {
-	margin-left: 25px;
-}
-
-textarea {
-	resize: none;
-	padding-bottom: 10px;
-	margin-bottom: 5px;
-}
-
-a {
-	text-decoration: none;
-}
-
-.boardUpdate {
-	width: 200px;
-	height: 50px;
-	font-size: 22px;
-}
-
-td, th {
-	height: 50px;
-	border-bottom: 1px solid #dcdcdc;
-	/*
-		테이블 태그와 관련된 속성은 margin속성 적용이 불가능하다. 그래서 padding으로 밀어주어야 한다.
-		또한 밑줄 긋는걸 원할 경우 border로 따로 설정해 주어야 한다.
-	*/
-}
-
-#replyContent {
-	padding-left: 20px;
-}
-
-tr:nth-child(even) {
-	/*
-		nth-child는 자식속성에 한하여 css를 적용시키겠다는 의미이다. 괄호안에 숫자를 입력해서 몇번째인지를 지정해주거나
-		odd : 홀수번째만 / even : 짝수번째만 이런식으로 적용이 가능하다.
-	*/
-	background-color: #f9f9f9;
-}
-.replyButton{
-	height: 35px;
-	width: 80px;
-	background-color:#dcdcdc;
-	border-radius: 5px;
-	border: none;
-}
-.replyButton:hover{
-	background-color: #bebebe;
-}
 </style>
 
+<!--
+	하나 또 배웠다.
+	css 경로 인식이 안돼어 검색을 해보니 servlet-context에 적혀있는 경로의 형식을 지켜서 파일을 넣어줘야 했다.
+	따봉
+-->
+
+<meta charset="UTF-8">
+<title>${view.bno }번게시글조회</title>
 </head>
 <body>
 	<!-- 게시글에 대한 정보는 데이터기도 하며 get은 글자수의 제한이 있으니 get보단 post로 전달해주어야 한다 -->
@@ -110,7 +55,7 @@ tr:nth-child(even) {
 			<br>
 			<label>내용</label>
 			<br>
-			<textarea class="boardElement" cols="160" rows="10" name="content" maxlength="2000" readonly="readonly">${view.content}</textarea>
+			<textarea rows="5" cols="50" class="boardElement" name="content" maxlength="2000" readonly="readonly">${view.content}</textarea>
 			<br>
 			<!-- 
 				**매우중요!!!
@@ -169,60 +114,66 @@ tr:nth-child(even) {
 								</div>
 							</div>
 						</td>
+
 						<td id="replyContent"><%=replyList.get(replyNum).getContent()%></td>
 						<td style="padding-right: 5px;" align="center">
-							<font size="2"><a href="#">[수정]</a></font> <br> <font size="2"><a href="#">[삭제]</a></font>
+							<font size="2"><a href="javascript:modifyReply('<%=replyList.get(replyNum).getRno()%>');">[수정]</a></font>
+							<br>
+							<font size="2"><a href="javascript:removeReply('<%=replyList.get(replyNum).getRno()%>');">[삭제]</a></font>
 						</td>
 					</tr>
+
 					<%
 					}
 					%>
 				</tbody>
 			</table>
 		</div>
+		
+		<!-- 댓글 수정 모달창 : #modal -->
+		<div id="modal" class="modal_overlay">
+			<!-- 댓글의 내용을 입력하는 클래스 : .modal_content -->
+			<div class="modal_content"> <!-- modal_window -->
+				<div class="replyTitle">
+					<h2>댓글 수정</h2>
+				</div>
+				<div class="replyContent">
+					<p>댓글 내용이 나올 부분</p>
+				</div>
+				<button type="button" id="modalClose" onclick="modalClose();">모달 창 닫기</button>
+			</div>
+			<div class="modal_layer"></div>
+			<!-- modal_layer는 배경을 담당하는 클래스이다. 모달창이 뜨면 배경을 어둡게하는 역할하는 생각보다 중요한 클래스임. -->
+		</div>
+
 		<br>
 		<hr>
-		
+
 		<h2>댓글 작성</h2>
-		
-			<div align="center">
-				<table>
-					<thead>
-						<tr>
-							<th style="border-bottom: none;">
-								<div style="margin-right: 20px;" align="left">
-									<input id="writer" type="text" placeholder="닉네임을 입력하세요.">
-								</div>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="border-bottom: none;">
-								<textarea id="content" rows="5" cols="100" placeholder="내용을 입력하세요"></textarea>
-								<div align="right">
-									<button class="replyButton" onclick="writeReply('${view.bno}');">
-									등록
-									</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- <p>
-				<label>
-					아이디 :
-					<input type="text" placeholder="닉네임을 입력하세요">
-				</label>
-			</p>
-			<p>
-				<label>내용</label>
-				<textarea rows="5" cols="50" placeholder="내용을 입력하세요"></textarea>
-			</p>
-			<div align="right">
-				<input type="submit" value="댓글작성">
-			</div> -->
-			</div>
+
+		<div align="center">
+			<table>
+				<thead>
+					<tr>
+						<th style="border-bottom: none;">
+							<div style="margin-right: 20px;" align="left">
+								<input id="writer" type="text" placeholder="닉네임을 입력하세요.">
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="border-bottom: none;">
+							<textarea id="content" rows="5" cols="100" placeholder="내용을 입력하세요"></textarea>
+							<div align="right">
+								<button class="replyButton" onclick="writeReply('${view.bno}');">등록</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<!-- 댓글 구현 끝 -->
 	</div>
 </body>
@@ -249,6 +200,18 @@ tr:nth-child(even) {
 		console.log(writer);
 		console.log(content);
 		
+		if (writer.length < 2 || writer.length > 12) {
+			alert("닉네임은 2글자 이상 12글자 이하여야 합니다.");
+			document.getElementById("writer").focus();
+			return false;
+		}
+		
+		if (content.length < 10) {
+			alert("댓글 내용은 10글자 이상 입력해주세요.");
+			document.getElementById("content").focus();
+			return false;
+		}
+		
 		$.ajax({
 			url : "/reply/writeReply",
 			type : "POST",
@@ -261,6 +224,11 @@ tr:nth-child(even) {
 			success : function(data) {
 				alert("댓글작성이 완료되었습니다.");
 				location.reload(true);
+				/*
+					location.reload :
+						true => 새로고침 한 결과를 "서버"단에서 가져옴
+						false => 브라우저 "캐쉬"에서 가져옴
+				*/
 			},
 			error : function(error) {
 				alert("알 수 없는 에러가 발생하였습니다.");
@@ -269,6 +237,22 @@ tr:nth-child(even) {
 			}
 		});
 	}
-	
+	/* 댓글 수정 js 로직 */
+	function modifyReply(rno) {
+		modalOpen();
+	}
+	/* 댓글 삭제 js 로직 */
+	function removeReply(rno) {
+		
+	}
+	/* --- 댓글 수정 모달창 js 로직 --- */
+	const replyModal = document.getElementById("modal");
+	function modalOpen(){
+        modal.style.display = 'block';
+    }
+    function modalClose(){
+        modal.style.display = 'none';
+    }
+    
 </script>
 </html>

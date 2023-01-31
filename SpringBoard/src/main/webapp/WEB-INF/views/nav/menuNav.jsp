@@ -19,7 +19,7 @@ header {
 	right: 0;
 	/* nav-bar 상단 고정 코드 끝 - 매우 많이 쓰이므로 그냥 외워두자 css는 답이없다. */
 	
-	height: 75px;
+	height: 40px;
 	padding: 1rem;
 	color: white;
 	background: gray;
@@ -30,7 +30,7 @@ header {
 }
 
 body {
-	padding-top: 95px;
+	padding-top: 60px;
 }
 .navA{
 	text-decoration: none;

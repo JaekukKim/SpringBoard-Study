@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+#boardTB {
+	width: 1250px;
+	padding-top: 30px;
+	margin-left: 50px;
+}
+
+label {
+	font-size: 22px;
+}
+
+.boardElement {
+	margin-left: 80px;
+	font-size: 18px;
+	width: 90%;
+	height: 200px;
+}
+
+.boardElementTitle {
+	margin-left: 25px;
+	font-size: 18px;
+}
+
+textarea {
+	resize: none;
+	padding-bottom: 10px;
+	margin-bottom: 5px;
+}
+
+#updateButton {
+	position : relative;
+	width : 120px;
+	height : 40px;
+	margin-right : 30px;
+	font-size : 20px;
+	border: none;
+	border-radius: 6px;
+}
+#updateButton:hover {
+	background-color: #bebebe;
+}
+
+#writer {
+	pointer-events: none;
+	/* 마우스 드래그나 올렸을때 변화, 클릭 등 모든 이벤트를 막아버린다. */
+	margin-left: 55px;
+	font-size: 18px;
+}
+
+textarea {
+	resize: none;
+}
+
+label {
+	font-size: 22px;
+}

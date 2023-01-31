@@ -35,11 +35,14 @@ public class ReplyController {
 	public void writeReply(ReplyVO replyVO) throws Exception {
 		log.info("ReplyController-writeReply 댓글 등록 : {}", replyVO);
 
-		System.out.println("댓글 내용 : " + replyVO.getContent());
-		System.out.println("게시글 번호 : " + replyVO.getBno());
-		System.out.println("댓글 번호 : " + replyVO.getRno());
-		System.out.println("댓글쓴이 : " + replyVO.getWriter());
-
 		replyService.writeReply(replyVO);
+	}
+	
+	// 댓글 수정하기
+	@RequestMapping(value = "/reply/modifiReply", method = RequestMethod.GET)
+	public void modifyReply(ReplyVO replyVO) throws Exception{
+		log.info("ReplyController-modifyReply 댓글 수정 : {}", replyVO);
+		
+		replyService.modifyReply(replyVO);
 	}
 }
