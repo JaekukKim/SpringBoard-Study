@@ -59,23 +59,42 @@ tr:nth-child(even) {
 	background-color: #f9f9f9;
 }
 
-.replyButton {
+.replyModalModify {
 	height: 35px;
 	width: 80px;
 	background-color: #dcdcdc;
 	border-radius: 5px;
 	border: none;
 }
-
-.replyButton:hover {
+.replyModalCancel {
+	height: 35px;
+	width: 80px;
+	background-color: #dcdcdc;
+	border-radius: 5px;
+	border: none;
+}
+.replyModalModify:hover {
 	background-color: #bebebe;
 }
-.modifyAndDeleteBtn{
+.replyModalCancel:hover{
+	background-color: #bebebe;
+}
+
+.replyModifyBtn{
 	background: none;
 	background-color: none;
 	border : none;
 }
-.modifyAndDeleteBtn:hover{
+.replyDeleteBtn{
+	background: none;
+	background-color: none;
+	border : none;
+}
+.replyModifyBtn:hover{
+	color : blue;
+	cursor: pointer;
+}
+.replyDeleteBtn:hover{
 	color : blue;
 	cursor: pointer;
 }

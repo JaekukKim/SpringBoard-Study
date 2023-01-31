@@ -135,19 +135,17 @@
 				<div class="replyContent">
 					<div style="margin-right: 20px;" align="left">
 						<!-- 댓글번호 -->
-						<input type="hidden">
-						<!-- 글번호 -->
-						<input type="hidden">
+						<input id="modalRno" type="hidden">
 						<!-- 작성자 -->
-						<input id="modalWriter" type="text" readonly="readonly">
+						<input id="modalWriter" type="text" readonly="readonly" style="pointer-events: none;">
 					</div>
 					<hr>
 					<!-- 글 내용 -->
-					<textarea id="modalContent" rows="5" cols="80" style="width: 98%;"></textarea>
+					<textarea id="modalContent" rows="5" cols="80" style="width: 98%;" required="required"></textarea>
 				</div>
 				<div align="right">
-					<button class="replyButton" onclick="modifyReply();">댓글수정</button>
-					<button class="replyButton" type="button" id="modalClose" onclick="modalClose();">취소</button>
+					<button class="replyModalModify" onclick="modifyReply(${view.bno});">댓글수정</button>
+					<button class="replyModalCancel" type="button" id="modalClose" onclick="modalClose();">취소</button>
 				</div>
 			</div>
 			<div class="modal_layer"></div>
@@ -208,10 +206,6 @@
 		let writer = document.getElementById("writer").value;
 		let content = document.getElementById("content").value;
 		
-		console.log(bno);
-		console.log(writer);
-		console.log(content);
-		
 		if (writer.length < 2 || writer.length > 12) {
 			alert("닉네임은 2글자 이상 12글자 이하여야 합니다.");
 			document.getElementById("writer").focus();
@@ -249,9 +243,36 @@
 			}
 		});
 	}
-	/* 댓글 수정 서버단 js 로직 */
-	function modifyReply() {
+	/* 댓글 수정 서버단 js(ajax) 로직 */
+	function modifyReply(bno) {
 		
+		let rno = document.getElementById("modalRno").value;
+		let content = document.getElementById("modalContent").value;
+		
+		$.ajax({
+			url : "/reply/modifyReply",
+			type : "POST",
+			data : {
+				bno : bno,
+				rno : rno,
+				content : content
+			},
+			
+			success : function(data) {
+				alert("댓글수정이 완료되었습니다.");
+				location.reload(true);
+				modalClose();
+				/*
+					location.reload :
+						true => 새로고침 한 결과를 "서버"단에서 가져옴
+						false => 브라우저 "캐쉬"에서 가져옴
+				*/
+			},
+			error : function(error) {
+				alert("알 수 없는 에러가 발생하였습니다.");
+				alert(error);
+			}
+		});
 		
 	}
 	
@@ -270,6 +291,7 @@
         $("#modalContent").val("");
         replyModal.style.display = 'none';
     }
+    
     /* 댓글 수정에 필요한 데이터 불러오기 */
     $(".replyVO").on("click", ".replyModifyBtn" ,function() {
     	/*
@@ -279,17 +301,19 @@
     		위에 해당하는 코드는 replyVO라는 클래스의 "바로 아랫부분"에 js가 동작할 수 있도록 클릭 이벤트를 만들어준거나 마찬가지다!
     		=> replyVO라는 클래스 명을 가진 "영역"의 replyModifyBtn의 클래스 명을 가진 버튼을 "클릭"할 시 동작하는 이벤트인것이다.
     	*/
-		alert("클릭댓습니다");
-    	// 모달창에 댓글번호, 내용, 작성자를 보내주어야 한다.
+    	
+    	// 모달창에 보내주기 전, 데이터를 따내야한다.
     	let replyVO = $(this).closest(".replyVO");
     	let rno = replyVO.find(".replyRno").text();
     	let writer = replyVO.find(".replyWriter").text();
     	/* text()로 뽑아내면 \t 이런거까지 전부다 뽑아낸다... 태그수정도 필요함.. */
     	let content = replyVO.find(".replyContent").text();
     	
-    	console.log(rno);
-    	console.log(writer);
-    	console.log(content);
+    	// 모달창에 댓글번호, 내용, 작성자를 보내주어야 한다.
+    	$("#modalRno").val(rno);
+    	$("#modalWriter").val(writer);
+    	$("#modalContent").val(content);
+    	
 		modalOpen();
 		/* ajax 떡칠이다. 꼭 js로 바꾸기. */
 	})

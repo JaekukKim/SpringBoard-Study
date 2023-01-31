@@ -39,27 +39,12 @@ public class ReplyController {
 	}
 	
 	// 댓글 수정하기
-	@RequestMapping(value = "/reply/modifyReply", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value = "/reply/modifyReply", method = RequestMethod.POST)
 	public void modifyReply(ReplyVO replyVO) throws Exception{
 		log.info("ReplyController-modifyReply 댓글 수정 : {}", replyVO);
 		
 		replyService.modifyReply(replyVO);
 	}
 	
-	// 단일 댓글 조회하여 가져오기 (수정에 필요)
-	@RequestMapping(value="/reply/view", method = RequestMethod.POST)
-	public void replySingleQuery (
-			ReplyVO replyVO,
-			@RequestParam("rno") int rno,
-			@RequestParam("bno") int bno,
-			Model model
-			) throws Exception{
-		log.info("ReplyController-replySingleQuery 단일 댓글 조회 : {}", replyVO);
-		
-		replyVO.setRno(rno);
-		replyVO.setBno(bno);
-		
-		model.addAttribute("replyVO", replyVO);
-		
-	}
 }
