@@ -70,22 +70,31 @@ tr:nth-child(even) {
 .replyButton:hover {
 	background-color: #bebebe;
 }
+.modifyAndDeleteBtn{
+	background: none;
+	background-color: none;
+	border : none;
+}
+.modifyAndDeleteBtn:hover{
+	color : blue;
+	cursor: pointer;
+}
 
 /* 댓글 수정창 modal css */
-#modifyReplyModal {
+#modal {
 	display: none;
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	width: 80%;
 	margin-left: -40%; /* half of width */
-	height: 500px;
-	margin-top: -250px; /* half of height */
+	height: 375px;
+	margin-top: -190px; /* half of height */
 	overflow: hidden;
 	z-index: 1;
 }
 
-#modal h2 {
+#modal .replyTitle h2 { /* 댓글 수정 */
 	display: inline;
 	margin: 0;
 }
@@ -114,6 +123,20 @@ tr:nth-child(even) {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.5);
 	z-index: -1;
+}
+
+#modal .close-button{
+	display: inline;
+	float: right;
+	width: 30px;
+	height: 30px;
+	border: none;
+	border-radius: 3px;
+	background-color: #dcdcdc;
+	
+}
+#modal .close-button:hover{
+	background-color: #bebebe;
 }
 
 /* 댓글 수정 모달 끝*/

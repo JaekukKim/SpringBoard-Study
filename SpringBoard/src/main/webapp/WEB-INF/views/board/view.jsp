@@ -8,10 +8,7 @@
 <head>
 
 <!-- 간단 css (생각보다 길어져서 파일로..)-->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/boardCSS/viewCSS.css">
-<style type="text/css">
-
-</style>
+<link rel="stylesheet" type="text/css" href="/resources/boardCSS/viewCSS.css">
 
 <!--
 	하나 또 배웠다.
@@ -72,14 +69,9 @@
 				<button type="button" class="boardUpdate">게시글삭제</button>
 			</a>
 		</div>
-		<!-- 댓글 구현하기 -->
 		<hr>
+		<!-- 댓글 구현하기 -->
 		<h2>댓글</h2>
-		<!--
-			<th style="width: 150px;">작성자</th>
-			<th style="width: 150px;">작성일</th>
-			<th style="width: 80px;">조회수</th>
-		-->
 		<div align="center">
 			<table>
 				<thead>
@@ -102,49 +94,66 @@
 					List<ReplyVO> replyList = (List<ReplyVO>) request.getAttribute("replyList");
 					for (int replyNum = 0; replyNum < replyList.size(); replyNum++) {
 					%>
-					<tr>
-						<td style="display: none;"><%=replyList.get(replyNum).getRno()%></td>
+					<tr class="replyVO">
+						<td class="replyRno" style="display: none;"><%=replyList.get(replyNum).getRno()%></td>
+						<td class="replyBno" style="display: none;"><%=replyList.get(replyNum).getBno()%></td>
 						<td>
-							<div style="margin-left: 20px;">
-								<%=replyList.get(replyNum).getWriter()%>
-								<br>
-								<div align="right" style="margin-right: 20px;">
+							<div class="replyWriter" style="margin-left: 20px;"><%=replyList.get(replyNum).getWriter()%></div>
+							<div>
+								<div class="replyRegDate" align="right" style="margin-right: 20px;">
 									<font size="2" color="gray"> <fmt:formatDate value="<%=replyList.get(replyNum).getRegDate()%>" pattern="yyyy-MM-dd" />
 									</font>
 								</div>
 							</div>
 						</td>
-
-						<td id="replyContent"><%=replyList.get(replyNum).getContent()%></td>
+						<td id="replyContent" class="replyContent"><%=replyList.get(replyNum).getContent()%></td>
 						<td style="padding-right: 5px;" align="center">
-							<font size="2"><a href="javascript:modifyReply('<%=replyList.get(replyNum).getRno()%>');">[수정]</a></font>
+							<font size="2"><button class="replyModifyBtn" type="button">[수정]</button></font>
 							<br>
-							<font size="2"><a href="javascript:removeReply('<%=replyList.get(replyNum).getRno()%>');">[삭제]</a></font>
+							<font size="2">
+							<button class="replyDeleteBtn" type="button" onclick="removeReply('<%=replyList.get(replyNum).getRno()%>');">[삭제]</button>
+							</font>
 						</td>
 					</tr>
-
 					<%
 					}
 					%>
 				</tbody>
 			</table>
 		</div>
-		
+
 		<!-- 댓글 수정 모달창 : #modal -->
 		<div id="modal" class="modal_overlay">
 			<!-- 댓글의 내용을 입력하는 클래스 : .modal_content -->
-			<div class="modal_content"> <!-- modal_window -->
+			<div class="modal_content">
+				<button type="button" class="close-button" onclick="modalClose();">X</button>
+				<!-- modal_window -->
 				<div class="replyTitle">
 					<h2>댓글 수정</h2>
 				</div>
+				<br>
 				<div class="replyContent">
-					<p>댓글 내용이 나올 부분</p>
+					<div style="margin-right: 20px;" align="left">
+						<!-- 댓글번호 -->
+						<input type="hidden">
+						<!-- 글번호 -->
+						<input type="hidden">
+						<!-- 작성자 -->
+						<input id="modalWriter" type="text" readonly="readonly">
+					</div>
+					<hr>
+					<!-- 글 내용 -->
+					<textarea id="modalContent" rows="5" cols="80" style="width: 98%;"></textarea>
 				</div>
-				<button type="button" id="modalClose" onclick="modalClose();">모달 창 닫기</button>
+				<div align="right">
+					<button class="replyButton" onclick="modifyReply();">댓글수정</button>
+					<button class="replyButton" type="button" id="modalClose" onclick="modalClose();">취소</button>
+				</div>
 			</div>
 			<div class="modal_layer"></div>
 			<!-- modal_layer는 배경을 담당하는 클래스이다. 모달창이 뜨면 배경을 어둡게하는 역할하는 생각보다 중요한 클래스임. -->
 		</div>
+		<!-- ajax를 이용할 것이므로 form태그는 사용하지 않는다. -->
 
 		<br>
 		<hr>
@@ -177,6 +186,9 @@
 		<!-- 댓글 구현 끝 -->
 	</div>
 </body>
+
+
+
 <script type="text/javascript">
 	/* 게시글 삭제 js 로직 */
 	function removeContent(bno) {
@@ -237,22 +249,97 @@
 			}
 		});
 	}
-	/* 댓글 수정 js 로직 */
-	function modifyReply(rno) {
-		modalOpen();
+	/* 댓글 수정 서버단 js 로직 */
+	function modifyReply() {
+		
+		
 	}
+	
 	/* 댓글 삭제 js 로직 */
 	function removeReply(rno) {
 		
 	}
+	
 	/* --- 댓글 수정 모달창 js 로직 --- */
 	const replyModal = document.getElementById("modal");
 	function modalOpen(){
-        modal.style.display = 'block';
+		replyModal.style.display = 'block';
     }
+	
     function modalClose(){
-        modal.style.display = 'none';
+        $("#modalContent").val("");
+        replyModal.style.display = 'none';
     }
+    /* 댓글 수정에 필요한 데이터 불러오기 */
+    $(".replyVO").on("click", ".replyModifyBtn" ,function() {
+    	/*
+    		[1] html의 body에 해당하는 데이터가 로딩이 먼저 되고
+    		[2] js가 로딩이 된 다음
+    		[3] 이벤트 처리를 진행한다.
+    		위에 해당하는 코드는 replyVO라는 클래스의 "바로 아랫부분"에 js가 동작할 수 있도록 클릭 이벤트를 만들어준거나 마찬가지다!
+    		=> replyVO라는 클래스 명을 가진 "영역"의 replyModifyBtn의 클래스 명을 가진 버튼을 "클릭"할 시 동작하는 이벤트인것이다.
+    	*/
+		alert("클릭댓습니다");
+    	// 모달창에 댓글번호, 내용, 작성자를 보내주어야 한다.
+    	let replyVO = $(this).closest(".replyVO");
+    	let rno = replyVO.find(".replyRno").text();
+    	let writer = replyVO.find(".replyWriter").text();
+    	/* text()로 뽑아내면 \t 이런거까지 전부다 뽑아낸다... 태그수정도 필요함.. */
+    	let content = replyVO.find(".replyContent").text();
+    	
+    	console.log(rno);
+    	console.log(writer);
+    	console.log(content);
+		modalOpen();
+		/* ajax 떡칠이다. 꼭 js로 바꾸기. */
+	})
+    
+    
+    /* function loadReplyList() {
+    	let replyVO = document.querySelector(".replyVO");
+    	let rno = replyVO.children[0].innerText;
+    	let writer = replyVO.children[2].children[0].innerText;
+    	let content = replyVO.children[3].innerText;
+    	
+    	/* 테스트 코드 */
+    	/* alert ("누르신 모달창의 rno,writer,content 는 \n" + rno + "\n" + writer + "\n" + content + "\n입니다");
+    	console.log(rno);
+    	console.log(writer);
+    	console.log(content);
+		console.log(replyVO.children);
+	} */
+    
+    /* 
+		e => {} 는 js의 람다식으로써 function(e){}와 같은 의미이다.
+		---람다식---
+		[1] 매개변수가 여러개일 경우
+			const exam1 = function (x,y){...} 의 함수를
+			const exam1 = (x,y) => {...}의 식으로 정의가 가능하다.
+		[2] 매개변수가 한개인 경우
+			const exam2 = function (x){...} 의 함수를
+			const exam2 = (x) => {...} 또는 x(괄호생략가능) => {...}의 식으로 정의가 가능하다
+		[3] 매개변수가 없을 경우
+			const exam3 = function(){...} 의 함수를
+			const exam3 = () => {...} 로 정의가 가능하다. 이때 괄호 생략은 불가능하다.
+	*/
+	
+	/* 모달창 외의 영역을 클릭하면 모달창이 꺼지게 만들기 */
+   	replyModal.addEventListener("click", e => {
+        const evTarget = e.target;
+        if(evTarget.classList.contains("modal_layer")) {
+        	/* 
+        		classList는 말 그대로 class=""으로 선언된 태그의 엘레먼트들이 들어가있는 리스트 이다.
+        		classList.contains("class이름") : classList에 class이름이 포함이(contain) 되어 있는지?
+     		*/
+     		replyModal.style.display = "none";
+        }
+    })
+    /* 모달창에서 esc를 누르면 모달창이 꺼지게 만들기 */
+    window.addEventListener("keyup", e => {
+    if(replyModal.style.display === "block" && e.key === "Escape") {
+    	replyModal.style.display = "none";
+    }
+	})
     
 </script>
 </html>

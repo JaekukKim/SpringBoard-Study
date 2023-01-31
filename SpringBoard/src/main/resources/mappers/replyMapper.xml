@@ -30,10 +30,20 @@
 		and bno = #{bno}
 	</update>
 	
+	<!-- 댓글 수정에 필요한 단일 댓글 조회 "단 하나!" -->
+	<select id="replySingleQuery" parameterType="com.board.domain.ReplyVO" resultType="com.board.domain.ReplyVO">
+		select rno, bno, writer, content
+		from tbl_reply
+		where rno = #{rno}
+		and bno = #{bno}
+	</select>
+	
 	<!-- 댓글 삭제하기 -->
 	<delete id="removeReply" parameterType="com.board.domain.ReplyVO">
 		delete from tbl_reply
 		where rno = #{rno}
 		and bno = #{bno}
 	</delete>
+	
+	
 </mapper>
