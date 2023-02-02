@@ -9,6 +9,8 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
+<!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
 <title>게시글 페이징</title>
 
 <style type="text/css">

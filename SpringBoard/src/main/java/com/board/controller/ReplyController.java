@@ -29,7 +29,7 @@ public class ReplyController {
 
 	}
 
-	// 댓글 작성하기
+	// 댓글 작성하기 (ajax)
 	@ResponseBody
 	@RequestMapping(value = "/reply/writeReply", method = RequestMethod.POST)
 	public void writeReply(ReplyVO replyVO) throws Exception {
@@ -38,13 +38,22 @@ public class ReplyController {
 		replyService.writeReply(replyVO);
 	}
 	
-	// 댓글 수정하기
+	// 댓글 수정하기 (ajax)
 	@ResponseBody
 	@RequestMapping(value = "/reply/modifyReply", method = RequestMethod.POST)
 	public void modifyReply(ReplyVO replyVO) throws Exception{
 		log.info("ReplyController-modifyReply 댓글 수정 : {}", replyVO);
 		
 		replyService.modifyReply(replyVO);
+	}
+	
+	// 댓글 삭제하기 (ajax)
+	@ResponseBody
+	@RequestMapping(value = "/reply/removeReply", method = RequestMethod.POST)
+	public void removeReply(ReplyVO replyVO) throws Exception{
+		log.info("ReplyController-removeReply 댓글 삭제 : {}", replyVO);
+		
+		replyService.removeReply(replyVO);
 	}
 	
 }

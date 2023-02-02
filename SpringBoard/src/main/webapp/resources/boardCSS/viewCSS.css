@@ -32,6 +32,10 @@ a {
 	text-decoration: none;
 }
 
+button:hover{
+	cursor: pointer;
+}
+
 .boardUpdate {
 	width: 200px;
 	height: 50px;
@@ -111,6 +115,7 @@ tr:nth-child(even) {
 	margin-top: -190px; /* half of height */
 	overflow: hidden;
 	z-index: 1;
+	border-radius: 10px;
 }
 
 #modal .replyTitle h2 { /* 댓글 수정 */
@@ -126,12 +131,12 @@ tr:nth-child(even) {
 
 #modal .modal_content {
 	width: 600px;
-	height: 400px;
+	height: 230px;
 	margin: 100px auto;
 	padding: 20px 10px;
 	background: #fff;
 	border: 2px none #666;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 
 #modal .modal_layer {
@@ -150,7 +155,7 @@ tr:nth-child(even) {
 	width: 30px;
 	height: 30px;
 	border: none;
-	border-radius: 3px;
+	border-radius: 5px;
 	background-color: #dcdcdc;
 	
 }
