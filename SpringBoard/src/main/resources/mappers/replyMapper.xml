@@ -37,5 +37,10 @@
 		and bno = #{bno}
 	</delete>
 	
+	<!-- 댓글을 전체 삭제하는 쿼리문도 만들어야한다. 왜? 게시글 삭제시 댓글도 전부 삭제되어야 하는데 그때 필요하기 때문이다. -->
+	<delete id="removeAllReply" parameterType="int">
+		delete from tbl_reply
+		where bno = #{bno}
+	</delete>
 	
 </mapper>

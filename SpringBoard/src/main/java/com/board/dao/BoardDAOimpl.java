@@ -23,7 +23,8 @@ public class BoardDAOimpl implements BoardDAO{
 	// mybatis에서 객체를 생성하는 부분은 너무 심층적으로 생각하지말고 사용법만 최대한 알자 아직 자세히 알기엔 시기상조다.
 	
 	// namespace는 mapper.xml과 동일해야한다. 태그안에 namespace선언한거임.
-	private static String namespace = "mybatisBoard";
+	private final static String namespace = "mybatisBoard";
+	private final static String replyNamespace = "mybatisReply";
 	
 	// DB에서 게시글을 불러오는 메소드
 	@Override
@@ -90,10 +91,16 @@ public class BoardDAOimpl implements BoardDAO{
 	}
 	
 	// 게시글 삭제하기. (DELETE)
+	// 2023-02-02 : 게시글 삭제시 댓글도 같이 삭제가 되어야한다. 댓글 삭제 로직 추가.
 	@Override
 	public void removeContent(int bno) throws Exception {
 		logger.info("게시글 삭제하기 실행");
 		
+		// 2023-02-02 : 게시글을 삭제하기 "전에!!"
+		// 댓글을 먼저 삭제하고 게시글이 삭제 되어야 한다. 인터프리터 언어의 순서를 꼭꼭 지켜야한다.
+		sqlSession.delete(replyNamespace + ".removeAllReply", bno);
+		
+		// 댓글삭제 다했으면 남은 게시글을 지워주자.
 		sqlSession.delete(namespace + ".removeContent", bno);
 		
 	}

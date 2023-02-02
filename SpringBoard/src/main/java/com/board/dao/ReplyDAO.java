@@ -17,4 +17,5 @@ public interface ReplyDAO {
 	
 	// 댓글 삭제하기
 	public void removeReply(ReplyVO replyVO) throws Exception;
+	
 }

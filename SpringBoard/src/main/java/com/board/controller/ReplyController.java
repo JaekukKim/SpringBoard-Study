@@ -56,4 +56,5 @@ public class ReplyController {
 		replyService.removeReply(replyVO);
 	}
 	
+	// 댓글 전체삭제 로직은 컨트롤러단에 굳이 필요가 없다. 게시글 삭제와 동시에 진행할것이기 때문.
 }

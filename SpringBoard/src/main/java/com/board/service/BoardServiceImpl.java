@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.dao.BoardDAO;
+import com.board.dao.ReplyDAO;
 import com.board.domain.BoardVO;
 
 @Service
@@ -19,6 +20,9 @@ public class BoardServiceImpl implements BoardService{
 	// DAO에 저장되어 있는 데이터를 가져와야하니 DAO 인터페이스를 구현체로 만들어주고 의존성주입(자료형을 참조하여 bean에서 주입)을 해준다.
 	@Autowired
 	private BoardDAO boardDao;
+	
+	@Autowired
+	private ReplyDAO replyDAO;
 	
 	// 게시글 불러오기 (select)
 	@Override
@@ -80,7 +84,8 @@ public class BoardServiceImpl implements BoardService{
 	// 리턴타입을 어떻게 해야할지 햇갈린다. 일단 지금은 select = 리턴타입이 정해져있음,
 	// insert나 update같이 리턴타입이 추상적인 경우 = void 인거 같은데. 생각하는 힘을 기르자.
 	
-	// 게시글 삭제하기 (pk인 bno를 받아서 삭제한다. 삭제는 리턴값이 컴퓨터 입장에서 모호하다. 그러므로 void로 리턴해준다.
+	// 게시글 삭제하기 (pk인 bno를 받아서 삭제한다. 삭제는 리턴값이 컴퓨터 입장에서 모호하다. 그러므로 void로 리턴해준다.)
+	// 2023-02-02 : 게시글 삭제시 댓글도 같이 삭제가 되어야한다. 댓글 삭제 로직 추가.
 	@Override
 	public void removeContent(int bno) throws Exception {
 		logger.info("게시글 삭제 실행");

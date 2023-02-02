@@ -46,8 +46,9 @@ public class ReplyDAOImpl implements ReplyDAO {
 	// 댓글 삭제하기
 	@Override
 	public void removeReply(ReplyVO replyVO) throws Exception {
-		log.info("ReplyDAOImpl-writeReply");
+		log.info("ReplyDAOImpl-writeReply 댓글 삭제 실행 : {}", replyVO);
 		
 		sqlSession.delete(NAME_SPACE + ".removeReply", replyVO);
 	}
+	
 }

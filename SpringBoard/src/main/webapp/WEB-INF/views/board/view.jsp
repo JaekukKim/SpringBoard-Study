@@ -94,7 +94,10 @@
 					*/
 
 					List<ReplyVO> replyList = (List<ReplyVO>) request.getAttribute("replyList");
+					boolean noticeMsg = (boolean)request.getAttribute("noticeMsg");
+					
 					for (int replyNum = 0; replyNum < replyList.size(); replyNum++) {
+						
 					%>
 					<tr class="replyVO">
 						<td class="replyRno" style="display: none;"><%=replyList.get(replyNum).getRno()%></td>
@@ -108,7 +111,9 @@
 								</div>
 							</div>
 						</td>
+					
 						<td id="replyContent" class="replyContent"><%=replyList.get(replyNum).getContent()%></td>
+					
 						<td style="padding-right: 5px;" align="center">
 							<font size="2"><button class="replyModifyBtn" type="button">[수정]</button></font>
 							<br>
@@ -118,6 +123,7 @@
 						</td>
 					</tr>
 					<%
+					
 					}
 					%>
 				</tbody>
@@ -169,6 +175,9 @@
 							<div style="margin-right: 20px;" align="left">
 								<input id="writer" type="text" placeholder="닉네임을 입력하세요.">
 							</div>
+							<div style="margin-right: 20px;" align="left">
+								<input id="replyPwd" type="text" placeholder="비밀번호를 입력하세요.(미구현)">
+							</div>
 						</th>
 					</tr>
 				</thead>
@@ -216,8 +225,8 @@
 			return false;
 		}
 		
-		if (content.length < 10) {
-			alert("댓글 내용은 10글자 이상 입력해주세요.");
+		if (content.length == 0) {
+			alert("댓글 내용은 반드시 입력되어야 합니다.");
 			document.getElementById("content").focus();
 			return false;
 		}

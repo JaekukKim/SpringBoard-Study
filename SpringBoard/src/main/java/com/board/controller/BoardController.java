@@ -100,22 +100,35 @@ public class BoardController {
 
 	// 게시글 조회하기 및 조회수 증가.
 	@RequestMapping(value = "/board/view", method = RequestMethod.GET)
-	public void viewContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
+	public void viewContent(
+			@RequestParam("bno") int bno,
+			BoardVO boardVO,
+			ReplyVO replyVO,
+			Model model
+			) {
 		// 게시글을 조회하기 위해 bno를 따와서 조회하는 방법을 사용하였다.
 		// 게시글을 조회할라면 bno는 기본적으로 값으로 받아야하고 (@RequestParam("bno") : /board?bno=?
 		// boardVO 객체의 데이터를 받아와야한다음 다시 view에 출력해주어야 한다.
 		try {
 			boardVO = boardService.view(bno);
 			// 위의 view 메소드에는 조회수가 증가하는 로직도 포함되어있다. 즉, 하나의 DAO로직이 2가지 일을 하는 셈이다.
+			
 			model.addAttribute("view", boardVO);
+			
 			logger.info("게시글 조회하기 성공, 조회수 ++");
 			
-			// 게시글 조회와 동시에 댓글 리스트 불러오기.
+			// ****게시글 조회와 동시에 댓글 리스트 불러오기.
 			List<ReplyVO> replyList = null;
-			
 			replyList = replyService.getReplyList(bno);
 			
+			// 댓글이 없을 시 안내문구 출력하는 과정
+			boolean noticeMsg = false;
+			if (replyVO.getContent() == "" || replyVO.getContent() == null) {
+				noticeMsg = true;
+			}
+			
 			model.addAttribute("replyList" , replyList);
+			model.addAttribute("noticeMsg", noticeMsg);
 
 		} catch (Exception e) {
 			logger.error("게시글 조회 실패");
@@ -156,6 +169,7 @@ public class BoardController {
 	// ------------------------게시글 수정 컨트롤러 2개 끝----------------------------------
 
 	// 게시글 삭제기능 pk인 bno를 받아 삭제할 예정.
+	// 2023-02-02 : 게시글 삭제시 댓글도 같이 삭제가 되어야한다. 댓글 삭제 로직 추가.
 	@RequestMapping(value = "/board/remove", method = RequestMethod.GET)
 	public String removeContent(@RequestParam("bno") int bno) throws Exception {
 		logger.info("게시글 삭제 실행");

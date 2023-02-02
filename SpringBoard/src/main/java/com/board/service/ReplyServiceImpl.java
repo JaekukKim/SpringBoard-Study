@@ -46,4 +46,5 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		replyDAO.removeReply(replyVO);
 	}
+	
 }
