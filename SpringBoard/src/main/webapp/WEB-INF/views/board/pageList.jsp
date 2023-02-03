@@ -86,35 +86,6 @@ a{
 						<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
 					</tr>
 				</c:forEach>
-
-				<!-- 스크립틀릿 -->
-				<%--	<%
-				List<BoardVO> boardList = (List<BoardVO>) request.getAttribute("list");
-				for (int i = 0; i < boardList.size(); i++) {
-				
-				<tr>
-					<td><%=boardList.get(i).getBno()%></td>
-					<td>
-						<a href="/board/view?bno=<%=boardList.get(i).getBno()%>"><%=boardList.get(i).getTitle()%></a>
-					</td>
-					<td><%=boardList.get(i).getContent()%></td>
-					<td><%=boardList.get(i).getWriter()%></td>
-					<td>
-						<fmt:formatDate value="<%=boardList.get(i).getRegDate()%>" pattern="yyyy-MM-dd" />
-					</td>
-					<td><%=boardList.get(i).getViewCnt()%></td>
-					<td>
-						<!-- 여기 td부분 delete는 도움받은부분. 나중에 혼자 해볼것 반드시 -->
-						<a href="/board/remove?bno=<%=boardList.get(i).getBno()%>">
-						<!-- 스크립틀릿은 꼭 "" 사이에 넣어주자!! 실수한부분임!! -->
-							<button><%=boardList.get(i).getBno()%>번 게시글 삭제하기</button>
-						</a>
-					</td>
-					<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
-				</tr>
-				<%
-				}
-				%> --%>
 			</tbody>
 		</table>
 		<!--
@@ -122,12 +93,6 @@ a{
 			model.addAttribute("pageList", pageList);
 			model.addAttribute("totalPageNum", totalPageNum);
 		-->
-		<%--
-		무지성으로 일단 페이징이 잘 되었는지 확인만하는 "이전,다음"없는 전체 출력.
-		<c:forEach begin="1" end="${totalPageNum }" var="pageNum" >
-			<span><a class="pageList" href="/board/pageList?pageNum=${pageNum }">${pageNum }</a></span>
-		</c:forEach>
-		--%>
 		<%
 		/*
 			model.addAttribute("list",list);

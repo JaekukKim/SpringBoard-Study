@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
 <!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
 <title>게시글 수정</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/boardCSS/modifyCSS.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/modifyCSS.css">
 </head>
 <body>
 	<!-- 게시판 네비게이션 -->
