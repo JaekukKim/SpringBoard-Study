@@ -83,5 +83,35 @@
 		where bno = #{bno}
 		<!-- 나 왜 where id라고 했냐... bno인데... 다른 게시판이랑 햇갈렸다... 하 ㅠㅠ -->
 	</delete>
-
+	
+	<!-- 게시글 검색기능 + 페이징 -->
+	<select id="boardSearch" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+		<!--
+			게시글 검색기능의 핵심 로직은 %내용%이고, 마이바티스가 쿼리문으로 인식이 가능하게 만들어주는 concat과
+			*mapper.xml에서 사용이 가능한 if태그이다. if태그는 jstl사용법과 매우 유사하다.
+		-->
+		
+		select bno, title, content, writer, regDate, viewCnt
+			from tbl_board
+			
+		<!-- html 태그에 넣어준 value 요소와 name 요소의 이름에 따른 if문 -->
+		<!-- if태그 안의 동등을 비교할땐 equals로 비교해야한다. 자동완성의 폐혜.... -->
+		<if test="searchType.equals('title')">
+			where title like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('content')">
+			where content like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('title_and_content')">
+			where title like concat('%', #{keyword}, '%')
+				or content like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('writer')">
+			where writer like concat('%', #{keyword}, '%')
+		</if>
+		
+		order by bno desc
+		limit #{displayTotalContent} , #{pageContent}
+	</select>
+	
 </mapper>

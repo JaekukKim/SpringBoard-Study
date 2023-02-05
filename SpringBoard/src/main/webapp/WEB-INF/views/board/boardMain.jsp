@@ -9,6 +9,7 @@
 <title>게시판 메인페이지</title>
 </head>
 <body>
+	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 	<h1>스프링으로 만드는 게시판 예제</h1>
 	<br>
 	<a href="/board/list">게시물 목록</a>

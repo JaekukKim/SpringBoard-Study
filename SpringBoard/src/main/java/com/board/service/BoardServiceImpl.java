@@ -64,15 +64,6 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.view(bno);
 	}
 	
-//	// 게시글 조회수 증가시키기(pk가 일치하면 viewCnt+1)
-//	@Override
-//	public void increaseViewCount(int bno) throws Exception {
-//		logger.info("게시글 조회수 증가");
-//		
-//		boardDao.view(bno);
-//		
-//	}
-	
 	// 게시글 수정하기 (기존 게시글을 수정하기 누른 후 (조회나마찬가지) 수정하여 db로 보냄(update)
 	@Override
 	public void modify(BoardVO boardVO) throws Exception {
@@ -91,5 +82,12 @@ public class BoardServiceImpl implements BoardService{
 		logger.info("게시글 삭제 실행");
 		
 		boardDao.removeContent(bno);
+	}
+	
+	@Override
+	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception {
+		logger.info("게시글 페이징 + 검색기능 (Service)");
+		
+		return boardDao.pageListAndSearch(displayTotalContent,pageContent,searchType,keyword);
 	}
 }

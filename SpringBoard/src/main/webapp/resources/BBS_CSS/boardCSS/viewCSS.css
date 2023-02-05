@@ -80,7 +80,7 @@ tr:nth-child(even) {
 .replyModalModify:hover {
 	background-color: #bebebe;
 }
-.replyModalCancel:hover{
+.replyModalCancel:hover {
 	background-color: #bebebe;
 }
 
@@ -94,6 +94,7 @@ tr:nth-child(even) {
 	background-color: none;
 	border : none;
 }
+
 .replyModifyBtn:hover{
 	color : blue;
 	cursor: pointer;
@@ -101,6 +102,16 @@ tr:nth-child(even) {
 .replyDeleteBtn:hover{
 	color : blue;
 	cursor: pointer;
+}
+
+.replySubmitButton {
+	border: none;
+	border-radius : 5px;
+	width: 80px;
+	height: 30px;
+}
+.replySubmitButton:hover {
+	background-color: #bebebe;
 }
 
 /* 댓글 수정창 modal css */

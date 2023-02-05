@@ -6,9 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
+<!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
+<title>${view.bno }번게시글조회</title>
 
 <!-- 간단 css (생각보다 길어져서 파일로..)-->
-<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/viewCSS.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/viewCSS.css?ver=1">
 
 <!--
 	하나 또 배웠다.
@@ -16,10 +20,6 @@
 	따봉
 -->
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
-<!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
-<title>${view.bno }번게시글조회</title>
 </head>
 <body>
 	<!-- 게시글에 대한 정보는 데이터기도 하며 get은 글자수의 제한이 있으니 get보단 post로 전달해주어야 한다 -->
@@ -187,7 +187,7 @@
 						<td style="border-bottom: none;">
 							<textarea id="content" rows="5" cols="100" placeholder="내용을 입력하세요"></textarea>
 							<div align="right">
-								<button class="replyButton" onclick="writeReply('${view.bno}');">등록</button>
+								<button class="replySubmitButton" onclick="writeReply('${view.bno}');">등록</button>
 							</div>
 						</td>
 					</tr>

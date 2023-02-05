@@ -11,6 +11,9 @@ public interface BoardService {
 	// 게시글 리스트를 불러옴과 동시에 페이징을 하는 메소드
 	public List<BoardVO> pageList(int displayTotalContent, int pageContent) throws Exception;
 	
+	// 게시글 페이징 + 검색
+	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception;
+	
 	// 게시글 총 갯수
 	public int totalContent() throws Exception;
 	
@@ -19,9 +22,6 @@ public interface BoardService {
 	
 	// 게시글 조회하기 메소드.
 	public BoardVO view(int bno) throws Exception;
-	
-	// 게시글 조회수 증가 메소드
-//	public void increaseViewCount(int bno) throws Exception;
 	
 	// 게시글 수정하기 메소드 (service)
 	public void modify(BoardVO boardVO) throws Exception;

@@ -102,6 +102,18 @@ a {
 				</c:forEach>
 			</tbody>
 		</table>
+		<!-- 게시글 검색기능 -->
+		<div>
+			<select name="searchType">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="title_and_content">제목+내용</option>
+				<option value="writer">작성자</option>
+			</select>
+			<input type="text" name="keyword">
+			<button id="searchingActivate" type="button" onclick="searchingActivate();">검색</button>
+		</div>
+		<!-- 게시글 검색기능 끝 -->
 		<%
 		/*
 			model.addAttribute("list",list);
@@ -114,7 +126,7 @@ a {
 		if (pageIngredient.isPrevPage() == true) {
 		%>
 		<span>
-			<a href="/board/pageList?pageNum=<%=pageIngredient.getStartPage() - 1%>">◀이전</a>
+			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getStartPage() - 1%>">◀이전</a>
 		</span>
 		<%
 		}
@@ -131,7 +143,7 @@ a {
 		if (selectedPageNum != i) {
 		%>
 		<span>
-			<a id="notSelectedPage" href="/board/pageList?pageNum=<%=i%>"><%=i%></a>
+			<a id="notSelectedPage" href="/board/pageListAndSearch?pageNum=<%=i%>"><%=i%></a>
 		</span>
 		<%
 		} else if (selectedPageNum == i) {
@@ -147,7 +159,7 @@ a {
 		if (pageIngredient.isNextPage() == true) {
 		%>
 		<span>
-			<a href="/board/pageList?pageNum=<%=pageIngredient.getEndPage() + 1%>">다음▶</a>
+			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getEndPage() + 1%>">다음▶</a>
 		</span>
 		<%
 		}
@@ -159,5 +171,12 @@ a {
 		</span>
 	</div>
 </body>
-
+<script type="text/javascript">
+	function searchingActivate() {
+		let searchType = document.getElementsByName("searchType")[0].value;
+		let keyword = document.getElementsByName("keyword")[0].value;
+		
+		location.href = "/board/pageListAndSearch?pageNum=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+	}
+</script>
 </html>

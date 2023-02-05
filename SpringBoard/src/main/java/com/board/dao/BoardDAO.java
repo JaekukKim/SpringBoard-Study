@@ -12,6 +12,9 @@ public interface BoardDAO {
 	public List<BoardVO> pageList(int displayTotalContent, int pageContent) throws Exception;
 	// 페이징에 있는 매개변수는 limit의 동적쿼리에 들어갈 매개변수이다.
 	
+	// 페이징 + 검색기능
+	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception;
+	
 	// 게시글 총 갯수
 	public int totalContent() throws Exception;
 	
