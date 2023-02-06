@@ -14,6 +14,9 @@ public interface BoardService {
 	// 게시글 페이징 + 검색
 	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception;
 	
+	// 게시글 페이징 + 검색 호환을 위한 "검색 키워드에 따른 게시글 총 갯수 출력"
+	public int totalSearchContent(String searchType, String keyword) throws Exception;
+	
 	// 게시글 총 갯수
 	public int totalContent() throws Exception;
 	

@@ -114,4 +114,26 @@
 		limit #{displayTotalContent} , #{pageContent}
 	</select>
 	
+	<!-- 검색된 결과에 따른 총 갯수를 가져오는 쿼리. 페이징 + 검색기능에 필요. -->
+	<select id="totalSearchContent" resultType="Int" parameterType="hashmap">
+		select count(bno)
+		from
+		tbl_board
+		
+		<if test="searchType.equals('title')">
+			where title like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('content')">
+			where content like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('title_and_content')">
+			where title like concat('%', #{keyword}, '%')
+				or content like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchType.equals('writer')">
+			where writer like concat('%', #{keyword}, '%')
+		</if>
+		
+	</select>
+	
 </mapper>

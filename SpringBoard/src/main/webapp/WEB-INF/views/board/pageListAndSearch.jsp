@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.board.domain.BoardVO"%>
+<%@ page import="com.board.domain.PageIngredient"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +15,10 @@
 <title>게시글 페이징</title>
 
 <style type="text/css">
-thead {
-	background-color: yellow;
+thead>tr>th {
+	background-color: #42b983;
+	border-left: 0;
+	border-right: 0;
 }
 
 tr {
@@ -26,8 +29,20 @@ span {
 	margin-right: 10px;
 }
 
-#boardTable {
+table {
 	margin-bottom: 20px;
+	border-collapse: collapse;
+	border-radius: 10px;
+}
+
+th, td {
+	padding: 10px;
+	border: 2px solid #e9e9e9;
+	border-right: none;
+}
+
+th:first-child, td:first-child {
+	border-left: none;
 }
 
 a {
@@ -51,16 +66,15 @@ a {
 	cursor: pointer;
 }
 </style>
+
 </head>
 <body>
-
 	<!-- 게시판 네비게이션 -->
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 
-
 	<div id="boardGroup" align="center">
 		<h1>게시글 목록(페이징)</h1>
-		<table id="boardTable" border="1">
+		<table>
 			<thead>
 				<tr>
 					<th style="width: 80px;">번호</th>
@@ -71,15 +85,6 @@ a {
 				</tr>
 			</thead>
 			<tbody>
-				<!--
-				게시글 리스트 불러올때 변수명 편하게 보세용.
-				private int bno; //primary key.
-				private String title;
-				private String content;
-				private String writer;
-				private Date regDate;
-				private int viewCnt;
-			 -->
 				<!-- jstl -->
 				<!-- jstl의 forEach문으로 데이터를 하나하나 불러올수 있는거 잊지말자 ㅇㅇ -->
 				<c:forEach items="${list }" var="list">
@@ -93,57 +98,58 @@ a {
 							<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
 						</td>
 						<td>${list.viewCnt }</td>
-
-						<%-- <a class="btn btn-sm btn-danger"
-						href="javascript:removeMember('${member.id }');">삭제</a> --%>
-						<!-- 자바스크립트 함수 안에 매개변수로 id를 넘겨준다. 이때 el식 안에 싱글쿼테이션으로 묶어주어야한다. -->
-						<!-- 데이터는 list.VO에서 선언한 변수명 으로 빼올수있음 아 물론 list는 키임 -->
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		
 		<!-- 게시글 검색기능 -->
+		<%
+			PageIngredient pageIngredient = (PageIngredient) request.getAttribute("page");
+		%>
 		<div>
 			<select name="searchType">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="title_and_content">제목+내용</option>
-				<option value="writer">작성자</option>
+				<!--
+					option 태그의 는 selected 라는 속성이 존재한다.
+					이 속성은 html에서는 디폴트 값을 설정하는데 사용하는게 주력이나
+					db에서 넘어온 값에 대해선 특히 더 요긴하게 써먹을 수 있다.
+					먼저 컨트롤러에서 넘겨준 searchType를 받아 이것이 option의 value 값과 같다면 그 옵션을 "선택된상태로(selected)"
+					만들수 있게 할 수 있다.
+				-->
+				
+				<!-- 
+				<option value="searchType's value             selected 여부 (db값과 비교해서)					보여질문구
+				 -->
+				<option value="title" 			<%= pageIngredient.getSearchType().equals("title")?"selected":"" %>>제목</option>		
+				<option value="content" 		<%= pageIngredient.getSearchType().equals("content")?"selected":"" %>>내용</option>
+				<option value="title_and_content" <%= pageIngredient.getSearchType().equals("title_and_content")?"selected":"" %>>제목+내용</option>
+				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer")?"selected":"" %>>작성자</option>	
 			</select>
-			<input type="text" name="keyword">
+			<input type="text" name="keyword" value="<%=pageIngredient.getKeyword()%>">
 			<button id="searchingActivate" type="button" onclick="searchingActivate();">검색</button>
 		</div>
 		<!-- 게시글 검색기능 끝 -->
+
+		<!-- 페이징 시작 -->
 		<%
-		/*
-			model.addAttribute("list",list);
-			model.addAttribute("page",page);
-		*/
-		PageIngredient pageIngredient = (PageIngredient) request.getAttribute("page");
 		int selectedPageNum = (int) request.getAttribute("selectedPageNum");
 
 		/* 이전페이지 버튼만들기 */
 		if (pageIngredient.isPrevPage() == true) {
 		%>
 		<span>
-			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getStartPage() - 1%>">◀이전</a>
+			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getStartPage() - 1%><%=pageIngredient.getSearchTypeAndKeyword()%>">◀이전</a>
 		</span>
 		<%
 		}
 
-		/* 페이지 쫙 출력하기 */
+		/* 페이지 쫙(1,2,3,4...) 출력하기 */
 		for (int i = pageIngredient.getStartPage(); i <= pageIngredient.getEndPage(); i++) {
-		/* 주노좌한테 여기 왜 i를 page라고 선언하면 빨간줄에 듀플리케이트 뜨는지 질문하기 */
-		/*
-			2023-01-13
-			page가 듀플이 뜨는 이유는 서블릿 스코프 때문이다. page < request < session < application
-			위에 적어논 범위를 나타내는 스코프들은 jsp에서 변수명으로 사용하지 못한다.
-			(js의 예약어를 생각하면 이해가 쉽다.)
-		*/
+
 		if (selectedPageNum != i) {
 		%>
 		<span>
-			<a id="notSelectedPage" href="/board/pageListAndSearch?pageNum=<%=i%>"><%=i%></a>
+			<a id="notSelectedPage" href="/board/pageListAndSearch?pageNum=<%=i%><%=pageIngredient.getSearchTypeAndKeyword()%>"><%=i%></a>
 		</span>
 		<%
 		} else if (selectedPageNum == i) {
@@ -159,11 +165,12 @@ a {
 		if (pageIngredient.isNextPage() == true) {
 		%>
 		<span>
-			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getEndPage() + 1%>">다음▶</a>
+			<a href="/board/pageListAndSearch?pageNum=<%=pageIngredient.getEndPage() + 1%><%=pageIngredient.getSearchTypeAndKeyword()%>">다음▶</a>
 		</span>
 		<%
 		}
 		%>
+		<!-- 페이징 끝 -->
 		<hr />
 		<br>
 		<span>
@@ -172,11 +179,19 @@ a {
 	</div>
 </body>
 <script type="text/javascript">
+	/*
+		아래 코드는 검색을 "첫 시작하는" js코드이다.
+		내용을 입력하고 "input 태그에 종속되어 있는 button태그 검색버튼"을 누르면 실행되는 코드이다.
+		1페이지 출력용 코드라고 보면 쉽다.
+	*/
 	function searchingActivate() {
 		let searchType = document.getElementsByName("searchType")[0].value;
 		let keyword = document.getElementsByName("keyword")[0].value;
 		
-		location.href = "/board/pageListAndSearch?pageNum=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+		/* select 태그의 value인 searchType에 관한 option태그의 값과
+		input태그에 들어간 keyword 값을 쿼리스트링으로 보내 첫페이지를 출력한다. */
+		location.href = "/board/pageListAndSearch?pageNum=1" + "&searchType="
+				+ searchType + "&keyword=" + keyword;
 	}
 </script>
 </html>

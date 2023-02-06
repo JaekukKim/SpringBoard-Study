@@ -14,7 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/menuNavCSS.css">
+<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/menuNavCSS.css?ver=1">
 
 </head>
 <body>

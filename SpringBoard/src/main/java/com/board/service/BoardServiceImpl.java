@@ -90,4 +90,10 @@ public class BoardServiceImpl implements BoardService{
 		
 		return boardDao.pageListAndSearch(displayTotalContent,pageContent,searchType,keyword);
 	}
+	
+	@Override
+	public int totalSearchContent(String searchType, String keyword) throws Exception {
+		
+		return boardDao.totalSearchContent(searchType, keyword);
+	}
 }

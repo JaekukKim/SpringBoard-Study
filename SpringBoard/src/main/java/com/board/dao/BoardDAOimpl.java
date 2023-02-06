@@ -65,6 +65,19 @@ public class BoardDAOimpl implements BoardDAO {
 
 		return sqlSession.selectList(namespace + ".boardSearch", pageData);
 	}
+	
+	// 검색 결과에 따른 게시글 총 갯수 출력.
+	@Override
+	public int totalSearchContent(String searchType, String keyword) throws Exception {
+		
+		// 검색타입, 키워드에 따른 갯수 출력은 타입과 키워드를 담아서 쿼리에 보내주어야 한다.
+		HashMap<String,String> searchData = new HashMap<>();
+		
+		searchData.put("searchType", searchType);
+		searchData.put("keyword", keyword);
+		
+		return sqlSession.selectOne(namespace + ".totalSearchContent", searchData);
+	}
 
 	// 게시글 총 갯수 (페이징에 사용될 계획)
 	@Override

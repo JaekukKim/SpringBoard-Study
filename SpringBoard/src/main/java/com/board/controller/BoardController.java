@@ -38,9 +38,7 @@ public class BoardController {
 		return "/board/boardMain";
 	}
 
-	// ---------------------------------------게시글 리스트
-	// 가져오기 및
-	// 페이징---------------------------------------------------
+	// ---------------------------------------게시글 리스트 가져오기 및 페이징---------------------------------------------------
 	@RequestMapping(value = "/board/list", method = RequestMethod.GET)
 	public void getList(Model model) throws Exception {
 		List<BoardVO> list = null;
@@ -50,8 +48,7 @@ public class BoardController {
 		model.addAttribute("list", list);
 	}
 
-	// 게시글 페이징 기능 구현 : 매우 어렵다곤 하는데... 어려운거 맞는듯 생각조차
-	// 안남.
+	// 게시글 페이징 기능 구현 : 매우 어렵다곤 하는데... 어려운거 맞는듯 생각조차 안남.
 	// 일단 게시글 리스트 불러오는거랑 연관이 있는건 바로 알 수 있다.
 	@RequestMapping(value = "/board/pageList", method = RequestMethod.GET)
 	public void pageList(@RequestParam("pageNum") int pageNum, Model model, PageIngredient page) throws Exception {
@@ -91,12 +88,18 @@ public class BoardController {
 		 * 근데 required가 true라면?? 요구하는 매개변수가 주어지지 않아 사이트 접속 자체가 안될것이다. 요구하는 값이 없기때문에!
 		 * 그러므로 우리는 @RequestParam의 required를 false(선택적요구)로, defaultValue를 따로 설정(가급적 포괄적으로)해주어야 한다.
 		 */
-
-		// 현재 페이지를 받아오기
+		
 		page.setPageNum(pageNum);
+		
+		// searchType , keyword , searchTypeAndKeyword는 맨 처음 값을 보내주는것이 아니다!
+		// 검색이 시작되고 나면 사용자가 입력한 값을 가지고 검색 및 페이징을 해주는 역할로 보내지는 것이다!
+		page.setSearchType(searchType);
+		page.setKeyword(keyword);
+		page.setSearchTypeAndKeyword(searchType, keyword);
+		
 
-		// 게시글 총 갯수를 구하면 PageIngredient의 로직에서 전부 계산을 해준다.
-		page.setTotalContent(boardService.totalContent());
+		// 게시글 총 갯수를 구한다. 단 검색타입과 키워드에 맞춘 결과에 대한 총 갯수를 출력해야한다.
+		page.setTotalContent(boardService.totalSearchContent(searchType, keyword));
 
 		List<BoardVO> list = null;
 		list = boardService.pageListAndSearch(page.getSelectContent(), page.getContentNum(), searchType, keyword);
@@ -106,7 +109,7 @@ public class BoardController {
 		// 현재 페이지가 몇페이지인지 쉽게 구분하기위한 구분자를 넘겨주자
 		model.addAttribute("selectedPageNum", pageNum);
 	}
-	// ---------------------------------------게시글 리스트 가져오기 및페이징끝---------------------------------------------------
+	// ---------------------------------------게시글 리스트 가져오기 및 페이징끝---------------------------------------------------
 
 	// ----------------------------------게시글 작성 및 작성하기 기능-------------------------------------------------------
 	// 게시글 작성 페이지
@@ -203,12 +206,10 @@ public class BoardController {
 		return "redirect:/board/view?bno=" + boardVO.getBno();
 		// 수정에 성공하면 수정된 게시글로 넘긴다.
 	}
-	// ------------------------게시글 수정 컨트롤러 2개
-	// 끝----------------------------------
+	// ------------------------게시글 수정 컨트롤러 2개 끝----------------------------------
 
 	// 게시글 삭제기능 pk인 bno를 받아 삭제할 예정.
-	// 2023-02-02 : 게시글 삭제시 댓글도 같이 삭제가 되어야한다. 댓글 삭제 로직
-	// 추가.
+	// 2023-02-02 : 게시글 삭제시 댓글도 같이 삭제가 되어야한다. 댓글 삭제 로직 추가.
 	@RequestMapping(value = "/board/remove", method = RequestMethod.GET)
 	public String removeContent(@RequestParam("bno") int bno) throws Exception {
 		logger.info("게시글 삭제 실행");
@@ -217,9 +218,7 @@ public class BoardController {
 
 		return "redirect:/board/pageList?pageNum=1";
 		// redirect는 서버를 2번 호출한다.
-		// View → Interceptor → Controller(내부에 redirect
-		// 실행) → View → Interceptor →
-		// Controller(redirect 링크 호출)
+		// View → Interceptor → Controller(내부에 redirect 실행) → View → Interceptor → Controller(redirect 링크 호출)
 	}
 
 }
