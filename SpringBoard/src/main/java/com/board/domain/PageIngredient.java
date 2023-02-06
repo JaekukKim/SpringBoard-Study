@@ -16,6 +16,10 @@ public class PageIngredient {
 	private int endPage; // 한 화면에 출력되는 페이지 중 끝 페이지의 숫자
 	private boolean prevPage; // 이전페이지 버튼
 	private boolean nextPage; // 다음페이지 버튼
+	
+	// 검색기능을 위한 검색어 관리. (검색타입, 검색어)
+	private String searchType;
+	private String keyword;
 
 	// 생성자를 이용하여 기본값을 설정해준다.
 	public PageIngredient() {

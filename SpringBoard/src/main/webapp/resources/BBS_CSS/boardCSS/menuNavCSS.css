@@ -1,0 +1,64 @@
+@charset "UTF-8";
+header {
+	/* nav-bar 상단 고정 코드 시작 */
+	position: fixed;
+	top: 0;
+	/* width: 100% */
+	left: 0;
+	right: 0;
+	/* nav-bar 상단 고정 코드 끝 - 매우 많이 쓰이므로 그냥 외워두자 css는 답이없다. */
+	height: 40px;
+	padding: 1rem;
+	color: white;
+	background: gray;
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+body {
+	padding-top: 60px;
+}
+
+#mainBoard {
+	text-decoration: none;
+	color: white;
+}
+
+#mainBoard:visited {
+	color: white;
+}
+
+#mainBoard:hover {
+	color: #dcdcdc;
+}
+
+#navBtnGroup {
+	float: left;
+}
+
+.navButton {
+	border: none;
+	float: left;
+	background: gray;
+	color: white;
+	height: 70px;
+	font-weight: bold;
+}
+
+.navButton:hover {
+	border-radius : 12px;
+	background-color: #bebebe;
+	color: black;
+	cursor: pointer;
+}
+
+button:nth-child(even) {
+	border-radius : 12px;
+	background-color: #e9e9e9;
+	color: black;
+}
+
+button:nth-child(even):hover {
+	color: white;
+}

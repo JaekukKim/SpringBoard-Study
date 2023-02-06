@@ -18,8 +18,9 @@
 	<a href="/board/pageList?pageNum=1">페이징 처리된 게시글 목록</a>
 	<br>
 	<br>
+	<a href = '/board/pageListAndSearch?pageNum=1'>페이징 + 검색으로 이동</a>
+	<br>
+	<br>
 	<a href="/board/write">게시글 작성</a>
-	<br>
-	<br>
 </body>
 </html>

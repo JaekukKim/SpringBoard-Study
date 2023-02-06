@@ -4,79 +4,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
+
 <!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
+<meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
+
 <title>게시판 네비게이션 탭</title>
 
 <!-- jquery 구글 CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<style type="text/css">
-header {
-	/* nav-bar 상단 고정 코드 시작 */
-	position: fixed;
-	top: 0;
-	/* width: 100% */
-	left: 0;
-	right: 0;
-	/* nav-bar 상단 고정 코드 끝 - 매우 많이 쓰이므로 그냥 외워두자 css는 답이없다. */
-	height: 40px;
-	padding: 1rem;
-	color: white;
-	background: gray;
-	font-weight: bold;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-body {
-	padding-top: 60px;
-}
-
-#mainBoard {
-	text-decoration: none;
-	color: white;
-}
-
-#mainBoard:visited {
-	color: white;
-}
-
-#mainBoard:hover {
-	color: #dcdcdc;
-}
-
-#navBtnGroup {
-	float: left;
-}
-
-.navButton {
-	border: none;
-	float: left;
-	background: gray;
-	color: white;
-	height: 70px;
-	font-weight: bold;
-}
-
-.navButton:hover {
-	border-radius : 12px;
-	background-color: #bebebe;
-	color: black;
-	cursor: pointer;
-}
-
-button:nth-child(even) {
-	border-radius : 12px;
-	background-color: #e9e9e9;
-	color: black;
-}
-
-button:nth-child(even):hover {
-	
-	color: white;
-}
-</style>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/menuNavCSS.css">
 
 </head>
 <body>
