@@ -120,12 +120,12 @@ a {
 				<!-- 
 				<option value="searchType's value             selected 여부 (db값과 비교해서)					보여질문구
 				 -->
-				<option value="title" 			<%= pageIngredient.getSearchType().equals("title")?"selected":"" %>>제목</option>		
-				<option value="content" 		<%= pageIngredient.getSearchType().equals("content")?"selected":"" %>>내용</option>
-				<option value="title_and_content" <%= pageIngredient.getSearchType().equals("title_and_content")?"selected":"" %>>제목+내용</option>
-				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer")?"selected":"" %>>작성자</option>	
+				<option value="title" 			<%= pageIngredient.getSearchType().equals("title") ? "selected" : "" %>>제목</option>		
+				<option value="content" 		<%= pageIngredient.getSearchType().equals("content") ? "selected" : "" %>>내용</option>
+				<option value="title_and_content" <%= pageIngredient.getSearchType().equals("title_and_content") ? "selected" : "" %>>제목+내용</option>
+				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer") ? "selected" : "" %>>작성자</option>	
 			</select>
-			<input type="text" name="keyword" value="<%=pageIngredient.getKeyword()%>">
+			<input type="text" name="keyword" value="<%=pageIngredient.getKeyword()%>" onkeyup="enterSearching();">
 			<button id="searchingActivate" type="button" onclick="searchingActivate();">검색</button>
 		</div>
 		<!-- 게시글 검색기능 끝 -->
@@ -192,6 +192,13 @@ a {
 		input태그에 들어간 keyword 값을 쿼리스트링으로 보내 첫페이지를 출력한다. */
 		location.href = "/board/pageListAndSearch?pageNum=1" + "&searchType="
 				+ searchType + "&keyword=" + keyword;
+	}
+	
+	/* input 태그 안에서 enter키 (keyNumber == 13) 누르면 검색 시작. */
+	function enterSearching() {
+		if (window.event.keyCode == 13) {
+			searchingActivate();
+		}
 	}
 </script>
 </html>

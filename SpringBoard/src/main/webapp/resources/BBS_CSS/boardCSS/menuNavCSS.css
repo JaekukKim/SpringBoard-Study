@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 header {
 	/* nav-bar 상단 고정 코드 시작 */
 	position: fixed;
@@ -7,59 +8,126 @@ header {
 	left: 0;
 	right: 0;
 	/* nav-bar 상단 고정 코드 끝 - 매우 많이 쓰이므로 그냥 외워두자 css는 답이없다. */
-	height: 40px;
+	height: 35px;
 	padding: 1rem;
+	margin : 0;
 	color: white;
-	background: gray;
+	background: #42b983;
 	font-weight: bold;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
-body {
-	padding-top: 60px;
+body{
+	padding-top : 60px;
 }
 
-#mainBoard {
+h1 > a{
 	text-decoration: none;
-	color: white;
 }
 
-#mainBoard:visited {
-	color: white;
+h1 > a:visited{
+	text-decoration: none;
+	color : white;
 }
 
-#mainBoard:hover {
-	color: #dcdcdc;
+nav{
+	height : auto;
+}
+/* 네비게이션 바는 범용성으로 import해서 사용할 것이기 때문에 nav이외의 태그들은 중복될
+가능성이 매우 높다. 그러므로 직접 선택자로 지정하지 않고 nav ~ 식으로 조합해서 사용하자. */
+nav ul {
+	/* 전체화면 크기로 고정되게 지정, list style (불릿) 없음 */
+	width: 100%;
+	height : 100%;
+	background-color: #42b983;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
-#navBtnGroup {
-	float: left;
+nav ul li {
+	/* 목록들이 메뉴에서 나란히 배치될 수 있도록 inline-block으로 설정 */
+	display: inline-block;
 }
 
-.navButton {
-	border: none;
-	float: left;
-	background: gray;
-	color: white;
-	height: 35px;
+.home {
+	/* a태그는 기본적으로 인라인태그 이므로 상하배치가 불가능하다. block로 바꿔주면
+    상하배치가 가능하다 */
+	background-color: #FFFF96; /* 노랑 */
+	width: auto;
+	text-align: center;
 	font-weight: bold;
-	margin-right : 10px;
+	float: left;
 }
 
-.navButton:hover {
-	border-radius : 12px;
-	background-color: #bebebe;
-	color: black;
+.home a {
+	display: block;
+	text-decoration: none;
+	color: navy;
+	padding: 16px 16px;
+}
+
+.dropdown {
+	/* 메뉴 제목과 서브메뉴 항목이 포함된 .dropdown */
+	position: relative;
+}
+
+.dropdown-menu {
+	color: white;
+	padding : 22px 20px 22px 20px; /* 순서대로 상 우 하 좌 */
+	font-size: 16px;
 	cursor: pointer;
 }
 
-button:nth-child(even) {
-	border-radius : 12px;
-	background-color: #e9e9e9;
-	color: black;
+.dropdown-menu:hover {
+	background-color: #FFFF96;
+	color : navy;
 }
 
-button:nth-child(even):hover {
-	color: white;
+.dropdown-content {
+	/* 
+        .dropdown의 position이 relative 이므로 이를 기준으로 절대위치를 지정해야
+        드롭다운의 효과를 제대로 뽑아낼 수 있다.
+    */
+	position: absolute; /* 절대위치 설정 */
+	min-width: 200px;
+	background-color: #f1f1f1;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+	/* a태그는 위와 마찬가지로 세로로 한줄배치 해야하니 block */
+	color: black;
+	width : auto;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content {
+	/* 마우스 커서가 올라가기 전까진 하위 항목들은 화면에 보이지 않게 한다. */
+	display: none;
+}
+.dropdown-content:nth-child(even){
+	color: #FFFF96;
+}
+
+.dropdown-content:hover:not(.home) {
+	/*
+        마우스가 메뉴위에 올라가면 메뉴를 나열해주어야 한다.
+        :not(선택자) => 특정 선택자를 제외시킬때 사용. -> home클래스는 hover효과가 안들어가게 한다.
+    */
+	background-color: #f1f1f1;
+	color: #FFFF96;
+	
+}
+
+.dropdown:hover .dropdown-content {
+	/* 현재 아무것도 보이지 않는 상태이므로 마우스가 올라가면 보이게 만든다 */
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #FFFF96;
 }

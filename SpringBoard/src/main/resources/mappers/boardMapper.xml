@@ -37,14 +37,6 @@
 		<!-- hashmap에 넣은 키 값 2개 (위의 동적쿼리 2개) 로 각각 받아 쓸것이다. -->
 	</select>
 
-	<!-- 조회수 증가 쿼리, -->
-	<update id="increaseViewCount" parameterType="Int">
-		update tbl_board
-		set
-		viewCnt = viewCnt+1
-		where bno = #{bno}
-	</update>
-
 	<!-- 게시글 작성 쿼리 : id는 자동증가. 날짜도 now()로 등록, 우리가 DB에 추가할건 제목, 글쓴이, 내용밖에 없다. -->
 	<insert id="write" parameterType="com.board.domain.BoardVO">
 		<!-- resultType는 쿼리를 실행하고 결과가 "나올때만" 사용하고 데이터를 "입력받는"과정은 결과가 없기에 입력받는 "타입"이므로 
@@ -76,6 +68,14 @@
 		tbl_board
 		where bno = #{bno}
 	</select>
+	
+	<!-- 조회수 증가 쿼리, -->
+	<update id="increaseViewCount" parameterType="Int">
+		update tbl_board
+		set
+		viewCnt = viewCnt+1
+		where bno = #{bno}
+	</update>
 
 	<!-- 게시글 삭제하기 쿼리. 고유키인 bno를 받아서 글을 삭제한다. 삭제한뒤에는 redirect로 게시글 리스트로 간다.(controller) -->
 	<delete id="removeContent" parameterType="Int">

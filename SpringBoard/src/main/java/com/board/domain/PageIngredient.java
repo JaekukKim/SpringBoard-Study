@@ -129,13 +129,6 @@ public class PageIngredient {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-
-	@Override
-	public String toString() {
-		return "PageIngredient [totalContent=" + totalContent + ", contentNum=" + contentNum + ", totalPageNum="
-				+ totalPageNum + ", selectContent=" + selectContent + ", maxPageNum=" + maxPageNum + ", startPage="
-				+ startPage + ", endPage=" + endPage + ", prevPage=" + prevPage + ", nextPage=" + nextPage + "]";
-	}
 	
 	// 페이징을 본격적으로 구현하는 로직
 	private void calculatePage() {
@@ -187,11 +180,20 @@ public class PageIngredient {
 		
 		if (searchType.equals("") || keyword.equals("")) {
 			searchTypeAndKeyword = "";
+			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-아무것도 입력하지 않음.-).");
 		} else {
 			// &searchType=writer&keyword=33
 			searchTypeAndKeyword =  "&searchType=" + searchType + "&keyword=" + keyword;
+			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-검색타입과 검색어가 들어옴.-.");
 		}
 		
+	}
+	
+	@Override
+	public String toString() {
+		return "PageIngredient [totalContent=" + totalContent + ", contentNum=" + contentNum + ", totalPageNum="
+				+ totalPageNum + ", selectContent=" + selectContent + ", maxPageNum=" + maxPageNum + ", startPage="
+				+ startPage + ", endPage=" + endPage + ", prevPage=" + prevPage + ", nextPage=" + nextPage + "]";
 	}
 
 }

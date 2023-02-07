@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.dao.BoardDAO;
-import com.board.dao.ReplyDAO;
 import com.board.domain.BoardVO;
 
 @Service
@@ -21,9 +20,6 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardDAO boardDao;
 	
-	@Autowired
-	private ReplyDAO replyDAO;
-	
 	// 게시글 불러오기 (select)
 	@Override
 	public List<BoardVO> list() throws Exception {
@@ -35,11 +31,15 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> pageList(int displayTotalContent, int pageContent) throws Exception {
 		
+		logger.info("게시글 페이징 시작 (Service)");
+		
 		return boardDao.pageList(displayTotalContent, pageContent);
 	}
 	// 게시글의 총 갯수를 구해오자 (페이징에 쓰일 예정)
 	@Override
 	public int totalContent() throws Exception {
+		
+		logger.info("totalContent (Service)");
 		
 		return boardDao.totalContent();
 	}
@@ -84,13 +84,15 @@ public class BoardServiceImpl implements BoardService{
 		boardDao.removeContent(bno);
 	}
 	
+	// 검색타입과 검색어에 따른 결과를 페이징해준다.
 	@Override
 	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception {
-		logger.info("게시글 페이징 + 검색기능 (Service)");
+		logger.info("pageListAndSearch : 게시글 페이징 + 검색기능 (Service)");
 		
 		return boardDao.pageListAndSearch(displayTotalContent,pageContent,searchType,keyword);
 	}
 	
+	// 검색타입과 검색어에 따른 결과의 게시물 갯수를 가져온다.
 	@Override
 	public int totalSearchContent(String searchType, String keyword) throws Exception {
 		

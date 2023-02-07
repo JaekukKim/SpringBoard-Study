@@ -97,7 +97,6 @@ public class BoardController {
 		page.setKeyword(keyword);
 		page.setSearchTypeAndKeyword(searchType, keyword);
 		
-
 		// 게시글 총 갯수를 구한다. 단 검색타입과 키워드에 맞춘 결과에 대한 총 갯수를 출력해야한다.
 		page.setTotalContent(boardService.totalSearchContent(searchType, keyword));
 
@@ -145,7 +144,9 @@ public class BoardController {
 		// 게시글을 조회할라면 bno는 기본적으로 값으로 받아야하고
 		// (@RequestParam("bno") : /board?bno=?
 		// boardVO 객체의 데이터를 받아와야한다음 다시 view에 출력해주어야 한다.
+		
 		try {
+			
 			boardVO = boardService.view(bno);
 			// 위의 view 메소드에는 조회수가 증가하는 로직도 포함되어있다. 즉, 하나의
 			// DAO로직이 2가지 일을 하는 셈이다.
@@ -168,13 +169,11 @@ public class BoardController {
 			model.addAttribute("noticeMsg", noticeMsg);
 
 		} catch (Exception e) {
-			logger.error("게시글 조회 실패");
+			logger.error("게시글 조회 실패 : {}", e);
 		}
 	}
 
 	// 게시글 수정하기 : 기존 게시글 조회(의 개념으로 수정페이지 들어가기)
-	// ---------------------------------------------------------------------
-	// String 게시글 = "내용123";
 	@RequestMapping(value = "/board/modify", method = RequestMethod.GET)
 	public void getContent(@RequestParam("bno") int bno, BoardVO boardVO, Model model) {
 		// 수정하는건 게시글 작성 + 조회이며 거기에 쿼리문만 기존걸 대체하는 update로
@@ -193,7 +192,6 @@ public class BoardController {
 	}
 
 	// 게시글 수정하기 : 기존 게시글 수정
-	// 게시글 = "내용 456";
 	@RequestMapping(value = "/board/modify", method = RequestMethod.POST)
 	public String setContent(BoardVO boardVO) {
 		try {

@@ -18,18 +18,52 @@
 
 </head>
 <body>
+	<!-- 시멘틱 태그인 nav 태그와 ul, li, a를 이용하여 네비바 구성 -->
+	<!-- 
+        dropdown: 각각의 메뉴를 구성하는 컨테이너 클래스.
+        dropdown-menu : 메인 메뉴 항목을 정의하는 클래스.
+        dropdown-content : 서브메뉴가 있을 경우 드롭다운으로 나타나는 메뉴 목록 지정 클래스.
+        home : 메인 화면으로의 링크를 위해 메뉴와 컬러 구성을 달리한 클래스.
+    -->
 	<header>
-		<h1>
-			<a id="mainBoard" href="../board/boardMain">SpringBoard</a>
-		</h1>
+		<h1><a href="/board/boardMain">SpringBoard</a></h1>
 		<nav>
-			<div id="navBtnGroup" align="left">
-				<!-- 태그에 링크 달아줄때는 꼭 컨트롤러에 url이 있는지 확인하고 달아줘야할것. -->
-				<button class="navButton" onclick="location.href = '/board/boardMain'">게시판 메인으로 이동</button>
-				<button class="navButton" onclick="location.href = '/board/list'">게시글 목록으로 이동</button>
-				<button class="navButton" onclick="location.href = '/board/pageList?pageNum=1'">페이징 목록으로 이동</button>
-				<button class="navButton" onclick="location.href = '/board/pageListAndSearch?pageNum=1'">페이징 + 검색으로 이동</button>
-				<button class="navButton" onclick="location.href = '/board/write'">게시글 작성하기</button>
+			<div>
+				<ul>
+					<li class="dropdown">
+						<div class="dropdown-menu">게시판 관리</div>
+						<div class="dropdown-content">
+							<a href="/board/boardMain">게시판 메인</a>
+							<a href="/board/list">게시글 목록</a>
+							<a href="/board/pageList?pageNum=1">페이징 목록</a>
+							<a href="/board/pageListAndSearch?pageNum=1">페이징 + 검색 목록</a>
+							<a href="/board/write">게시글 작성</a>
+						</div>
+					</li>
+					<li class="dropdown">
+						<div class="dropdown-menu">회원 관리</div>
+						<div class="dropdown-content">
+							<a href="#">회원가입</a>
+							<a href="#">회원정보수정</a>
+							<a href="#">회원탈퇴</a>
+						</div>
+					</li>
+					<li class="dropdown">
+						<div class="dropdown-menu">이미지 관리</div>
+						<div class="dropdown-content">
+							<a href="#">이미지 게시판</a>
+							<a href="#">이미지 업로드</a>
+							<a href="#">...</a>
+							<a href="#">...</a>
+						</div>
+					</li>
+					<li class="dropdown">
+						<div class="dropdown-menu">관리자 페이지</div>
+					</li>
+					<!-- <li class="home">
+						<a href="/board/boardMain">SpringBoard</a>
+					</li> -->
+				</ul>
 			</div>
 		</nav>
 	</header>
