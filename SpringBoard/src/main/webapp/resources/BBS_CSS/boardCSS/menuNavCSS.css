@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+/* 구글 폰트 CDN */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap');
+
+*{
+	/* 구글 폰트 웹사이트 전체 적용 */
+	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 header {
 	/* nav-bar 상단 고정 코드 시작 */
 	position: fixed;
@@ -85,6 +94,11 @@ nav ul li {
 	color : navy;
 }
 
+.dropdown-menu:visited {
+	background-color: #FFFF96;
+	color : navy;
+}
+
 .dropdown-content {
 	/* 
         .dropdown의 position이 relative 이므로 이를 기준으로 절대위치를 지정해야
@@ -109,11 +123,8 @@ nav ul li {
 	/* 마우스 커서가 올라가기 전까진 하위 항목들은 화면에 보이지 않게 한다. */
 	display: none;
 }
-.dropdown-content:nth-child(even){
-	color: #FFFF96;
-}
 
-.dropdown-content:hover:not(.home) {
+.dropdown-content:hover {
 	/*
         마우스가 메뉴위에 올라가면 메뉴를 나열해주어야 한다.
         :not(선택자) => 특정 선택자를 제외시킬때 사용. -> home클래스는 hover효과가 안들어가게 한다.

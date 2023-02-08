@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
 <title>${view.bno }번게시글조회</title>
 <!-- 간단 css (생각보다 길어져서 파일로..)-->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/viewCSS.css?ver=1">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/viewCSS.css?ver=2">
 
 </head>
 <body>
@@ -20,25 +20,44 @@
 	<div id="boardTB">
 		<h1>${view.bno }번게시글</h1>
 		<form method="post">
-			<label>조회수 : </label>
-			<span class="boardElement">${view.viewCnt }</span>
+			<div align="right">
+				<label>조회수 : </label>
+			</div>
+			<span>${view.viewCnt }</span>
+			
 			<hr>
 			<br>
-			<label>카테고리 : </label>
-			<span class="boardElement">${view.category }</span>
+			
+			<div align="right" style="float: left;">
+				<label>카테고리 : </label>
+			</div>
+			<span>${view.category }</span>
+			
 			<hr>
 			<br>
-			<label>게시글 제목 : </label>
-			<span class="boardElementTitle">${view.title }</span>
+			
+			<div align="right">
+				<label>게시글 제목 : </label>
+			</div>
+			<span>${view.title }</span>
+			
 			<hr>
 			<br>
-			<label>작성자 : </label>
-			<span class="boardElement">${view.writer }</span>
+			
+			<div align="right">
+				<label>작성자 : </label>
+			</div>
+			<span>${view.writer }</span>
+			
 			<hr>
 			<br>
-			<label>내용</label>
+			
+			<div>
+				<label>내용</label>
+			</div>
+			
 			<br>
-			<textarea rows="5" cols="50" class="boardElement" name="content" maxlength="2000" readonly="readonly">${view.content}</textarea>
+			<textarea rows="5" cols="50" class="boardTextarea" name="content" maxlength="2000" readonly="readonly">${view.content}</textarea>
 			<br>
 			<!-- 
 				**매우중요!!!
@@ -71,7 +90,7 @@
 				<tbody>
 					<%
 					List<ReplyVO> replyList = (List<ReplyVO>) request.getAttribute("replyList");
-					
+
 					for (int replyNum = 0; replyNum < replyList.size(); replyNum++) {
 					%>
 					<tr class="replyVO">
@@ -86,20 +105,18 @@
 								</div>
 							</div>
 						</td>
-					
+
 						<td id="replyContent" class="replyContent"><%=replyList.get(replyNum).getContent()%></td>
-					
+
 						<td style="padding-right: 5px;" align="center">
 							<font size="2"><button class="replyModifyBtn" type="button">[수정]</button></font>
 							<br>
 							<font size="2">
-								<button class="replyDeleteBtn" type="button" 
-								onclick="removeReply('<%=replyList.get(replyNum).getRno()%>','<%=replyList.get(replyNum).getBno()%>');">[삭제]</button>
+								<button class="replyDeleteBtn" type="button" onclick="removeReply('<%=replyList.get(replyNum).getRno()%>','<%=replyList.get(replyNum).getBno()%>');">[삭제]</button>
 							</font>
 						</td>
 					</tr>
 					<%
-					
 					}
 					%>
 				</tbody>
@@ -136,7 +153,7 @@
 			<!-- modal_layer는 배경을 담당하는 클래스이다. 모달창이 뜨면 배경을 어둡게하는 역할인 생각보다 중요한 클래스임. -->
 		</div>
 		<!-- 댓글 수정 modal창 끝 -->
-		
+
 		<br>
 		<hr>
 

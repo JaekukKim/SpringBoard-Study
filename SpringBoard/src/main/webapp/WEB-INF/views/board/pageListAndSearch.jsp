@@ -1,4 +1,3 @@
-<%@page import="com.board.domain.PageIngredient"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -24,6 +23,9 @@
 
 	<div id="boardGroup" align="center">
 		<h1>게시글 목록(페이징)</h1>
+		<div class="board_write" align="right">
+			<button class="boardWriteButtonDiv" onclick="location.href='/board/write'">게시글 작성</button>
+		</div>
 		<table>
 			<thead>
 				<tr>
@@ -60,7 +62,7 @@
 			PageIngredient pageIngredient = (PageIngredient) request.getAttribute("page");
 		%>
 		<div>
-			<select id="searchType" name="searchType" onchange="resetKeyword();">
+			<select class="searchType" name="searchType" onchange="changeInputTag();">
 				<!--
 					option 태그의 는 selected 라는 속성이 존재한다.
 					이 속성은 html에서는 디폴트 값을 설정하는데 사용하는게 주력이나
@@ -68,17 +70,13 @@
 					먼저 컨트롤러에서 넘겨준 searchType를 받아 이것이 option의 value 값과 같다면 그 옵션을 "선택된상태로(selected)"
 					만들수 있게 할 수 있다.
 				-->
-				
-				<!-- 
-				<option value="searchType's value             selected 여부 (db값과 비교해서)					보여질문구
-				 -->
 				<option value="title" 			<%= pageIngredient.getSearchType().equals("title") ? "selected" : "" %>>제목</option>		
 				<option value="content" 		<%= pageIngredient.getSearchType().equals("content") ? "selected" : "" %>>내용</option>
 				<option value="title_and_content" <%= pageIngredient.getSearchType().equals("title_and_content") ? "selected" : "" %>>제목+내용</option>
 				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer") ? "selected" : "" %>>작성자</option>
 				<option value="category"		<%= pageIngredient.getSearchType().equals("category") ? "selected" : "" %>>카테고리</option>	
 			</select>
-			<input type="text" name="keyword" value="<%=pageIngredient.getKeyword()%>" onkeyup="enterSearching();">
+			<input type="text" id="keyword" class="keyword" name="keyword" value="<%=pageIngredient.getKeyword()%>" onkeyup="enterSearching();">
 			<button id="searchingActivate" type="button" onclick="searchingActivate();">검색</button>
 		</div>
 		<!-- 게시글 검색기능 끝 -->
@@ -126,9 +124,6 @@
 		<!-- 페이징 끝 -->
 		<hr />
 		<br>
-		<span>
-			<button class="boardWriteButtonDiv" onclick="location.href='/board/write'">게시글 작성</button>
-		</span>
 	</div>
 </body>
 <script type="text/javascript" src="/resources/BBS_JS/pageListAndSearch.js"></script>

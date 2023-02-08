@@ -14,7 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/menuNavCSS.css?ver=1">
+<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/menuNavCSS.css">
 
 </head>
 <body>
@@ -31,7 +31,7 @@
 			<div>
 				<ul>
 					<li class="dropdown">
-						<div class="dropdown-menu">게시판 관리</div>
+						<div class="dropdown-menu">Board</div>
 						<div class="dropdown-content">
 							<a href="/board/boardMain">게시판 메인</a>
 							<a href="/board/list">게시글 목록</a>
@@ -41,7 +41,7 @@
 						</div>
 					</li>
 					<li class="dropdown">
-						<div class="dropdown-menu">회원 관리</div>
+						<div class="dropdown-menu">Member</div>
 						<div class="dropdown-content">
 							<a href="#">회원가입</a>
 							<a href="#">회원정보수정</a>
@@ -49,7 +49,7 @@
 						</div>
 					</li>
 					<li class="dropdown">
-						<div class="dropdown-menu">이미지 관리</div>
+						<div class="dropdown-menu">Image</div>
 						<div class="dropdown-content">
 							<a href="#">이미지 게시판</a>
 							<a href="#">이미지 업로드</a>
@@ -60,9 +60,6 @@
 					<li class="dropdown">
 						<div class="dropdown-menu">관리자 페이지</div>
 					</li>
-					<!-- <li class="home">
-						<a href="/board/boardMain">SpringBoard</a>
-					</li> -->
 				</ul>
 			</div>
 		</nav>
