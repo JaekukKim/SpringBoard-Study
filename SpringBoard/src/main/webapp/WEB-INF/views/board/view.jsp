@@ -8,32 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
-<!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
 <title>${view.bno }번게시글조회</title>
-
 <!-- 간단 css (생각보다 길어져서 파일로..)-->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/viewCSS.css?ver=1">
 
-<!--
-	하나 또 배웠다.
-	css 경로 인식이 안돼어 검색을 해보니 servlet-context에 적혀있는 경로의 형식을 지켜서 파일을 넣어줘야 했다.
-	따봉
--->
-
 </head>
 <body>
-	<!-- 게시글에 대한 정보는 데이터기도 하며 get은 글자수의 제한이 있으니 get보단 post로 전달해주어야 한다 -->
-	<!--
-		private String title;
-		private String content;
-		private String writer;
-	 -->
-	<!--
-	 	form 태그 안에 있는 name속성의 값은 db의 컬럼명 (VO의 변수명)과 일치시켜주는게 편하다.
-	 	게시글의 정보를 입력받아 BoardVO객체에 넣어서 전송시켜주는데, 이때 변수명과 name속성명이 동일하다면 추가작업을 해주는 과정을
-	 	생략할 수 있어 작업이 매우 편해진다.
-	 	그렇지 않다면 String id=getAttribute("name속성 명")이런식으로 데이터를 받아서 jdbc마냥 추가시켜주어야 한다.
-	  -->
 	<!-- 게시판 네비게이션 -->
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 
@@ -42,6 +22,10 @@
 		<form method="post">
 			<label>조회수 : </label>
 			<span class="boardElement">${view.viewCnt }</span>
+			<hr>
+			<br>
+			<label>카테고리 : </label>
+			<span class="boardElement">${view.category }</span>
 			<hr>
 			<br>
 			<label>게시글 제목 : </label>
@@ -85,19 +69,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- model.addAttribute("replyList" , replyList); -->
 					<%
-					/*
-					private String content;	// 댓글 내용
-					private String writer;	// 댓글 작성자
-					private Date regDate;	// 댓글 등록날짜
-					*/
-
 					List<ReplyVO> replyList = (List<ReplyVO>) request.getAttribute("replyList");
-					boolean noticeMsg = (boolean)request.getAttribute("noticeMsg");
 					
 					for (int replyNum = 0; replyNum < replyList.size(); replyNum++) {
-						
 					%>
 					<tr class="replyVO">
 						<td class="replyRno" style="display: none;"><%=replyList.get(replyNum).getRno()%></td>
@@ -161,8 +136,7 @@
 			<!-- modal_layer는 배경을 담당하는 클래스이다. 모달창이 뜨면 배경을 어둡게하는 역할인 생각보다 중요한 클래스임. -->
 		</div>
 		<!-- 댓글 수정 modal창 끝 -->
-		<!-- ajax를 이용할 것이므로 form태그는 사용하지 않는다. -->
-
+		
 		<br>
 		<hr>
 

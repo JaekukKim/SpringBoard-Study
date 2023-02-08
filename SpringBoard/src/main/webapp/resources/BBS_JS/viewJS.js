@@ -1,7 +1,6 @@
 /**
  *  게시글 삭제, 댓글 관련, modal 로직
  */
-
 function removeContent(bno) {
 	let YN = confirm('정말 [' + bno + ']번 게시글을 삭제하시겠습니까?\n삭제된 정보는 복구되지 않습니다.');
 
@@ -135,8 +134,6 @@ function removeReply(rno , bno) {
 	*/
 
 	let removeYN = confirm("댓글을 삭제하시겠습니까? 삭제된 정보는 복구되지 않습니다.");
-	
-	console.log(bno);
 	
 	if (removeYN == true) {
 

@@ -13,8 +13,11 @@
 	<br>
 	<br>
 	
-	<a href="/board/pageList?pageNum=1">게시판 메인페이지 이동</a>
-	
+	<a href="/board/pageListAndSearch?pageNum=1">게시판 메인페이지 이동</a>
+	<hr>
+	<div>
+		서블릿 버전 체크 : <%= application.getMajorVersion() %>.<%= application.getMinorVersion() %>
+	</div>
 </body>
 </html>
 

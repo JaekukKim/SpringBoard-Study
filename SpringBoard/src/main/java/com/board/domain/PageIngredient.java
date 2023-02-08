@@ -180,11 +180,11 @@ public class PageIngredient {
 		
 		if (searchType.equals("") || keyword.equals("")) {
 			searchTypeAndKeyword = "";
-			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-아무것도 입력하지 않음.-).");
+			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-아무것도 입력하지 않음-)");
 		} else {
 			// &searchType=writer&keyword=33
 			searchTypeAndKeyword =  "&searchType=" + searchType + "&keyword=" + keyword;
-			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-검색타입과 검색어가 들어옴.-.");
+			log.info("검색타입과 검색어를 쿼리파라미터로 전달(-검색타입과 검색어가 들어옴-)");
 		}
 		
 	}

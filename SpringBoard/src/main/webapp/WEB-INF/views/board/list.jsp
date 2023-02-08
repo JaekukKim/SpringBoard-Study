@@ -14,7 +14,7 @@
 
 <style type="text/css">
 thead {
-	background-color: yellow;
+	background-color: #42b983;
 }
 
 tr {

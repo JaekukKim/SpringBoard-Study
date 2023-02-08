@@ -53,7 +53,7 @@ public class BoardDAOimpl implements BoardDAO {
 	public List<BoardVO> pageListAndSearch(int displayTotalContent, int pageContent, String searchType, String keyword) throws Exception {
 		// 기존 페이징의 데이터에 검색타입과 검색어 매개변수만 추가해주면 된다.
 		// 단, 기존 검색기능이 없는 페이징에선 페이징에 관련된 숫자만 필요하니 Integer타입으로 넣었지만
-		// 검색기능은 String이 들어가기때문에 object로 포괄시켜준다.
+		// 검색기능은 거기에 더해서 String이 들어가기때문에 object로 포괄시켜준다.
 		
 		logger.info("페이징 + 검색기능 시작 (DAO)");
 		

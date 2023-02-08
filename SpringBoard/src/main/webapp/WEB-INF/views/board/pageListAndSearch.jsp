@@ -14,58 +14,8 @@
 <!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
 <title>게시글 페이징</title>
 
-<style type="text/css">
-thead>tr>th {
-	background-color: #42b983;
-	border-left: 0;
-	border-right: 0;
-}
-
-tr {
-	text-align: center;
-}
-
-span {
-	margin-right: 10px;
-}
-
-table {
-	margin-bottom: 20px;
-	border-collapse: collapse;
-	border-radius: 10px;
-}
-
-th, td {
-	padding: 10px;
-	border: 2px solid #e9e9e9;
-	border-right: none;
-}
-
-th:first-child, td:first-child {
-	border-left: none;
-}
-
-a {
-	text-decoration: none;
-}
-
-#notSelectedPage:visited {
-	color: gray;
-}
-
-.boardWriteButtonDiv {
-	border: none;
-	border-radius: 12px;
-	width: 120px;
-	height: 40px;
-	background-color: #bebebe;
-}
-
-.boardWriteButtonDiv:hover {
-	background-color: #dcdcdc;
-	cursor: pointer;
-}
-</style>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/resources/BBS_CSS/boardCSS/pageListAndSearch.css?ver=1">
 
 </head>
 <body>
@@ -80,6 +30,7 @@ a {
 					<th style="width: 80px;">번호</th>
 					<th style="width: 300px;">제목</th>
 					<th style="width: 150px;">작성자</th>
+					<th style="width: 150px;">카테고리</th>
 					<th style="width: 150px;">작성일</th>
 					<th style="width: 80px;">조회수</th>
 				</tr>
@@ -94,6 +45,7 @@ a {
 							<a href="/board/view?bno=${list.bno }">${list.title }</a>
 						</td>
 						<td>${list.writer }</td>
+						<td>${list.category }</td>
 						<td>
 							<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
 						</td>
@@ -108,7 +60,7 @@ a {
 			PageIngredient pageIngredient = (PageIngredient) request.getAttribute("page");
 		%>
 		<div>
-			<select name="searchType">
+			<select id="searchType" name="searchType" onchange="resetKeyword();">
 				<!--
 					option 태그의 는 selected 라는 속성이 존재한다.
 					이 속성은 html에서는 디폴트 값을 설정하는데 사용하는게 주력이나
@@ -123,7 +75,8 @@ a {
 				<option value="title" 			<%= pageIngredient.getSearchType().equals("title") ? "selected" : "" %>>제목</option>		
 				<option value="content" 		<%= pageIngredient.getSearchType().equals("content") ? "selected" : "" %>>내용</option>
 				<option value="title_and_content" <%= pageIngredient.getSearchType().equals("title_and_content") ? "selected" : "" %>>제목+내용</option>
-				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer") ? "selected" : "" %>>작성자</option>	
+				<option value="writer" 			<%= pageIngredient.getSearchType().equals("writer") ? "selected" : "" %>>작성자</option>
+				<option value="category"		<%= pageIngredient.getSearchType().equals("category") ? "selected" : "" %>>카테고리</option>	
 			</select>
 			<input type="text" name="keyword" value="<%=pageIngredient.getKeyword()%>" onkeyup="enterSearching();">
 			<button id="searchingActivate" type="button" onclick="searchingActivate();">검색</button>
@@ -178,27 +131,5 @@ a {
 		</span>
 	</div>
 </body>
-<script type="text/javascript">
-	/*
-		아래 코드는 검색을 "첫 시작하는" js코드이다.
-		내용을 입력하고 "input 태그에 종속되어 있는 button태그 검색버튼"을 누르면 실행되는 코드이다.
-		1페이지 출력용 코드라고 보면 쉽다.
-	*/
-	function searchingActivate() {
-		let searchType = document.getElementsByName("searchType")[0].value;
-		let keyword = document.getElementsByName("keyword")[0].value;
-		
-		/* select 태그의 value인 searchType에 관한 option태그의 값과
-		input태그에 들어간 keyword 값을 쿼리스트링으로 보내 첫페이지를 출력한다. */
-		location.href = "/board/pageListAndSearch?pageNum=1" + "&searchType="
-				+ searchType + "&keyword=" + keyword;
-	}
-	
-	/* input 태그 안에서 enter키 (keyNumber == 13) 누르면 검색 시작. */
-	function enterSearching() {
-		if (window.event.keyCode == 13) {
-			searchingActivate();
-		}
-	}
-</script>
+<script type="text/javascript" src="/resources/BBS_JS/pageListAndSearch.js"></script>
 </html>

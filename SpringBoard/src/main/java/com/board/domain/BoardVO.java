@@ -8,13 +8,14 @@ public class BoardVO {
 	 * varchar(50) not null, -- 게시글 제목 content text not null, -- 게시글 내용 writer
 	 * varchar(30) not null, -- 게시글 작성자
 	 * regDate timestamp not null default now(), --
-	 * 게시글 작성날짜 viewCnt int default 0, -- 게시글 조회수 primary key(bno) -- 게시글 번호는
-	 * primary key. 중복 금지. );
+	 * 게시글 작성날짜 viewCnt int default 0, -- 게시글 조회수 primary key(bno) -- 게시글 번호는 primary key. 중복 금지. );
+	 * category VARCHAR(15) not null DEFAULT '자유게시판'
 	 */
 	private int bno; // primary key.
 	private String title;
 	private String content;
 	private String writer;
+	private String category;
 	private Date regDate;
 	private int viewCnt;
 
@@ -65,12 +66,22 @@ public class BoardVO {
 	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
 	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regDate=" + regDate + ", viewCnt="
-				+ viewCnt + "]";
+				+ viewCnt + ", category=" + category + "]";
 	}
+
+	
 	
 	
 }
