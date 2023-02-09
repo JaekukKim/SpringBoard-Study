@@ -26,14 +26,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan
-		base-package="com.board" />
-	<context:component-scan
-		base-package="com.board.domain" />
-	<context:component-scan
-		base-package="com.board.dao" />
-	<context:component-scan
-		base-package="com.board.service" />
+	<context:component-scan base-package="com.board" />
+	<context:component-scan base-package="com.member" />
+	
 
 
 </beans:beans>

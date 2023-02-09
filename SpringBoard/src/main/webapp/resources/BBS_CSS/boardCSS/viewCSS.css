@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 #boardTB {
-	width: 1250px;
-	padding-top: 30px;
-	margin-left: 50px;
+	width: 95%;
+	margin : auto;
+	padding: auto;
 }
 
 label {

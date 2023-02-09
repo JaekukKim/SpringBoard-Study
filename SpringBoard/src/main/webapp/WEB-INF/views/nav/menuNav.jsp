@@ -25,7 +25,7 @@
         dropdown-content : 서브메뉴가 있을 경우 드롭다운으로 나타나는 메뉴 목록 지정 클래스.
         home : 메인 화면으로의 링크를 위해 메뉴와 컬러 구성을 달리한 클래스.
     -->
-	<header>
+	<header class="nav_header">
 		<h1><a href="/board/boardMain">SpringBoard</a></h1>
 		<nav>
 			<div>
@@ -43,7 +43,7 @@
 					<li class="dropdown">
 						<div class="dropdown-menu">Member</div>
 						<div class="dropdown-content">
-							<a href="#">회원가입</a>
+							<a href="/member/signUp">회원가입</a>
 							<a href="#">회원정보수정</a>
 							<a href="#">회원탈퇴</a>
 						</div>

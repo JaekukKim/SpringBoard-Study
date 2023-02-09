@@ -38,8 +38,11 @@ a {
 	color: gray;
 }
 
+#boardGroup{
+	width : 100%;
+}
 .board_write{
-	width : 1000px;
+	width : 75%;
 	margin-bottom : 10px;
 }
 

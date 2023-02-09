@@ -9,7 +9,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-header {
+.nav_header {
 	/* nav-bar 상단 고정 코드 시작 */
 	position: fixed;
 	top: 0;

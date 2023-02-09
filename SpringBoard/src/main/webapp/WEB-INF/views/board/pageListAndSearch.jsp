@@ -122,9 +122,10 @@
 		}
 		%>
 		<!-- 페이징 끝 -->
-		<hr />
-		<br>
 	</div>
+	
+	<!-- 게시판 꼬릿말 footer -->
+	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
 <script type="text/javascript" src="/resources/BBS_JS/pageListAndSearch.js"></script>
 </html>

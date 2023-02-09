@@ -94,9 +94,10 @@ tr {
 			</c:forEach> --%>
 			</tbody>
 		</table>
-		<hr />
 		<a href="/board/write">게시글 작성</a>
 	</div>
+	<!-- 게시판 꼬릿말 footer -->
+	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
 <script>
 	//도움받은 부분은 이미 답이 정해져 있어서 어떻게 처리할까 고민하다가 bno를 받아 컨트롤러에서 redirect 해주는식으로 하였다.

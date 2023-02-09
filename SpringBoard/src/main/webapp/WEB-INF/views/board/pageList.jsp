@@ -152,12 +152,13 @@ a {
 		<%
 		}
 		%>
-		<hr />
 		<br>
 		<span>
 			<button class="boardWriteButtonDiv" onclick="location.href='/board/write'">게시글 작성</button>
 		</span>
 	</div>
+	<!-- 게시판 꼬릿말 footer -->
+	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
 
 </html>

@@ -187,6 +187,8 @@
 		</div>
 		<!-- 댓글 구현 끝 -->
 	</div>
+	<!-- 게시판 꼬릿말 footer -->
+	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
 
 <!-- 자바스크립트 로직 짠것. 외부파일 가져오기. -->

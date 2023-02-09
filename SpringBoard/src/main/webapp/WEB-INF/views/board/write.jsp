@@ -61,5 +61,7 @@ a {
 			<button>페이징 목록으로 돌아가기</button>
 		</a>
 	</div>
+	<!-- 게시판 꼬릿말 footer -->
+	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
 </html>
