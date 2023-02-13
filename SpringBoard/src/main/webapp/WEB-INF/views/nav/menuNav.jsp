@@ -43,6 +43,7 @@
 					<li class="dropdown">
 						<div class="dropdown-menu">Member</div>
 						<div class="dropdown-content">
+							<a href="/member/login">로그인</a>
 							<a href="/member/signUp">회원가입</a>
 							<a href="#">회원정보수정</a>
 							<a href="#">회원탈퇴</a>

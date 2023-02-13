@@ -9,23 +9,27 @@
 .footer-div {
 	width: auto;
 }
-footer > div {
-	width : 75%;
-}
-address > a{
-	color: #42b983;
-}
-address > a:hover{
-	color: #2c3e50;
+footer>div {
+	width: 75%;
+	position : relative;
+	height: auto;
+	min-height: 100%;
 }
 
+address>a {
+	color: #42b983;
+}
+
+address>a:hover {
+	color: #2c3e50;
+}
 </style>
 </head>
 <body>
-<hr>
+	<hr>
 	<div class="footer-div" align="center">
 		<footer>
-			<div align="left">
+			<div align="center">
 				<p>제작자 : Auden Kim</p>
 				<address>
 					GitHub :
@@ -33,7 +37,7 @@ address > a:hover{
 				</address>
 			</div>
 		</footer>
-		<br>
 	</div>
+	<br>
 </body>
 </html>

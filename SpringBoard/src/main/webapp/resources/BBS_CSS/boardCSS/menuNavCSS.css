@@ -8,7 +8,12 @@
 	font-family: 'Noto Sans', sans-serif;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
+html, body {
+	height : 100%;
+}
+body{
+	padding-top : 60px;
+}
 .nav_header {
 	/* nav-bar 상단 고정 코드 시작 */
 	position: fixed;
@@ -26,9 +31,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-body{
-	padding-top : 60px;
 }
 
 h1 > a{

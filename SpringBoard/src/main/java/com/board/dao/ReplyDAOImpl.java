@@ -10,6 +10,7 @@ import com.board.domain.ReplyVO;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Repository
 public class ReplyDAOImpl implements ReplyDAO {
@@ -49,6 +50,40 @@ public class ReplyDAOImpl implements ReplyDAO {
 		log.info("ReplyDAOImpl-writeReply 댓글 삭제 실행 : {}", replyVO);
 		
 		sqlSession.delete(NAME_SPACE + ".removeReply", replyVO);
+		
+		
+		
+		int a = 0;
+		String name = "100";
+		
+		if (a==1) {
+			name = "200";
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 }

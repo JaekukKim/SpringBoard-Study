@@ -12,8 +12,8 @@
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 	
 	<div class="topWrapper" align="center">
-		<div class="wrapper">
-			<h1 align="left">회원가입</h1>
+		<div class="wrapper" style="margin: 10% 0;">
+			<h1 align="left">로그인</h1>
 			<form role="form" method="post" autocomplete="off">
 			<!-- 자동완성은 막아버린다. -->
 				<div class="input-box">
@@ -22,29 +22,13 @@
 				<div class="input-box">
 					<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요" required>
 				</div>
-				<div class="input-box">
-					<input type="text" name="userName" placeholder="이름을 입력하세요" required>
-				</div>
-				<div class="input-box">
-					<input type="email" name="userEmail" placeholder="이메일을 입력하세요" required>
-				</div>
-				<div class="input-box">
-					<input type="text" name="userNickname" placeholder="닉네임을 입력하세요" required>
-				</div>
-				<div class="input-box">
-					<input type="tel" name="userPhoneNumber" placeholder="휴대전화 번호를 입력하세요" required>
-				</div>
-				<div class="policy">
-					<input type="checkbox" value="">
-					<h3>회원가입에 동의합니다(미구현)</h3>
-				</div>
 				<div class="input-box button">
-					<input type="Submit" value="회원가입">
+					<input type="Submit" value="로그인">
 				</div>
 				<div class="text">
 					<h3>
-						계정이 이미 있나요?
-						<a href="#">로그인하기</a>
+						아이디나 비밀번호를 잊으셨나요?
+						<a href="#">계정찾기</a>
 					</h3>
 				</div>
 			</form>

@@ -19,7 +19,7 @@ import com.board.service.ReplyService;
 
 @Controller
 public class BoardController {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	// 만약 넘어온 데이터가 null값이면 안돼니깐 골라서받자
 	// null인 경우는 거의 없다. 일시적인 원인모를 예외였음.

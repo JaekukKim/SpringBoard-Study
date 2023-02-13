@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatisMember">
+
+	<!-- 편한 작업을 위해 DTO 변수 (테이블 컬럼명) 따오기
+		private String userId; // pk - 중복불가
+		private String userPwd;
+		private String userName;
+		private String userEmail;
+		private String userNickname; // pk - 중복불가
+		private String userPhoneNumber;
+		private Date regDate;
+	 -->
+	 
+	<!-- 회원 가입 기능 -->
+	<insert id="signUpMember">
+		insert into 
+			tbl_member (userId, userPwd, userName, userEmail, userNickname, userPhoneNumber)
+		values (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userNickname}, #{userPhoneNumber});
+	</insert>
+	
+	<!-- 로그인 기능 -->
+	<select id="loginMember" parameterType="com.member.domain.MemberDTO">
+		select userId, userPwd
+			from tbl_member
+		where userId = #{userId}
+			and userPwd = #{userPwd}
+	</select>
+</mapper>

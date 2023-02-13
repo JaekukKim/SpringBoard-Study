@@ -1,9 +1,12 @@
+/* 로그인과 양식이 똑같아서 공유해도 괜찮을 것 같아서 같이 쓸려고 한다. */
+
 body {
 	align-items: center;
 	justify-content: center;
 }
 
 .topWrapper {
+	vertical-align : 50%;
 	align-items: center;
 	align-content: center;
 	align-self: center;
@@ -34,7 +37,7 @@ body {
 }
 
 form .input-box input {
-	height: 90%;
+	height: 80%;
 	width: 90%;
 	outline: none;
 	padding: 0 15px;
