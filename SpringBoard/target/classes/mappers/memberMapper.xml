@@ -20,8 +20,8 @@
 	</insert>
 	
 	<!-- 로그인 기능 -->
-	<select id="loginMember" parameterType="com.member.domain.MemberDTO">
-		select userId, userPwd
+	<select id="memberLogin" parameterType="com.member.domain.MemberDTO" resultType="com.member.domain.MemberDTO">
+		select userId, userPwd, userNickname
 			from tbl_member
 		where userId = #{userId}
 			and userPwd = #{userPwd}

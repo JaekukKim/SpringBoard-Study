@@ -24,4 +24,12 @@ public class MemberDAOImpl implements MemberDAO{
 		
 		sqlSession.insert(NAME_SPACE + ".signUpMember", membeDTO);
 	}
+	
+	// 로그인 기능 구현
+	@Override
+	public MemberDTO memberLogin(MemberDTO memberDTO) throws Exception {
+		log.info("로그인 실행 memberLogin(DAO)");
+		
+		return sqlSession.selectOne(NAME_SPACE + ".memberLogin", memberDTO);
+	}
 }

@@ -77,7 +77,7 @@ public class BoardController {
 			// keyword : html의 검색쪽 input tag에서 기입한 text의 값
 			PageIngredient page, Model model) throws Exception {
 
-		logger.info("페이징 + 검색기능 시작 (Controller)");
+		logger.info("페이징 + 검색기능 시작 (Controller)\n검색타입 : {}\n검색어 : {}" , searchType , keyword);
 
 		/*
 		 * ** 중요함 **

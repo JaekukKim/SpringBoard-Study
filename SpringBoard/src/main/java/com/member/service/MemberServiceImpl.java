@@ -22,4 +22,12 @@ public class MemberServiceImpl implements MemberService{
 		
 		memberDAO.memberSignUp(memberDTO);
 	}
+	
+	// 로그인 기능
+	@Override
+	public MemberDTO memberLogin(MemberDTO memberDTO) throws Exception {
+		log.info("로그인 실행 memberLogin(Service)");
+		
+		return memberDAO.memberLogin(memberDTO);
+	}
 }

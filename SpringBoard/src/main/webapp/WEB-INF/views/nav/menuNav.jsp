@@ -26,7 +26,24 @@
         home : 메인 화면으로의 링크를 위해 메뉴와 컬러 구성을 달리한 클래스.
     -->
 	<header class="nav_header">
-		<h1><a href="/board/boardMain">SpringBoard</a></h1>
+		<h1>
+			<a href="/board/boardMain">SpringBoard</a>
+		</h1>
+		<%
+		if (session.getAttribute("isLogon") == null) {
+		%>
+		<div>
+			<h2>Guest님, 환영합니다.</h2>
+		</div>
+		<%
+		} else {
+		%>
+		<div>
+			<h2>${isLogon.userNickname }님, 환영합니다.</h2>
+		</div>
+		<%
+		}
+		%>
 		<nav>
 			<div>
 				<ul>

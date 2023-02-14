@@ -10,18 +10,23 @@
 <body>
 	<!-- 게시판 네비게이션 -->
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
-	
+
 	<div class="topWrapper" align="center">
 		<div class="wrapper" style="margin: 10% 0;">
 			<h1 align="left">로그인</h1>
-			<form role="form" method="post" autocomplete="off">
-			<!-- 자동완성은 막아버린다. -->
+			<form method="post" autocomplete="off" action="/member/login">
+				<!-- 자동완성은 막아버린다. -->
 				<div class="input-box">
 					<input type="text" name="userId" placeholder="아이디를 입력하세요" required>
 				</div>
 				<div class="input-box">
 					<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요" required>
 				</div>
+				
+				<div>
+					<label style="color: red;">아이디나 비밀번호를 다시한번 확인해주세요.</label>
+				</div>
+				
 				<div class="input-box button">
 					<input type="Submit" value="로그인">
 				</div>
