@@ -22,13 +22,21 @@
 				<div class="input-box">
 					<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요" required>
 				</div>
+				<%-- <%
+				boolean memberLogin = (boolean) session.getAttribute("memberLogin");
 				
+				if(memberLogin == false){
+		
+				}
+				%> --%>
+				<!-- jstl-el식으로 받으면 데이터가 잘 나오는데 왜 스크립틀릿으론 안나오는지 모르겠네. -->
+				<c:if test="${memberLogin==false }">
 				<div>
 					<label style="color: red;">아이디나 비밀번호를 다시한번 확인해주세요.</label>
 				</div>
-				
+				</c:if>
 				<div class="input-box button">
-					<input type="Submit" value="로그인">
+					<input type="submit" value="로그인">
 				</div>
 				<div class="text">
 					<h3>

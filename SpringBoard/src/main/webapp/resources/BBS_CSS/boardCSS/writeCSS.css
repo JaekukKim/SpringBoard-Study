@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+#boardWrite {
+	width: 95%;
+	margin : auto;
+	padding: auto;
+}
+
+form>div{
+	width : 170px;
+	float : left;
+	
+}
+div>label{
+	font-size: 22px;
+}
+form>span{
+	padding: 4px 5px 0px 15px;
+	display : inline-block;
+	font-size: 18px;
+}
+span>input{
+	font-size : 18px;
+	width: 300px;
+}
+
+textarea {
+	resize: none;
+	width : 90%;
+	height : 200px;
+	padding-bottom: 10px;
+	margin-bottom: 5px;
+	margin-left : 80px;
+	font-size: 18px;
+}
+
+#updateButton {
+	position : relative;
+	width : 120px;
+	height : 40px;
+	font-size : 20px;
+	border: none;
+	border-radius: 6px;
+	
+}
+#updateButton:hover {
+	background-color: #bebebe;
+	cursor: pointer;
+}

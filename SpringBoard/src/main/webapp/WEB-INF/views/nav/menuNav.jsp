@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.member.domain.MemberDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,16 +31,17 @@
 			<a href="/board/boardMain">SpringBoard</a>
 		</h1>
 		<%
-		if (session.getAttribute("isLogon") == null) {
+		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
+		if (memberInfo == null) {
 		%>
 		<div>
-			<h2>Guest님, 환영합니다.</h2>
+			<h2>현재 Guest로 접속중입니다.</h2>
 		</div>
 		<%
 		} else {
 		%>
 		<div>
-			<h2>${isLogon.userNickname }님, 환영합니다.</h2>
+			<h2>${memberInfo.userNickname }님이 접속중입니다.</h2>
 		</div>
 		<%
 		}
@@ -60,10 +62,22 @@
 					<li class="dropdown">
 						<div class="dropdown-menu">Member</div>
 						<div class="dropdown-content">
-							<a href="/member/login">로그인</a>
+						<%
+						if (memberInfo == null) {
+						%>
+							<!-- 비 로그인시 보이게 -->
+							<a href="/member/loginpage">로그인</a>
 							<a href="/member/signUp">회원가입</a>
-							<a href="#">회원정보수정</a>
-							<a href="#">회원탈퇴</a>
+						<%
+						} else {
+						%>	
+							<!-- 로그인이 된 상태에만 보이게 -->
+							<a href="/member/logout">로그아웃</a>
+							<a href="/member/membermodify">회원정보수정</a>
+							<a href="/member/removemember">회원탈퇴</a>
+						<%
+						}
+						%>
 						</div>
 					</li>
 					<li class="dropdown">

@@ -12,12 +12,15 @@
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
 	
 	<div class="topWrapper" align="center">
-		<div class="wrapper">
+		<div class="wrapper" style="margin: 2% 0 5% 0;">
 			<h1 align="left">회원가입</h1>
 			<form role="form" method="post" autocomplete="off">
 			<!-- 자동완성은 막아버린다. -->
-				<div class="input-box">
+				<div class="input-box id-box">
 					<input type="text" name="userId" placeholder="아이디를 입력하세요" required>
+				</div>
+				<div class="duplicated_id" align="right">
+					<button type="button" name="userId">아이디 중복검사</button>
 				</div>
 				<div class="input-box">
 					<input type="password" name="userPwd" placeholder="비밀번호를 입력하세요" required>
@@ -44,7 +47,7 @@
 				<div class="text">
 					<h3>
 						계정이 이미 있나요?
-						<a href="#">로그인하기</a>
+						<a href="/member/loginpage">로그인하기</a>
 					</h3>
 				</div>
 			</form>

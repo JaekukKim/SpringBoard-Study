@@ -21,9 +21,19 @@
 	
 	<!-- 로그인 기능 -->
 	<select id="memberLogin" parameterType="com.member.domain.MemberDTO" resultType="com.member.domain.MemberDTO">
-		select userId, userPwd, userNickname
+		select userId, userPwd, userName, userEmail, userNickname, userPhoneNumber
 			from tbl_member
 		where userId = #{userId}
 			and userPwd = #{userPwd}
 	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="memberModify" parameterType="com.member.domain.MemberDTO">
+		update tbl_member set
+			userPwd = #{userPwd} ,
+			userName = #{userName} ,
+			userEmail = #{userEmail} ,
+			userPhoneNumber = #{userPhoneNumber}
+		where userID = #{userID}
+	</update>
 </mapper>

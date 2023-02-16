@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.member.domain.MemberDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +8,7 @@
 <meta name="viewport" content="width=device-width, height=device-height ,initial-scale=1">
 <!-- 반응형 웹을 만들어주기 위한 메타태그 viewport -->
 <title>게시글 작성</title>
-<style type="text/css">
-#boardWrite {
-	padding-top: 50px;
-}
-
-span {
-	text-align: left;
-}
-a {
-	text-decoration: none;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/BBS_CSS/boardCSS/writeCSS.css">
 </head>
 <body>
 	<!-- 게시글에 대한 정보는 데이터기도 하며 get은 글자수의 제한이 있으니 get보단 post로 전달해주어야 한다 -->
@@ -35,33 +25,54 @@ a {
 	  -->
 	<!-- 게시판 네비게이션 -->
 	<jsp:include page="../nav/menuNav.jsp" flush="false"></jsp:include>
-
-	<div id="boardWrite" align="center">
+	<div id="boardWrite">
 		<h1>게시글 작성하기</h1>
-		<hr />
 		<form method="post">
-			<label>게시글 제목</label>
-			<input type="text" name="title" maxlength="20">
-			<br> <br>
-			<label> 작성자</label>
-			<input type="text" name="writer" maxlength="12">
-			<br> <br>
-			<label> 내용 </label>
+			<!-- 여기서 post방식으로 데이터를 보내준다면 controller에서 같은 url일지라도 메소드=post로 된 곳으로 들어간다. -->
+			<!-- 수정하기 부분은 조회의 일부분이라고 말할 수 있다. 수정을 하기 위해선 조회를 반드시 해야하기 때문이다.
+			 그러므로 조회부분에서 추가해주었던 데이터를 통해 게시글 내용을 불러오기가 가능하다. -->
+			<div align="right">
+				<label>게시글 제목 : </label>
+			</div>
+			<span>
+				<input type="text" name="title" maxlength="20" placeholder="제목을 입력해주세요" required>
+			</span>
+			<hr>
 			<br>
-			<textarea cols="50" rows="10" name="content" maxlength="2000"></textarea>
-			<br> <br>
-			<input type="submit" value="게시글작성">
-			<input type="reset" value="다시작성">
+			<div align="right">
+				<label>작성자 : </label>
+			</div>
+			<%
+			MemberDTO memberInfo = (MemberDTO) session.getAttribute("memberInfo");
+			if (memberInfo == null) {
+			%>
+			<span>
+				<input name="writer" type="text" maxlength="20" placeholder="비회원은 작성자를 반드시 입력해주세요" required>
+			</span>
+			<%
+			} else {
+			%>
+			<span>
+				<input name="writer" type="text" maxlength="20" style="border: none; pointer-events: none;" value="${memberInfo.userNickname }" readonly="readonly">
+			</span>
+			<%
+			}
+			%>
+			<hr>
+			<br>
+			<div align="left">
+				<label>내용</label>
+			</div>
+			<br>
+			<textarea rows="5" cols="50" class="boardElement" placeholder="내용을 입력해주세요" name="content" maxlength="2000" required></textarea>
+			<br>
+			<span>
+				<button id="updateButton" type="submit" onclick="checkAllValue();">작성완료</button>
+			</span>
 		</form>
-		<br>
-		<a href="/board/list">
-			<button>목록으로 돌아가기</button>
-		</a>
-		<a href="/board/pageList?pageNum=1">
-			<button>페이징 목록으로 돌아가기</button>
-		</a>
 	</div>
 	<!-- 게시판 꼬릿말 footer -->
 	<jsp:include page="../footer/menuFooter.jsp" flush="false"></jsp:include>
 </body>
+<script type="text/javascript" src="/resources/BBS_JS/writeJS.js"></script>
 </html>

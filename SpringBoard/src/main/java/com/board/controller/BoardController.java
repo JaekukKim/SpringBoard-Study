@@ -120,20 +120,14 @@ public class BoardController {
 
 	// 게시글 작성 기능 구현
 	@RequestMapping(value = "/board/write", method = RequestMethod.POST)
-	public String writeContent(BoardVO boardVO) {
-		// BoardDAO에서 넘어온 데이터를 이제 Controller를 통해서 출력해주어야
-		// 한다.
-		try {
+	public String writeContent(BoardVO boardVO) throws Exception{
+		// BoardDAO에서 넘어온 데이터를 이제 Controller를 통해서 출력해주어야 한다.
+			logger.info("게시글 작성 writeContent (controller)");
+			
 			boardService.write(boardVO);
-			logger.info("게시글 작성 완료");
-		} catch (Exception e) {
-			logger.info("게시글 작성 실패");
-			e.printStackTrace();
-		}
-
-		return "redirect:/board/pageList?pageNum=1";
-		// redirect는 다시 돌려보낸다는 의미이다. 서블릿의 sendRedirect와
-		// 같음, 스프링에선 return에 저런식으로 입력가능.
+		
+		return "redirect:/board/pageListAndSearch?pageNum=1";
+		// redirect는 다시 돌려보낸다는 의미이다. 서블릿의 sendRedirect와 같음, 스프링에선 return에 저런식으로 입력가능.
 	}
 	// ----------------------------------게시글 리스트 관련 메소드끝----------------------------------
 
